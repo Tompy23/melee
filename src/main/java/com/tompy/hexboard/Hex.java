@@ -5,7 +5,7 @@ public class Hex {
     private boolean selected;
 
     private Hex(Builder builder) {
-        coordinate = HexCoordinate.builder().setQ(builder.q).setR(builder.r).build();
+        coordinate = HexCoordinate.builder().setCol(builder.q).setRow(builder.r).build();
         selected = false;
     }
 
@@ -19,6 +19,14 @@ public class Hex {
 
     public void unselect() {
         selected = false;
+    }
+
+    public int getCol() {
+        return coordinate.getCol();
+    }
+
+    public int getRow() {
+        return coordinate.getRow();
     }
 
     public int getQ() {

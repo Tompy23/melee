@@ -1,22 +1,67 @@
 package com.tompy.melee;
 
+import com.tompy.hexboard.Hex;
+import com.tompy.hexboard.HexBoard;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Polygon;
 
 public class GamePlayController {
+    private static final double SQRT3 = Math.sqrt(3);
     @FXML
     private ScrollPane background;
     @FXML
-    private AnchorPane backanchor;
+    private StackPane backanchor;
+    @FXML
+    private Pane hexBoard;
+    private HexBoard board;
 
     public void showGrid() {
-        background.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        background.setOpacity(1.0);
+        // background.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        //background.setOpacity(1.0);
 
-        backanchor.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        // backanchor.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+
+        board = HexBoard.builder().pixelSize(30).height(6).width(6).build();
+
+        drawHexBoard();
+
+
+    }
+
+    public void drawHexBoard() {
+        double[] coordinates = new double[12];
+        int angle = 0;
+        for (int j = 0; j < 12; j += 2) {
+            double radians = angle * Math.PI / 180;
+            coordinates[j] = board.getPixelSize() * Math.cos(radians);
+            coordinates[j + 1] = board.getPixelSize() * Math.sin(radians);
+            angle += 60;
+        }
+
+        for (Hex hex : board.getHexes()) {
+            double x = 100 + (hex.getCol() * SQRT3 * board.getPixelSize());
+            double y = 100 + (hex.getRow() * board.getPixelSize());
+            if (hex.getRow() % 2 == 0) {
+                x += board.getPixelSize() * SQRT3;
+            }
+            //            Circle c = new Circle();
+            //            c.setCenterX(x);
+            //            c.setCenterY(y);
+            //            c.setRadius(5);
+            //            hexBoard.getChildren().add(c);
+
+            double[] finalCoordinates = new double[12];
+            for (int i = 0; i < 12; i += 2) {
+                finalCoordinates[i] = coordinates[i] + x;
+                finalCoordinates[i + 1] = coordinates[i + 1] + y;
+            }
+
+            Polygon hexShape = new Polygon(finalCoordinates);
+            hexBoard.getChildren().add(hexShape);
+
+        }
     }
 }
