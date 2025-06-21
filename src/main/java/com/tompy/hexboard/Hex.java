@@ -5,7 +5,7 @@ public class Hex {
     private boolean selected;
 
     private Hex(Builder builder) {
-        coordinate = HexCoordinate.builder().setCol(builder.q).setRow(builder.r).build();
+        coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
         selected = false;
     }
 
@@ -66,16 +66,16 @@ public class Hex {
     }
 
     public static final class Builder {
-        private int q;
-        private int r;
+        private int col;
+        private int row;
 
-        public Builder setQ(int q) {
-            this.q = q;
+        public Builder setCol(int col) {
+            this.col = col;
             return this;
         }
 
-        public Builder setR(int r) {
-            this.r = r;
+        public Builder setRow(int row) {
+            this.row = row;
             return this;
         }
 

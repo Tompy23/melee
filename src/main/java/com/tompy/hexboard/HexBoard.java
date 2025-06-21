@@ -19,7 +19,7 @@ public class HexBoard {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width * 2; j += 2) {
-                Hex hex = Hex.builder().setQ(j).setR(i).build();
+                Hex hex = Hex.builder().setCol(j).setRow(i).build();
                 hexes.add(hex);
                 hexMap.put(hex.getCoordinate(), hex);
             }
