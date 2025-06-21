@@ -3,21 +3,22 @@ package com.tompy.hexboard;
 import java.util.*;
 
 public class HexBoard {
-    private final int pixelHeight;
-    private final int pixelWidth;
+    private final int pixelSize;
     private final int height;
     private final int width;
     private List<Hex> hexes;
     private Map<HexCoordinate, Hex> hexMap;
 
     public HexBoard(Builder builder) {
-        this.pixelHeight = builder.pixelHeight;
-        this.pixelWidth = builder.pixelWidth;
+        this.pixelSize = builder.pixelSize;
         this.height = builder.height;
         this.width = builder.width;
 
+        hexes = new ArrayList<>();
+        hexMap = new HashMap<>();
+
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+            for (int j = 0; j < width * 2; j += 2) {
                 Hex hex = Hex.builder().setQ(j).setR(i).build();
                 hexes.add(hex);
                 hexMap.put(hex.getCoordinate(), hex);
@@ -25,12 +26,12 @@ public class HexBoard {
         }
     }
 
-    public int getPixelHeight() {
-        return pixelHeight;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public int getPixelWidth() {
-        return pixelWidth;
+    public int getPixelSize() {
+        return pixelSize;
     }
 
     public int getHeight() {
@@ -46,7 +47,7 @@ public class HexBoard {
     }
 
     public Hex getHex(int q, int r) {
-        return hexMap.get(HexCoordinate.builder().setQ(q).setR(r).build());
+        return hexMap.get(HexCoordinate.builder().setCol(q).setRow(r).build());
     }
 
     public List<Hex> getSelectedHexes() {
@@ -58,18 +59,12 @@ public class HexBoard {
     }
 
     public static final class Builder {
-        private int pixelHeight;
-        private int pixelWidth;
+        private int pixelSize;
         private int height;
         private int width;
 
-        public Builder pixelHeight(int pixelHeight) {
-            this.pixelHeight = pixelHeight;
-            return this;
-        }
-
-        public Builder pixelWidth(int pixelWidth) {
-            this.pixelWidth = pixelWidth;
+        public Builder pixelSize(int pixelSize) {
+            this.pixelSize = pixelSize;
             return this;
         }
 

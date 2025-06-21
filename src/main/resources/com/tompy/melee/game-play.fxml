@@ -6,9 +6,13 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.melee.GamePlayController">
    <children>
       <ScrollPane fx:id="background" layoutX="7.0" layoutY="7.0" pannable="true" prefHeight="388.0" prefWidth="585.0">
-        <content>
-          <AnchorPane fx:id="backanchor" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="561.0" />
-        </content>
+         <content>
+            <StackPane fx:id="backanchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="476.0" prefWidth="718.0">
+               <children>
+                  <Pane fx:id="hexBoard" prefHeight="275.0" prefWidth="390.0" />
+               </children>
+            </StackPane>
+         </content>
       </ScrollPane>
    </children>
 </AnchorPane>

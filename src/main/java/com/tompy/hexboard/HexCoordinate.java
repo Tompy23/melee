@@ -1,28 +1,36 @@
 package com.tompy.hexboard;
 
 public class HexCoordinate {
-    private final int q;
-    private final int r;
+    private final int col;
+    private final int row;
 
     public HexCoordinate(Builder builder) {
-        this.q = builder.q;
-        this.r = builder.r;
+        this.col = builder.col;
+        this.row = builder.row;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
     public int getQ() {
-        return q;
+        return (col - row) / 2;
     }
 
     public int getR() {
-        return r;
+        return row;
     }
 
     public int getS() {
-        return -r-q;
+        return -getQ()-getR();
     }
 
     @Override
@@ -33,25 +41,25 @@ public class HexCoordinate {
         if (this == other) {
             return true;
         }
-        return this.q == o.q && this.r == o.r;
+        return this.col == o.col && this.row == o.row;
     }
 
     @Override
     public int hashCode() {
-        return q * r;
+        return col * row;
     }
 
     public static final class Builder {
-        private int q;
-        private int r;
+        private int col;
+        private int row;
 
-        public Builder setQ(int q) {
-            this.q = q;
+        public Builder setCol(int col) {
+            this.col = col;
             return this;
         }
 
-        public Builder setR(int r) {
-            this.r = r;
+        public Builder setRow(int row) {
+            this.row = row;
             return this;
         }
 
