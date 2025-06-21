@@ -12,6 +12,7 @@ import javafx.scene.shape.Polygon;
 
 public class GamePlayController {
     private static final double SQRT3 = Math.sqrt(3);
+    private static final int BORDER = 100;
     @FXML
     private ScrollPane background;
     @FXML
@@ -27,7 +28,7 @@ public class GamePlayController {
 
         // backanchor.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
-        board = HexBoard.builder().pixelSize(30).height(24).width(24).build();
+        board = HexBoard.builder().pixelSize(30).height(64).width(24).build();
 
         drawHexBoard();
 
@@ -35,11 +36,11 @@ public class GamePlayController {
     }
 
     public void drawHexBoard() {
-        double height = 2 * board.getPixelSize();
+        double height = 1.5 * board.getPixelSize();
         double width = SQRT3 * board.getPixelSize();
 
-        double panelWidth = board.getWidth() * width + 200;
-        double panelHeight = board.getHeight() * height;
+        double panelWidth = board.getWidth() * width + 2 * BORDER;
+        double panelHeight = board.getHeight() * height + 2 * BORDER;
 
         background.setPrefViewportWidth(panelWidth);
         background.setPrefViewportHeight(panelHeight);
@@ -61,8 +62,8 @@ public class GamePlayController {
         }
 
         for (Hex hex : board.getHexes()) {
-            double x = 100 + hex.getCol() / 2.0 * width;
-            double y = 100 + (hex.getRow() * 1.5 * board.getPixelSize());
+            double x = BORDER + hex.getCol() / 2.0 * width;
+            double y = BORDER + (hex.getRow() * 1.5 * board.getPixelSize());
             if (hex.getRow() % 2 == 0) {
                 x += 1.0 / 2.0 * width;
             }
