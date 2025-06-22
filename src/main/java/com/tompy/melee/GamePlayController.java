@@ -2,10 +2,11 @@ package com.tompy.melee;
 
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -14,21 +15,29 @@ public class GamePlayController {
     private static final double SQRT3 = Math.sqrt(3);
     private static final int BORDER = 100;
     @FXML
-    private ScrollPane background;
+    private BorderPane borderPane;
     @FXML
-    private StackPane boardStack;
+    private ScrollPane scrollBackground;
     @FXML
-    private Pane hexBoard;
+    private StackPane stackBoard;
+    @FXML
+    private Pane paneHexBoard;
+    @FXML
+    private Button zoomIn;
+    @FXML
+    private Button zoomOut;
 
     private HexBoard board;
 
+    private double zoom = 1.0;
+
     public void showGrid() {
-        // background.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        //background.setOpacity(1.0);
+        // scrollPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        //scrollPane.setOpacity(1.0);
 
         // backanchor.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
-        board = HexBoard.builder().pixelSize(30).height(64).width(24).build();
+        board = HexBoard.builder().pixelSize(30).height(32).width(32).build();
 
         drawHexBoard();
 
@@ -42,14 +51,14 @@ public class GamePlayController {
         double panelWidth = board.getWidth() * width + 2 * BORDER;
         double panelHeight = board.getHeight() * height + 2 * BORDER;
 
-        background.setPrefViewportWidth(panelWidth);
-        background.setPrefViewportHeight(panelHeight);
+        scrollBackground.setPrefViewportWidth(panelWidth);
+        scrollBackground.setPrefViewportHeight(panelHeight);
 
-        boardStack.setPrefWidth(panelWidth);
-        boardStack.setPrefHeight(panelHeight);
+        stackBoard.setPrefWidth(panelWidth);
+        stackBoard.setPrefHeight(panelHeight);
 
-        hexBoard.setPrefWidth(panelWidth);
-        hexBoard.setPrefHeight(panelHeight);
+        paneHexBoard.setPrefWidth(panelWidth);
+        paneHexBoard.setPrefHeight(panelHeight);
 
         double[] coordinates = new double[12];
 
@@ -67,11 +76,6 @@ public class GamePlayController {
             if (hex.getRow() % 2 == 0) {
                 x += 1.0 / 2.0 * width;
             }
-            Circle c = new Circle();
-            c.setCenterX(x);
-            c.setCenterY(y);
-            c.setRadius(3);
-            hexBoard.getChildren().add(c);
 
             double[] finalCoordinates = new double[12];
             for (int i = 0; i < 12; i += 2) {
@@ -80,11 +84,40 @@ public class GamePlayController {
             }
 
             Polygon hexShape = new Polygon(finalCoordinates);
-            hexShape.setFill(Color.TRANSPARENT);
+            hexShape.setFill(Color.WHITE);
             hexShape.setStroke(Color.BLACK);
             hexShape.setStrokeWidth(1.0);
-            hexBoard.getChildren().add(hexShape);
+            paneHexBoard.getChildren().add(hexShape);
 
+            Circle c = new Circle();
+            c.setCenterX(x);
+            c.setCenterY(y);
+            c.setRadius(3);
+            paneHexBoard.getChildren().add(c);
         }
+    }
+
+    public void handleZoomIn(ActionEvent event) {
+        System.out.println("handleZoomIn");
+        System.out.println(event.toString());
+
+        zoom += .1;
+        if (zoom > 2.0) {
+            zoom = 2.0;
+        }
+        stackBoard.setScaleX(zoom);
+        stackBoard.setScaleY(zoom);
+    }
+
+    public void handleZoomOut(ActionEvent event) {
+        System.out.println("handleZoomOut");
+        System.out.println(event.toString());
+
+        zoom -= .1;
+        if (zoom < 0.3) {
+            zoom = 0.3;
+        }
+        stackBoard.setScaleX(zoom);
+        stackBoard.setScaleY(zoom);
     }
 }

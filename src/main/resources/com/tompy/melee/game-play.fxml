@@ -3,16 +3,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.melee.GamePlayController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@game-play.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.melee.GamePlayController">
    <children>
-      <ScrollPane fx:id="background" layoutX="7.0" layoutY="7.0" pannable="true" prefHeight="388.0" prefWidth="585.0">
-         <content>
-            <StackPane fx:id="boardStack" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="476.0" prefWidth="718.0">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ScrollPane fx:id="scrollBackground" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" styleClass=".corner" BorderPane.alignment="CENTER">
+               <content>
+                  <StackPane fx:id="stackBoard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="476.0" prefWidth="718.0">
+                     <children>
+                        <Pane fx:id="paneHexBoard" prefHeight="275.0" prefWidth="390.0" />
+                     </children>
+                  </StackPane>
+               </content>
+            </ScrollPane>
+         </center>
+         <top>
+            <HBox maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="hexBoard" prefHeight="275.0" prefWidth="390.0" />
-               </children>
-            </StackPane>
-         </content>
-      </ScrollPane>
+                  <Button disable="true" mnemonicParsing="false" text="Rotate Counter" />
+               </children></HBox>
+         </top>
+         <right>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="100.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="zoomIn" mnemonicParsing="false" onAction="#handleZoomIn" text="Zoom In" />
+                  <Button fx:id="zoomOut" mnemonicParsing="false" onAction="#handleZoomOut" text="Zooom Out" />
+               </children></VBox>
+         </right>
+         <left>
+            <Button fx:id="btnNextScene" mnemonicParsing="false" text="Next Scene" BorderPane.alignment="CENTER" />
+         </left>
+         <bottom>
+            <TextArea prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT" />
+         </bottom>
+      </BorderPane>
    </children>
 </AnchorPane>
