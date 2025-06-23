@@ -1,7 +1,7 @@
 package com.tompy.state;
 
 /**
- * A class that can handle a state machine in a separate thread
+ * A class that can process a state machine in a separate thread
  */
 public class StateThread implements Runnable {
     private final StateMachine machine;
@@ -19,7 +19,7 @@ public class StateThread implements Runnable {
      */
     public void run() {
         while(!machine.stopThread()) {
-            machine.process();
+            machine.process(System.currentTimeMillis());
         }
     }
 }

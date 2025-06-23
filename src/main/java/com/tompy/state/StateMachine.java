@@ -12,8 +12,9 @@ public interface StateMachine {
 
     /**
      * Called from the thread
+     * @param l - The time since last call
      */
-    void process();
+    void process(long l);
 
     /**
      * Indicate that the processing loop should end

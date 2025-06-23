@@ -44,7 +44,7 @@ public class MessageDrainingState extends MessageAbstractState {
     }
 
     @Override
-    public void process() {
+    public void process(long l) {
         if (startDraining + drainLength > defaultLength) {
             service.stopService();
         }

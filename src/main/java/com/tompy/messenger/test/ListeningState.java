@@ -28,7 +28,7 @@ public class ListeningState implements State {
     }
 
     @Override
-    public void process() {
+    public void process(long l) {
         Optional<MessageA> mA;
         do {
             mA = service.poll(listenerTokenA);

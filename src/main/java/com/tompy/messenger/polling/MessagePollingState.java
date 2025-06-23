@@ -6,7 +6,7 @@ import com.tompy.messenger.service.Listener;
 import java.util.Iterator;
 
 /**
- * A state used by the message service to handle the passing of messages from the broadcaster to the
+ * A state used by the message service to process the passing of messages from the broadcaster to the
  * appropriate listener queues
  */
 public class MessagePollingState extends MessageAbstractState {
@@ -25,7 +25,7 @@ public class MessagePollingState extends MessageAbstractState {
     }
 
     @Override
-    public void process() {
+    public void process(long l) {
         Iterator<Message> broadcasterIterator = service.getBroadcaster().iterator();
         while (broadcasterIterator.hasNext()) {
             Message message = broadcasterIterator.next();

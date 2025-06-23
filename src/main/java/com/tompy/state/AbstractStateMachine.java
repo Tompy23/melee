@@ -16,7 +16,9 @@ public abstract class AbstractStateMachine implements StateMachine {
     }
 
     @Override
-    public void process() {
-        currentState.process();
+    public void process(long l) {
+        if (currentState != null) {
+            currentState.process(l);
+        }
     }
 }

@@ -16,6 +16,7 @@ public interface State {
 
     /**
      * Called in a loop while this is the current state
+     * @param l - time since last call
      */
-    void process();
+    void process(long l);
 }

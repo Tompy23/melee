@@ -13,4 +13,6 @@ module com.tompy.melee {
 
     opens com.tompy.melee to javafx.fxml;
     exports com.tompy.melee;
+    exports com.tompy.melee.state;
+    opens com.tompy.melee.state to javafx.fxml;
 }
