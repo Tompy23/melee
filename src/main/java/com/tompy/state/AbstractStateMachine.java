@@ -1,4 +1,4 @@
-package com.tompy.messenger.state;
+package com.tompy.state;
 
 /**
  * An abstract to be extended by all state machines that handles all the necessary work

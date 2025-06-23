@@ -1,4 +1,4 @@
-package com.tompy.messenger.state;
+package com.tompy.state;
 
 /**
  * API for a state

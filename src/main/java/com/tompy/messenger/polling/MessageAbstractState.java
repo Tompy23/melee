@@ -1,6 +1,6 @@
 package com.tompy.messenger.polling;
 
-import com.tompy.messenger.state.State;
+import com.tompy.state.State;
 
 /**
  * The abstract class all com.tompy.messenger.Message Service States must extend

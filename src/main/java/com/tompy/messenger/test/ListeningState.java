@@ -2,7 +2,7 @@ package com.tompy.messenger.test;
 
 import com.tompy.messenger.MessageService;
 import com.tompy.messenger.service.MessageInstance;
-import com.tompy.messenger.state.State;
+import com.tompy.state.State;
 
 import java.util.Optional;
 

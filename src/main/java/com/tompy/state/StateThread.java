@@ -1,4 +1,4 @@
-package com.tompy.messenger.state;
+package com.tompy.state;
 
 /**
  * A class that can handle a state machine in a separate thread

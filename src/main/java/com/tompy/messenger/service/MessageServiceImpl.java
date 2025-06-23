@@ -5,8 +5,8 @@ import com.tompy.messenger.MessageService;
 import com.tompy.messenger.polling.MessageDrainingState;
 import com.tompy.messenger.polling.MessagePollingService;
 import com.tompy.messenger.polling.MessagePollingState;
-import com.tompy.messenger.state.AbstractStateMachine;
-import com.tompy.messenger.state.StateThread;
+import com.tompy.state.AbstractStateMachine;
+import com.tompy.state.StateThread;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,8 +1,8 @@
 package com.tompy.messenger.test;
 
 import com.tompy.messenger.service.Listener;
-import com.tompy.messenger.state.AbstractStateMachine;
-import com.tompy.messenger.state.StateThread;
+import com.tompy.state.AbstractStateMachine;
+import com.tompy.state.StateThread;
 
 public class MessageListener extends AbstractStateMachine {
     private final Thread thread;

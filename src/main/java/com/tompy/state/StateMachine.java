@@ -1,4 +1,4 @@
-package com.tompy.messenger.state;
+package com.tompy.state;
 
 /**
  * The API for a state machine

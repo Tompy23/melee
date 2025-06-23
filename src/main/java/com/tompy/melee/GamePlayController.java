@@ -32,16 +32,9 @@ public class GamePlayController {
     private double zoom = 1.0;
 
     public void showGrid() {
-        // scrollPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        //scrollPane.setOpacity(1.0);
-
-        // backanchor.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-
         board = HexBoard.builder().pixelSize(30).height(32).width(32).build();
 
         drawHexBoard();
-
-
     }
 
     public void drawHexBoard() {
