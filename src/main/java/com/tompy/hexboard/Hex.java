@@ -41,6 +41,10 @@ public class Hex {
         return coordinate.getS();
     }
 
+    public CubeCoordinate getCube() {
+        return new CubeCoordinate(getQ(), getR(), getS());
+    }
+
     public HexCoordinate getCoordinate() {
         return coordinate;
     }

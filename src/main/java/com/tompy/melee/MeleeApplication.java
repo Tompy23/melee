@@ -18,7 +18,6 @@ public class MeleeApplication extends Application {
 
         gpsl.begin(stage);
 
-
         stateMachine = new MeleeStateMachine();
         timer = new MeleeTimer(stateMachine);
         stateMachine.changeState(new CommonStateImpl());

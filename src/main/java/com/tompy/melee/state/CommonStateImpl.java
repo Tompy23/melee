@@ -15,6 +15,6 @@ public class CommonStateImpl implements State {
 
     @Override
     public void process(long l) {
-        System.out.println(l);
+
     }
 }

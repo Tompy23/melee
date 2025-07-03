@@ -1,5 +1,7 @@
 package com.tompy.hexboard;
 
+import kotlin.experimental.ExperimentalObjCName;
+
 public class HexCoordinate {
     private final int col;
     private final int row;
@@ -47,6 +49,13 @@ public class HexCoordinate {
     @Override
     public int hashCode() {
         return col * row;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("COL: ").append(col).append(", ROW: ").append(row);
+        return sb.toString();
     }
 
     public static final class Builder {
