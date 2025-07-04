@@ -1,15 +1,21 @@
 package com.tompy.hexboard;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+
 import java.util.*;
 
 public class HexBoard {
+    private static final double SQRT3 = Math.sqrt(3);
+    private final int border;
     private final int pixelSize;
     private final int height;
     private final int width;
-    private List<Hex> hexes;
-    private Map<HexCoordinate, Hex> hexMap;
+    private final List<Hex> hexes;
+    private final Map<HexCoordinate, Hex> hexMap;
 
     public HexBoard(Builder builder) {
+        this.border = builder.border;
         this.pixelSize = builder.pixelSize;
         this.height = builder.height;
         this.width = builder.width;
@@ -17,17 +23,52 @@ public class HexBoard {
         hexes = new ArrayList<>();
         hexMap = new HashMap<>();
 
+        double[] coordinates = new double[12];
+
+        int angle = 30;
+        for (int j = 0; j < 12; j += 2) {
+            double radians = angle * Math.PI / 180;
+            coordinates[j] = pixelSize * Math.cos(radians);
+            coordinates[j + 1] = pixelSize * Math.sin(radians);
+            angle += 60;
+        }
+
+        double hexWidth = SQRT3 * pixelSize;
+
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width * 2; j += 2) {
-                Hex hex = Hex.builder().setCol(j).setRow(i).build();
+
+                double x = border + j / 2.0 * hexWidth;
+                double y = border + (i * 1.5 * pixelSize);
+                if (i % 2.0 == 0) {
+                    x += 1.0 / 2.0 * hexWidth;
+                }
+
+                double[] finalCoordinates = new double[12];
+                for (int k = 0; k < 12; k += 2) {
+                    finalCoordinates[k] = coordinates[k] + x;
+                    finalCoordinates[k + 1] = coordinates[k + 1] + y;
+                }
+
+                Polygon hexShape = new Polygon(finalCoordinates);
+                hexShape.setFill(Color.TRANSPARENT);
+                hexShape.setStroke(Color.BLACK);
+                hexShape.setStrokeWidth(1.0);
+
+                Hex hex = Hex.builder().setCol(j).setRow(i).setPolygon(hexShape).build();
                 hexes.add(hex);
                 hexMap.put(hex.getCoordinate(), hex);
+                hexShape.setUserData(hex);
             }
         }
     }
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public int getBorder() {
+        return border;
     }
 
     public int getPixelSize() {
@@ -59,9 +100,15 @@ public class HexBoard {
     }
 
     public static final class Builder {
+        private int border;
         private int pixelSize;
         private int height;
         private int width;
+
+        public Builder border(int border) {
+            this.border = border;
+            return this;
+        }
 
         public Builder pixelSize(int pixelSize) {
             this.pixelSize = pixelSize;

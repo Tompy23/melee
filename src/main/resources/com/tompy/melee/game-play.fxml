@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@game-play.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.melee.GamePlayController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@game-play.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.melee.GamePlayController">
    <children>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -11,6 +11,8 @@
                <content>
                   <StackPane fx:id="stackBoard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="476.0" prefWidth="718.0">
                      <children>
+                        <Pane fx:id="paneBackImage" prefHeight="200.0" prefWidth="200.0" />
+                        <Pane fx:id="paneHexDecorator" prefHeight="200.0" prefWidth="200.0" />
                         <Pane fx:id="paneHexBoard" prefHeight="275.0" prefWidth="390.0" />
                      </children>
                   </StackPane>
