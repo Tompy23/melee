@@ -1,6 +1,7 @@
 package com.tompy.melee.state;
 
 import com.tompy.state.AbstractStateMachine;
+import com.tompy.state.State;
 import com.tompy.state.StateMachine;
 
 public class MeleeStateMachine extends AbstractStateMachine {

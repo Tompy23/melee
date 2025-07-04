@@ -30,10 +30,11 @@
                <children>
                   <Button fx:id="zoomIn" mnemonicParsing="false" onAction="#handleZoomIn" text="Zoom In" />
                   <Button fx:id="zoomOut" mnemonicParsing="false" onAction="#handleZoomOut" text="Zooom Out" />
+                  <Button fx:id="btnUnselect" mnemonicParsing="false" onAction="#handleUnselect" text="Unselect All" />
                </children></VBox>
          </right>
          <left>
-            <Button fx:id="btnNextScene" mnemonicParsing="false" text="Next Scene" BorderPane.alignment="CENTER" />
+            <Button fx:id="btnNextScene" mnemonicParsing="false" onAction="#handleNextScene" text="Next Scene" BorderPane.alignment="CENTER" />
          </left>
          <bottom>
             <TextArea prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT" />

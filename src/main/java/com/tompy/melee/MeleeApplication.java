@@ -1,5 +1,6 @@
 package com.tompy.melee;
 
+import com.tompy.melee.state.ChangeSceneStateImpl;
 import com.tompy.melee.state.CommonStateImpl;
 import com.tompy.melee.state.MeleeStateMachine;
 import com.tompy.melee.state.MeleeTimer;
@@ -14,13 +15,9 @@ public class MeleeApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        GamePlaySceneLoader gpsl = new GamePlaySceneLoader();
-
-        gpsl.begin(stage);
-
         stateMachine = new MeleeStateMachine();
         timer = new MeleeTimer(stateMachine);
-        stateMachine.changeState(new CommonStateImpl());
+        stateMachine.changeState(new ChangeSceneStateImpl(stateMachine, stage, "first.properties"));
         timer.start();
     }
 
