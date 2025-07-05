@@ -1,4 +1,4 @@
-module com.tompy.melee {
+module com.tompy.game {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -11,8 +11,8 @@ module com.tompy.melee {
     requires org.kordamp.ikonli.javafx;
     requires com.almasb.fxgl.all;
 
-    opens com.tompy.melee to javafx.fxml;
-    exports com.tompy.melee;
-    exports com.tompy.melee.state;
-    opens com.tompy.melee.state to javafx.fxml;
+    opens com.tompy.game to javafx.fxml;
+    exports com.tompy.game;
+    exports com.tompy.game.state;
+    opens com.tompy.game.state to javafx.fxml;
 }

@@ -1,32 +1,23 @@
-package com.tompy.melee;
+package com.tompy.game;
 
+import com.tompy.game.state.ChangeSceneStateImpl;
+import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
-import com.tompy.hexboard.HexCoordinate;
-import com.tompy.melee.state.ChangeSceneStateImpl;
-import com.tompy.melee.state.MeleeStateMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
-public class GamePlayController {
+public class GamePlayControllerImpl implements GamePlayController {
     private static final double SQRT3 = Math.sqrt(3);
-    @FXML
-    private BorderPane borderPane;
     @FXML
     private ScrollPane scrollBackground;
     @FXML
@@ -37,37 +28,26 @@ public class GamePlayController {
     private Pane paneHexDecorator;
     @FXML
     private Pane paneHexBoard;
-    @FXML
-    private Button zoomIn;
-    @FXML
-    private Button zoomOut;
 
     private HexBoard board;
 
     private double zoom = 1.0;
 
-    private Map<HexCoordinate, Polygon> boardPolygons;
-
-    private HexCoordinate currentHex;
-
     private Properties properties;
-
-    private MeleeStateMachine stateMachine;
 
     private Stage stage;
 
+    @Override
     public void setProperties(Properties properties) {
         this.properties = properties;
     }
 
-    public void setStateMachine(MeleeStateMachine stateMachine) {
-        this.stateMachine = stateMachine;
-    }
-
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    @Override
     public void showGrid() {
         int pixelSize = Integer.parseInt(properties.getProperty("board.pixel.size"));
         int height = Integer.parseInt(properties.getProperty("board.height"));
@@ -78,9 +58,7 @@ public class GamePlayController {
         drawHexBoard();
     }
 
-    public void drawHexBoard() {
-        boardPolygons = new HashMap<>();
-
+    private void drawHexBoard() {
         double height = 1.5 * board.getPixelSize();
         double width = SQRT3 * board.getPixelSize();
 
@@ -114,11 +92,11 @@ public class GamePlayController {
                 x += 1.0 / 2.0 * hexWidth;
             }
 
+            GameStateMachine stateMachine = GameStateMachine.get();
             paneHexBoard.getChildren().add(hex.getPolygon());
-            boardPolygons.put(hex.getCoordinate(), hex.getPolygon());
-            hex.getPolygon().setOnMouseEntered(this::turnBlue);
-            hex.getPolygon().setOnMouseExited(this::turnWhite);
-            hex.getPolygon().setOnMouseClicked(this::handleClick);
+            hex.getPolygon().setOnMouseEntered(stateMachine::onMouseEnterHex);
+            hex.getPolygon().setOnMouseExited(stateMachine::onMouseLeaveHex);
+            hex.getPolygon().setOnMouseClicked(stateMachine::onClickHex);
 
             Circle c = new Circle();
             c.setCenterX(x);
@@ -130,42 +108,9 @@ public class GamePlayController {
         paneBackImage.setBackground(Background.fill(Color.ORANGE));
     }
 
-    public void handleClick(MouseEvent event) {
-        System.out.println("Mouse Down");
-        Polygon target = (Polygon) event.getTarget();
-        Hex hex = (Hex) target.getUserData();
-        if (hex.isSelected()) {
-            hex.unselect();
-        } else {
-            hex.select();
-            target.setOpacity(.5);
-            target.setFill(Color.GREEN);
-        }
-    }
-
-    public void turnBlue(MouseEvent event) {
-        Polygon p = (Polygon) event.getTarget();
-        Hex h = (Hex) p.getUserData();
-        //if (!h.isSelected()) {
-        p.setOpacity(.5);
-        p.setFill(Color.BLUE);
-        //}
-    }
-
-    public void turnWhite(MouseEvent event) {
-        Polygon p = (Polygon) event.getTarget();
-        Hex h = (Hex) p.getUserData();
-        if (!h.isSelected()) {
-            p.setFill(Color.TRANSPARENT);
-        } else {
-            p.setOpacity(.5);
-            p.setFill(Color.GREEN);
-        }
-    }
-
     public void handleNextScene(ActionEvent event) {
         String nextScene = properties.getProperty("scene.next");
-        stateMachine.changeState(new ChangeSceneStateImpl(stateMachine, stage, nextScene));
+        GameStateMachine.get().changeState(new ChangeSceneStateImpl(stage, nextScene));
     }
 
     public void handleZoomIn(ActionEvent event) {

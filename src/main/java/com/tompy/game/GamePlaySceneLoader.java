@@ -1,7 +1,5 @@
-package com.tompy.melee;
+package com.tompy.game;
 
-import com.tompy.melee.state.MeleeStateMachine;
-import com.tompy.state.StateMachine;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,11 +10,11 @@ import java.util.Properties;
 
 public class GamePlaySceneLoader {
 
-    public void loadScene(Stage stage, MeleeStateMachine stateMachine, String propertiesFilename) throws IOException {
+    public void loadScene(Stage stage, String propertiesFilename) throws IOException {
         Properties sceneProperties = new Properties();
         sceneProperties.load(getFileFromResourceAsStream(propertiesFilename));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MeleeApplication.class.getResource(sceneProperties.getProperty("fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(GameApplication.class.getResource(sceneProperties.getProperty("fxml")));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle(sceneProperties.getProperty("title"));
@@ -25,13 +23,11 @@ public class GamePlaySceneLoader {
 
         GamePlayController gpc = fxmlLoader.getController();
         gpc.setStage(stage);
-        gpc.setStateMachine(stateMachine);
         gpc.setProperties(sceneProperties);
         gpc.showGrid();
     }
 
     private InputStream getFileFromResourceAsStream(String fileName) {
-
         // The class loader that loaded the class
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(fileName);
@@ -42,6 +38,5 @@ public class GamePlaySceneLoader {
         } else {
             return inputStream;
         }
-
     }
 }
