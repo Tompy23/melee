@@ -17,7 +17,7 @@ public class StateFactory {
         return new StateBuilder(this);
     }
 
-    private GameState create(StateBuilder builder) {
+    private GameHandler create(StateBuilder builder) {
         switch (builder.type) {
             case COMMON:
                 return new CommonGameStateImpl();
@@ -60,7 +60,7 @@ public class StateFactory {
             return this;
         }
 
-        public GameState build() {
+        public GameHandler build() {
             return factory.create(this);
         }
     }

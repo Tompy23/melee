@@ -7,7 +7,7 @@ import javafx.scene.shape.Polygon;
 
 public class GameStateMachine {
     private static GameStateMachine stateMahcine;
-    private GameState currentState;
+    private GameHandler currentState;
 
     public static GameStateMachine get() {
         if (stateMahcine == null) {
@@ -16,7 +16,7 @@ public class GameStateMachine {
         return stateMahcine;
     }
 
-    public void changeState(GameState newState) {
+    public void changeState(GameHandler newState) {
         if (currentState != null) {
             currentState.endState();
         }
@@ -28,6 +28,10 @@ public class GameStateMachine {
         if (currentState != null) {
             currentState.process(l);
         }
+    }
+
+    public boolean stopThread() {
+        return false;
     }
 
     public void onClickHex(MouseEvent event) {

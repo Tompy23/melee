@@ -3,7 +3,7 @@ package com.tompy.game.state;
 import com.tompy.state.State;
 import javafx.scene.input.MouseEvent;
 
-public interface GameState extends State {
+public interface GameHandler extends State {
 
     void onClickHex(MouseEvent event);
 
