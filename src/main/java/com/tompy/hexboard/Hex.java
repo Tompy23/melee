@@ -1,16 +1,22 @@
 package com.tompy.hexboard;
 
+import com.tompy.game.marker.Marker;
 import javafx.scene.shape.Polygon;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hex {
     private final HexCoordinate coordinate;
     private final Polygon polygon;
     private boolean selected;
+    private List<Marker> markers;
 
     private Hex(Builder builder) {
         coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
         this.polygon = builder.polygon;
         selected = false;
+        markers = new ArrayList<>();
     }
 
     public static Builder builder() {
@@ -100,5 +106,9 @@ public class Hex {
         public Hex build() {
             return new Hex(this);
         }
+    }
+
+    public void addMarker(Marker marker) {
+        markers.add(marker);
     }
 }

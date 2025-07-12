@@ -1,5 +1,8 @@
 package com.tompy.game;
 
+import com.tompy.game.marker.Counter;
+import com.tompy.game.marker.CounterFactory;
+import com.tompy.game.marker.CounterType;
 import com.tompy.game.state.ChangeSceneStateImpl;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;
@@ -14,8 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-import java.util.Properties;
-
 public class GamePlayControllerImpl implements GamePlayController {
     private static final double SQRT3 = Math.sqrt(3);
     @FXML
@@ -29,18 +30,9 @@ public class GamePlayControllerImpl implements GamePlayController {
     @FXML
     private Pane paneHexBoard;
 
-    private HexBoard board;
-
     private double zoom = 1.0;
 
-    private Properties properties;
-
     private Stage stage;
-
-    @Override
-    public void setProperties(Properties properties) {
-        this.properties = properties;
-    }
 
     @Override
     public void setStage(Stage stage) {
@@ -48,17 +40,8 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     @Override
-    public void showGrid() {
-        int pixelSize = Integer.parseInt(properties.getProperty("board.pixel.size"));
-        int height = Integer.parseInt(properties.getProperty("board.height"));
-        int width = Integer.parseInt(properties.getProperty("board.width"));
-        int border = Integer.parseInt(properties.getProperty("board.border"));
-        board = HexBoard.builder().pixelSize(pixelSize).height(height).width(width).border(border).build();
-
-        drawHexBoard();
-    }
-
-    private void drawHexBoard() {
+    public void drawHexBoard() {
+        HexBoard board = GameData.get().getHexBoard();
         double height = 1.5 * board.getPixelSize();
         double width = SQRT3 * board.getPixelSize();
 
@@ -109,7 +92,7 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleNextScene(ActionEvent event) {
-        String nextScene = properties.getProperty("scene.next");
+        String nextScene = (String)GameData.get().getProperty("scene.next");
         GameStateMachine.get().changeState(new ChangeSceneStateImpl(stage, nextScene));
     }
 
@@ -138,9 +121,16 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleUnselect(ActionEvent event) {
+        HexBoard board = GameData.get().getHexBoard();
         board.unselectAllHexes();
         for (Hex hex : board.getHexes()) {
             hex.getPolygon().setFill(Color.TRANSPARENT);
         }
+    }
+
+    public void handleAddCounter(ActionEvent event) {
+        HexBoard board = GameData.get().getHexBoard();
+        Counter counter = CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png").hex(board.getHex(0, 0)).build();
+        // How to show counter?
     }
 }

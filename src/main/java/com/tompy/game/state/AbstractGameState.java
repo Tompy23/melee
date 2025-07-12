@@ -1,5 +1,6 @@
 package com.tompy.game.state;
 
+import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

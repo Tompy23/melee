@@ -23,8 +23,9 @@ public class GamePlaySceneLoader {
 
         GamePlayController gpc = fxmlLoader.getController();
         gpc.setStage(stage);
-        gpc.setProperties(sceneProperties);
-        gpc.showGrid();
+        GameData.builder().controller(gpc).properties(sceneProperties).init();
+
+        gpc.drawHexBoard();
     }
 
     private InputStream getFileFromResourceAsStream(String fileName) {
