@@ -2,41 +2,37 @@ package com.tompy.game.event;
 
 import com.tompy.hexboard.Hex;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 public class GameFunction {
 
-    public static void selectHexGreenOrBlue(Polygon target) {
-        Hex hex = (Hex) target.getUserData();
-
+    public static void selectHexGreenOrBlue(Hex hex) {
         if (hex.isSelected()) {
             hex.unselect();
-            fillHexHalfBlue(target);
+            fillHexHalfBlue(hex);
         } else {
             hex.select();
-            fillHexGreen(target);
+            fillHexGreen(hex);
         }
     }
 
-    public static void fillHexHalfBlue(Polygon p) {
-        p.setOpacity(.5);
-        p.setFill(Color.BLUE);
+    public static void fillHexHalfBlue(Hex hex) {
+        hex.getPolygon().setOpacity(.5);
+        hex.getPolygon().setFill(Color.BLUE);
     }
 
-    public static void fillHexTransparent(Polygon p) {
-        p.setFill(Color.TRANSPARENT);
+    public static void fillHexTransparent(Hex hex) {
+        hex.getPolygon().setFill(Color.TRANSPARENT);
     }
 
-    public static void fillHexGreen(Polygon p) {
-        p.setFill(Color.GREEN);
+    public static void fillHexGreen(Hex hex) {
+        hex.getPolygon().setFill(Color.GREEN);
     }
 
-    public static void fillHexGreenOrTransparent(Polygon p) {
-        Hex h = (Hex) p.getUserData();
-        if (h.isSelected()) {
-            GameFunction.fillHexGreen(p);
+    public static void fillHexGreenOrTransparent(Hex hex) {
+        if (hex.isSelected()) {
+            GameFunction.fillHexGreen(hex);
         } else {
-            GameFunction.fillHexTransparent(p);
+            GameFunction.fillHexTransparent(hex);
         }
     }
 }
