@@ -1,4 +1,4 @@
-package com.tompy.game.marker;
+package com.tompy.game.counter;
 
 import com.tompy.hexboard.Hex;
 import javafx.scene.image.Image;
@@ -20,7 +20,7 @@ public class CounterFactory {
     private Counter create(CounterBuilder builder) {
         switch (builder.type) {
             case GLADIATOR:
-                Counter newCounter = Counter.builder().image(new Image(builder.imageName)).build();
+                Counter newCounter = CounterImpl.builder().image(new Image(builder.imageName)).build();
                 if (builder.hex != null) {
                     newCounter.addToHex(builder.hex);
                 }

@@ -1,14 +1,13 @@
-package com.tompy.game.marker;
+package com.tompy.game.counter;
 
 import com.tompy.hexboard.Hex;
-import com.tompy.hexboard.HexCoordinate;
 import javafx.scene.image.Image;
 
-public class Counter implements Marker {
+public class CounterImpl implements Counter {
     private final Image image;
     private Hex hex;
 
-    private Counter(Builder builder) {
+    private CounterImpl(Builder builder) {
         this.image = builder.image;
     }
 
@@ -20,6 +19,7 @@ public class Counter implements Marker {
         return image;
     }
 
+    @Override
     public void addToHex(Hex hex) {
         this.hex = hex;
     }
@@ -36,8 +36,8 @@ public class Counter implements Marker {
             return this;
         }
 
-        public Counter build() {
-            return new Counter(this);
+        public CounterImpl build() {
+            return new CounterImpl(this);
         }
     }
 

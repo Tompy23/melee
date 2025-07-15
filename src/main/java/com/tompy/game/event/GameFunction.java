@@ -1,7 +1,13 @@
 package com.tompy.game.event;
 
+import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+
+import java.util.Optional;
 
 public class GameFunction {
 
@@ -9,9 +15,11 @@ public class GameFunction {
         if (hex.isSelected()) {
             hex.unselect();
             fillHexHalfBlue(hex);
+            removeText(hex.getCoordinate().toString());
         } else {
             hex.select();
             fillHexGreen(hex);
+            showHexCoordinates(hex);
         }
     }
 
@@ -33,6 +41,25 @@ public class GameFunction {
             GameFunction.fillHexGreen(hex);
         } else {
             GameFunction.fillHexTransparent(hex);
+            //removeText(hex.getCoordinate().toString());
         }
+    }
+
+    public static void removeText(String hexId) {
+        Optional<Node> node = GameData.get().getController().getTextPane().getChildren().stream().filter(n -> n.getId().equals(hexId)).findFirst();
+        if (node.isPresent()) {
+            GameData.get().getController().getTextPane().getChildren().remove(node.get());
+        }
+    }
+
+    public static void showHexCoordinates(Hex hex) {
+        Pane hexTextPane = GameData.get().getController().getTextPane();
+        Text text = new Text();
+        text.setStyle("-fx-font: 10 arial;");
+        text.setText(hex.getCoordinate().toString());
+        text.setX(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
+        text.setY(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds()).getCenterY() + 12);
+        text.setId(hex.getCoordinate().toString());
+        hexTextPane.getChildren().add(text);
     }
 }

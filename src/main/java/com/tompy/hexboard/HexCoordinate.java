@@ -54,7 +54,7 @@ public class HexCoordinate {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("COL: ").append(col).append(", ROW: ").append(row);
+        sb.append(col).append(" : ").append(row);
         return sb.toString();
     }
 

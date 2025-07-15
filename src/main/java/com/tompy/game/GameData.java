@@ -36,6 +36,10 @@ public class GameData {
         }
     }
 
+    public GamePlayController getController() {
+        return controller;
+    }
+
     public HexBoard getHexBoard() {
         return hexBoard;
     }

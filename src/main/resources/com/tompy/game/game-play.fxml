@@ -14,6 +14,7 @@
                         <Pane fx:id="paneBackImage" prefHeight="200.0" prefWidth="200.0" />
                         <Pane fx:id="paneHexDecorator" prefHeight="200.0" prefWidth="200.0" />
                         <Pane fx:id="paneHexBoard" prefHeight="275.0" prefWidth="390.0" />
+                        <Pane fx:id="paneText" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </StackPane>
                </content>

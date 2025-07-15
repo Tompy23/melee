@@ -1,8 +1,9 @@
 package com.tompy.game;
 
-import com.tompy.game.marker.Counter;
-import com.tompy.game.marker.CounterFactory;
-import com.tompy.game.marker.CounterType;
+import com.tompy.game.counter.Counter;
+import com.tompy.game.counter.CounterImpl;
+import com.tompy.game.counter.CounterFactory;
+import com.tompy.game.counter.CounterType;
 import com.tompy.game.state.ChangeSceneStateImpl;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;
@@ -29,6 +30,8 @@ public class GamePlayControllerImpl implements GamePlayController {
     private Pane paneHexDecorator;
     @FXML
     private Pane paneHexBoard;
+    @FXML
+    private Pane paneText;
 
     private double zoom = 1.0;
 
@@ -63,6 +66,9 @@ public class GamePlayControllerImpl implements GamePlayController {
         paneBackImage.setPrefWidth(panelWidth);
         paneBackImage.setPrefHeight(panelHeight);
 
+        paneText.setPrefWidth(panelWidth);
+        paneText.setPrefHeight(panelHeight);
+
         for (Hex hex : board.getHexes()) {
             double hexWidth = SQRT3 * board.getPixelSize();
 
@@ -89,6 +95,16 @@ public class GamePlayControllerImpl implements GamePlayController {
         }
 
         paneBackImage.setBackground(Background.fill(Color.ORANGE));
+    }
+
+    @Override
+    public Pane getHexBoardPane() {
+        return paneHexBoard;
+    }
+
+    @Override
+    public Pane getTextPane() {
+        return paneText;
     }
 
     public void handleNextScene(ActionEvent event) {
