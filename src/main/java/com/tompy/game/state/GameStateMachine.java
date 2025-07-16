@@ -3,6 +3,7 @@ package com.tompy.game.state;
 import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
 import com.tompy.state.AbstractStateMachine;
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 
@@ -50,5 +51,20 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
         currentState.onMouseLeaveHex(event);
 
         GameData.get().setHexWithMouse(null);
+    }
+
+    @Override
+    public void onMouseEnterCounter(MouseEvent event) {
+        currentState.onMouseEnterCounter(event);
+    }
+
+    @Override
+    public void onMouseLeaveCounter(MouseEvent event) {
+        currentState.onMouseLeaveCounter(event);
+    }
+
+    @Override
+    public void onMouseClickCounter(MouseEvent event) {
+        currentState.onMouseClickCounter(event);
     }
 }

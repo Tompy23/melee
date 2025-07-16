@@ -1,22 +1,32 @@
 package com.tompy.hexboard;
 
 import com.tompy.game.counter.Counter;
+import com.tompy.game.event.GameFunction;
+import com.tompy.game.state.GameStateMachine;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hex {
     private final HexCoordinate coordinate;
     private final Polygon polygon;
     private boolean selected;
-    private List<Counter> counters;
+    private List<Rectangle> counters;
+    private boolean countersStacked;
 
     private Hex(Builder builder) {
         coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
         this.polygon = builder.polygon;
         selected = false;
         counters = new ArrayList<>();
+        countersStacked = false;
     }
 
     public static Builder builder() {
@@ -67,6 +77,56 @@ public class Hex {
         return selected;
     }
 
+    public List<Rectangle> getCounters() {
+        return Collections.unmodifiableList(counters);
+    }
+
+    public boolean isCountersStacked() {
+        return countersStacked;
+    }
+
+    public void addCounter(Counter newCounter) {
+        Rectangle newCounterView = new Rectangle();
+        newCounterView.setFill(new ImagePattern(newCounter.getImage()));
+        newCounterView.setUserData(newCounter);
+
+        GameStateMachine gsm = GameStateMachine.get();
+        newCounterView.setOnMouseEntered(gsm::onMouseEnterCounter);
+        newCounterView.setOnMouseExited(gsm::onMouseLeaveCounter);
+        newCounterView.setOnMouseClicked(gsm::onMouseClickCounter);
+
+        counters.add(newCounterView);
+
+        newCounter.addToHex(this);
+
+        GameFunction.displayCountersInHex(this);
+    }
+
+    public void removeCounter(Counter oldCounter) {
+        for (Rectangle counter : counters) {
+            if (((Counter) counter.getUserData()).getId() == oldCounter.getId()) {
+
+
+            }
+        }
+    }
+
+//    public void displayCounters() {
+//        if (!counters.isEmpty()) {
+//            if (counters.size() == 1) {
+//                ImageView counterImageView = counters.getFirst();
+//                Counter counter = (Counter) counterImageView.getUserData();
+//
+//            } else {
+//                if (countersStacked) {
+//
+//                } else {
+//
+//                }
+//            }
+//        }
+//    }
+
     @Override
     public boolean equals(Object other) {
         if (other == null || !(other instanceof Hex o)) {
@@ -106,9 +166,5 @@ public class Hex {
         public Hex build() {
             return new Hex(this);
         }
-    }
-
-    public void addMarker(Counter counter) {
-        counters.add(counter);
     }
 }

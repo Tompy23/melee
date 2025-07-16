@@ -1,6 +1,5 @@
 package com.tompy.game;
 
-import com.tompy.game.counter.Counter;
 import com.tompy.game.counter.CounterFactory;
 import com.tompy.game.counter.CounterType;
 import com.tompy.game.event.GameFunction;
@@ -108,7 +107,7 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleNextScene(ActionEvent event) {
-        String nextScene = (String)GameData.get().getProperty("scene.next");
+        String nextScene = (String) GameData.get().getProperty("scene.next");
         GameStateMachine.get().changeState(new ChangeSceneStateImpl(stage, nextScene));
     }
 
@@ -146,8 +145,7 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleAddCounter(ActionEvent event) {
-        HexBoard board = GameData.get().getHexBoard();
-        Counter counter = CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png").hex(board.getHex(0, 0)).build();
-        // How to show counter?
+        CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
+                .hex(GameData.get().getHexBoard().getHex(0, 0)).build();
     }
 }

@@ -10,6 +10,7 @@ module com.tompy.game {
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
     requires com.almasb.fxgl.all;
+    requires jdk.xml.dom;
 
     opens com.tompy.game to javafx.fxml;
     exports com.tompy.game;

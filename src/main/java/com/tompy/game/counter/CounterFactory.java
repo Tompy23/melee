@@ -22,7 +22,7 @@ public class CounterFactory {
             case GLADIATOR:
                 Counter newCounter = CounterImpl.builder().image(new Image(builder.imageName)).build();
                 if (builder.hex != null) {
-                    newCounter.addToHex(builder.hex);
+                    builder.hex.addCounter(newCounter);
                 }
                 return newCounter;
             default:

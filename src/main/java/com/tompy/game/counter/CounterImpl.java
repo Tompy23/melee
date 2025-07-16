@@ -4,10 +4,14 @@ import com.tompy.hexboard.Hex;
 import javafx.scene.image.Image;
 
 public class CounterImpl implements Counter {
+    private static long idIndex = 0;
+    private final long id;
     private final Image image;
     private Hex hex;
+    private boolean selected;
 
     private CounterImpl(Builder builder) {
+        this.id = ++idIndex;
         this.image = builder.image;
     }
 
@@ -15,6 +19,12 @@ public class CounterImpl implements Counter {
         return new Builder();
     }
 
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    @Override
     public Image getImage() {
         return image;
     }
@@ -22,6 +32,26 @@ public class CounterImpl implements Counter {
     @Override
     public void addToHex(Hex hex) {
         this.hex = hex;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void select() {
+        selected = true;
+    }
+
+    @Override
+    public void select(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public void unselect() {
+        selected = false;
     }
 
     public Hex getHex() {
