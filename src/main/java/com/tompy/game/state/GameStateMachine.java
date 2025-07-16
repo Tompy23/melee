@@ -3,7 +3,6 @@ package com.tompy.game.state;
 import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
 import com.tompy.state.AbstractStateMachine;
-import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 
@@ -65,6 +64,15 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
 
     @Override
     public void onMouseClickCounter(MouseEvent event) {
-        currentState.onMouseClickCounter(event);
+        if (event.getClickCount() == 1) {
+            currentState.onMouseClickCounter(event);
+        }
+    }
+
+    @Override
+    public void onMouseDoubleClickCounter(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            currentState.onMouseDoubleClickCounter(event);
+        }
     }
 }

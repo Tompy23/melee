@@ -54,6 +54,7 @@ public class CounterImpl implements Counter {
         selected = false;
     }
 
+    @Override
     public Hex getHex() {
         return hex;
     }

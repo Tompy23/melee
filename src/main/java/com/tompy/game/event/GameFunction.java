@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +70,15 @@ public class GameFunction {
     }
 
     public static void displayCountersInHex(Hex hex) {
+        List<Node> toRemove = new ArrayList<>();
+        for (Node child : GameData.get().getController().getHexBoardPane().getChildren()) {
+            if (child.getId() != null && child.getId().startsWith("COUNTER")) {
+                toRemove.add(child);
+            }
+        }
+        GameData.get().getController().getHexBoardPane().getChildren().removeAll(toRemove);
+
+
         List<Rectangle> counters = hex.getCounters();
         if (!counters.isEmpty()) {
             if (counters.size() == 1) {
@@ -82,10 +92,21 @@ public class GameFunction {
                         .getCenterY() - (counter.getImage().getHeight() / 2));
                 GameData.get().getController().getHexBoardPane().getChildren().add(counterView);
             } else {
-                if (hex.isCountersStacked()) {
-
-                } else {
-
+                long offset = 0;
+                for (Rectangle counterView : counters) {
+                    Counter counter = (Counter) counterView.getUserData();
+                    counterView.setWidth(counter.getImage().getWidth());
+                    counterView.setHeight(counter.getImage().getHeight());
+                    counterView.setX(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds())
+                            .getCenterX() - (counter.getImage().getWidth() / 2) + offset);
+                    counterView.setY(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds())
+                            .getCenterY() - (counter.getImage().getHeight() / 2) - offset);
+                    if (hex.isCountersStacked()) {
+                        offset += 8;
+                    } else {
+                        offset += 12;
+                    }
+                    GameData.get().getController().getHexBoardPane().getChildren().add(counterView);
                 }
             }
         }

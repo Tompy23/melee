@@ -63,6 +63,7 @@ public abstract class AbstractGameState implements GameState {
 
     @Override
     public void onMouseClickCounter(MouseEvent event) {
+        System.out.println("one click");
         Rectangle rectangle = (Rectangle) event.getTarget();
         Counter counter = (Counter) rectangle.getUserData();
 
@@ -73,6 +74,21 @@ public abstract class AbstractGameState implements GameState {
             rectangle.setStrokeWidth(6);
             rectangle.setStroke(Color.GREEN);
             counter.select();
+        }
+    }
+
+    @Override
+    public void onMouseDoubleClickCounter(MouseEvent event) {
+        System.out.println("two clicks");
+        Rectangle rectangle = (Rectangle) event.getTarget();
+
+        Counter counter = (Counter) rectangle.getUserData();
+
+        Hex hex = (Hex) counter.getHex();
+        if (hex.isCountersStacked()) {
+            hex.unstackCounters();
+        } else {
+            hex.stackCounters();
         }
     }
 }

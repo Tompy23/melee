@@ -81,6 +81,14 @@ public class Hex {
         return Collections.unmodifiableList(counters);
     }
 
+    public void stackCounters() {
+        countersStacked = true;
+    }
+
+    public void unstackCounters() {
+        countersStacked = false;
+    }
+
     public boolean isCountersStacked() {
         return countersStacked;
     }
@@ -89,6 +97,7 @@ public class Hex {
         Rectangle newCounterView = new Rectangle();
         newCounterView.setFill(new ImagePattern(newCounter.getImage()));
         newCounterView.setUserData(newCounter);
+        newCounterView.setId("COUNTER" + newCounter.getId());
 
         GameStateMachine gsm = GameStateMachine.get();
         newCounterView.setOnMouseEntered(gsm::onMouseEnterCounter);

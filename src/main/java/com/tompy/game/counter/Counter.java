@@ -8,6 +8,8 @@ public interface Counter {
 
     void addToHex(Hex hex);
 
+    Hex getHex();
+
     Image getImage();
 
     boolean isSelected();
