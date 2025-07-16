@@ -2,12 +2,13 @@ package com.tompy.game.state;
 
 import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
+import com.tompy.state.AbstractStateMachine;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 
-public class GameStateMachine {
+public class GameStateMachine extends AbstractStateMachine<GameState> implements GameHandler {
     private static GameStateMachine stateMahcine;
-    private GameHandler currentState;
+    private GameState currentState;
 
     public static GameStateMachine get() {
         if (stateMahcine == null) {
@@ -16,7 +17,7 @@ public class GameStateMachine {
         return stateMahcine;
     }
 
-    public void changeState(GameHandler newState) {
+    public void changeState(GameState newState) {
         if (currentState != null) {
             currentState.endState();
         }

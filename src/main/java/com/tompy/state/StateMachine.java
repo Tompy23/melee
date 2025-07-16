@@ -3,12 +3,12 @@ package com.tompy.state;
 /**
  * The API for a state machine
  */
-public interface StateMachine {
+public interface StateMachine<T extends State> {
     /**
      * Change the state of the machine
      * @param newState - The next {@link State}
      */
-    void changeState(State newState);
+    void changeState(T newState);
 
     /**
      * Called from the thread

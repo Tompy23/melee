@@ -3,11 +3,11 @@ package com.tompy.state;
 /**
  * An abstract to be extended by all state machines that handles all the necessary work
  */
-public abstract class AbstractStateMachine implements StateMachine {
-    protected State currentState;
+public abstract class AbstractStateMachine<T extends State> implements StateMachine<T> {
+    protected T currentState;
 
     @Override
-    public void changeState(State newState) {
+    public void changeState(T newState) {
         if (currentState != null) {
             currentState.endState();
         }

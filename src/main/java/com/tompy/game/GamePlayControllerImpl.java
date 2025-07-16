@@ -1,9 +1,9 @@
 package com.tompy.game;
 
 import com.tompy.game.counter.Counter;
-import com.tompy.game.counter.CounterImpl;
 import com.tompy.game.counter.CounterFactory;
 import com.tompy.game.counter.CounterType;
+import com.tompy.game.event.GameFunction;
 import com.tompy.game.state.ChangeSceneStateImpl;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;
@@ -140,7 +140,8 @@ public class GamePlayControllerImpl implements GamePlayController {
         HexBoard board = GameData.get().getHexBoard();
         board.unselectAllHexes();
         for (Hex hex : board.getHexes()) {
-            hex.getPolygon().setFill(Color.TRANSPARENT);
+            GameFunction.fillHexGreenOrTransparent(hex);
+            GameFunction.removeText(hex.getCoordinate().toString());
         }
     }
 

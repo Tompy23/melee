@@ -5,7 +5,7 @@ import com.tompy.hexboard.Hex;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 
-public abstract class AbstractGameState implements GameHandler {
+public abstract class AbstractGameState implements GameState {
     @Override
     public void beginState() {
 
