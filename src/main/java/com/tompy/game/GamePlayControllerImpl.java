@@ -139,7 +139,7 @@ public class GamePlayControllerImpl implements GamePlayController {
         HexBoard board = GameData.get().getHexBoard();
         board.unselectAllHexes();
         for (Hex hex : board.getHexes()) {
-            GameFunction.fillHexGreenOrTransparent(hex);
+            GameFunction.exitHexSetProperties(hex);
             GameFunction.removeText(hex.getCoordinate().toString());
         }
     }

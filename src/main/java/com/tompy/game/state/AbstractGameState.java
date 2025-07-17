@@ -26,13 +26,13 @@ public abstract class AbstractGameState implements GameState {
     @Override
     public void onClickHex(MouseEvent event) {
         // If selected, unselect and turn half-blue, else select and turn green
-        GameFunction.selectHexGreenOrBlue((Hex) event.getTarget());
+        GameFunction.selectHexSetProperties((Hex) event.getTarget());
     }
 
     @Override
     public void onMouseEnterHex(MouseEvent event) {
         Hex hex = (Hex) event.getTarget();
-        GameFunction.fillHexHalfBlue(hex);
+        GameFunction.enterHexSetProperties(hex);
 
         GameData.get().setHexWithMouse(hex);
     }
@@ -40,7 +40,7 @@ public abstract class AbstractGameState implements GameState {
     @Override
     public void onMouseLeaveHex(MouseEvent event) {
         Hex hex = (Hex) event.getTarget();
-        GameFunction.fillHexGreenOrTransparent(hex);
+        GameFunction.exitHexSetProperties(hex);
 
         GameData.get().setHexWithMouse(null);
     }
@@ -49,23 +49,18 @@ public abstract class AbstractGameState implements GameState {
     public void onMouseEnterCounter(MouseEvent event) {
         Counter counter = (Counter) event.getTarget();
 
-        counter.setStroke(Color.BLACK);
+        GameFunction.enterCounterSetProperties(counter);
+        GameFunction.enterHexSetProperties(counter.getHex());
 
-        Hex hex = counter.getHex();
-        GameFunction.fillHexHalfBlue(hex);
-        GameData.get().setHexWithMouse(hex);
+        GameData.get().setHexWithMouse(counter.getHex());
     }
 
     @Override
     public void onMouseLeaveCounter(MouseEvent event) {
         Counter counter = (Counter) event.getTarget();
 
-        if (counter.isSelected()) {
-            counter.setStroke(Color.GREEN);
-        } else {
-            counter.setStroke(Color.TRANSPARENT);
-        }
-        GameFunction.fillHexGreenOrTransparent(counter.getHex());
+        GameFunction.exitCounterSetProperties(counter);
+        GameFunction.exitHexSetProperties(counter.getHex());
 
         GameData.get().setHexWithMouse(null);
     }
@@ -73,29 +68,42 @@ public abstract class AbstractGameState implements GameState {
     @Override
     public void onMouseClickCounter(MouseEvent event) {
         Counter counter = (Counter) event.getTarget();
+        Hex hex = counter.getHex();
         if (event.getClickCount() == 1) {
-            System.out.println("one click");
-            GameFunction.unselectAllCountersInHex(GameData.get().getHexWithMouse());
+            if (!event.isControlDown()) {
+                GameFunction.unselectAllCountersOutsideHex(hex);
+            }
 
-            if (counter.isSelected()) {
-                counter.setStroke(Color.TRANSPARENT);
-                counter.unselect();
+            if (hex.isCountersStacked()) {
+                if (counter.isSelected()) {
+                    GameFunction.unselectAllCountersInHex(hex);
+                } else {
+                    GameFunction.selectAllCountersInHex(hex);
+                }
             } else {
-                counter.setStroke(Color.GREEN);
-                counter.select();
+                if (!event.isControlDown()) {
+                    GameFunction.unselectAllCountersInHex(hex);
+                }
+                if (counter.isSelected()) {
+                    GameFunction.unSelectCounter(counter);
+                } else {
+                    GameFunction.selectCounter(counter);
+                }
             }
         } else {
             if (event.getClickCount() == 2) {
-                System.out.println("two clicks");
-
-                Hex hex = counter.getHex();
                 if (hex.isCountersStacked()) {
                     hex.unstackCounters();
                 } else {
                     hex.stackCounters();
+                    if (counter.isSelected()) {
+                        GameFunction.selectAllCountersInHex(hex);
+                    } else {
+                        GameFunction.unselectAllCountersInHex(hex);
+                    }
                 }
             }
         }
-        GameFunction.displayCountersInHex(counter.getHex());
+        GameFunction.displayCountersInHex(hex);
     }
 }
