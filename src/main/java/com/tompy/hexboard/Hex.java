@@ -5,6 +5,7 @@ import com.tompy.game.event.GameFunction;
 import com.tompy.game.state.GameStateMachine;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -98,6 +99,8 @@ public class Hex {
         newCounterView.setFill(new ImagePattern(newCounter.getImage()));
         newCounterView.setUserData(newCounter);
         newCounterView.setId("COUNTER" + newCounter.getId());
+        newCounterView.setStrokeWidth(6.0);
+        newCounterView.setStroke(Color.TRANSPARENT);
 
         GameStateMachine gsm = GameStateMachine.get();
         newCounterView.setOnMouseEntered(gsm::onMouseEnterCounter);

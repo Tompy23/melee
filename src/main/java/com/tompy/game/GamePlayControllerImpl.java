@@ -148,4 +148,9 @@ public class GamePlayControllerImpl implements GamePlayController {
         CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
                 .hex(GameData.get().getHexBoard().getHex(0, 0)).build();
     }
+
+    public void handleAddCounter2(ActionEvent event) {
+        CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
+                .hex(GameData.get().getHexBoard().getHex(4, 2)).build();
+    }
 }

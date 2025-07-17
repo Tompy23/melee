@@ -4,16 +4,24 @@ import com.tompy.game.GameData;
 import com.tompy.game.counter.Counter;
 import com.tompy.hexboard.Hex;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class GameFunction {
+
+    public static Hex getHex(Rectangle rectangle) {
+        Counter counter = (Counter) rectangle.getUserData();
+        return counter.getHex();
+    }
 
     public static void selectHexGreenOrBlue(Hex hex) {
         if (hex.isSelected()) {
@@ -45,7 +53,6 @@ public class GameFunction {
             GameFunction.fillHexGreen(hex);
         } else {
             GameFunction.fillHexTransparent(hex);
-            //removeText(hex.getCoordinate().toString());
         }
     }
 
@@ -73,7 +80,11 @@ public class GameFunction {
         List<Node> toRemove = new ArrayList<>();
         for (Node child : GameData.get().getController().getHexBoardPane().getChildren()) {
             if (child.getId() != null && child.getId().startsWith("COUNTER")) {
-                toRemove.add(child);
+                Rectangle rectangle = (Rectangle) child;
+                Counter counter = (Counter) rectangle.getUserData();
+                if (counter.getHex().equals(hex)) {
+                    toRemove.add(child);
+                }
             }
         }
         GameData.get().getController().getHexBoardPane().getChildren().removeAll(toRemove);
@@ -112,7 +123,36 @@ public class GameFunction {
         }
     }
 
-    public static void selectCounter(Counter counter) {
+    public static void unselectAllCountersOutsideHex(Hex otherHex) {
+        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+            if (!hex.equals(otherHex)) {
+                for (Rectangle rectangle : hex.getCounters()) {
+                    Counter counter = (Counter) rectangle.getUserData();
+                    counter.unselect();
+                }
+            }
+        }
+    }
+
+    public static void selectAllCountersInHex(Hex hex) {
+        for (Rectangle rectangle : hex.getCounters()) {
+            Counter counter = (Counter) rectangle.getUserData();
+            counter.select();
+        }
+    }
+
+    public static void unselectAllCountersInHex(Hex hex) {
+        if (hex != null) {
+            for (Rectangle rectangle : hex.getCounters()) {
+                if (rectangle.getUserData() != null) {
+                    Counter counter = (Counter) rectangle.getUserData();
+                    counter.unselect();
+                }
+            }
+        }
+    }
+
+    public static void onMouseEnterCounter(MouseEvent event) {
 
     }
 }

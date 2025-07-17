@@ -1,10 +1,7 @@
 package com.tompy.game.state;
 
-import com.tompy.game.GameData;
-import com.tompy.hexboard.Hex;
 import com.tompy.state.AbstractStateMachine;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Polygon;
 
 public class GameStateMachine extends AbstractStateMachine<GameState> implements GameHandler {
     private static GameStateMachine stateMahcine;
@@ -17,6 +14,7 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
         return stateMahcine;
     }
 
+    @Override
     public void changeState(GameState newState) {
         if (currentState != null) {
             currentState.endState();
@@ -25,31 +23,31 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
         currentState.beginState();
     }
 
+    @Override
     public void process(long l) {
         if (currentState != null) {
             currentState.process(l);
         }
     }
 
+    @Override
     public boolean stopThread() {
         return false;
     }
 
+    @Override
     public void onClickHex(MouseEvent event) {
         currentState.onClickHex(event);
     }
 
+    @Override
     public void onMouseEnterHex(MouseEvent event) {
         currentState.onMouseEnterHex(event);
-
-        Polygon p = (Polygon) event.getTarget();
-        GameData.get().setHexWithMouse((Hex) p.getUserData());
     }
 
+    @Override
     public void onMouseLeaveHex(MouseEvent event) {
         currentState.onMouseLeaveHex(event);
-
-        GameData.get().setHexWithMouse(null);
     }
 
     @Override
