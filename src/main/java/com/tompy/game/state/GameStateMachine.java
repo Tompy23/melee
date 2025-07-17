@@ -64,15 +64,6 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
 
     @Override
     public void onMouseClickCounter(MouseEvent event) {
-        if (event.getClickCount() == 1) {
-            currentState.onMouseClickCounter(event);
-        }
-    }
-
-    @Override
-    public void onMouseDoubleClickCounter(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            currentState.onMouseDoubleClickCounter(event);
-        }
+        currentState.onMouseClickCounter(event);
     }
 }

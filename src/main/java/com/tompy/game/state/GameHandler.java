@@ -16,6 +16,4 @@ public interface GameHandler {
     void onMouseLeaveCounter(MouseEvent event);
 
     void onMouseClickCounter(MouseEvent event);
-
-    void onMouseDoubleClickCounter(MouseEvent event);
 }

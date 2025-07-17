@@ -63,32 +63,32 @@ public abstract class AbstractGameState implements GameState {
 
     @Override
     public void onMouseClickCounter(MouseEvent event) {
-        System.out.println("one click");
-        Rectangle rectangle = (Rectangle) event.getTarget();
-        Counter counter = (Counter) rectangle.getUserData();
+        if (event.getClickCount() == 1) {
+            System.out.println("one click");
+            Rectangle rectangle = (Rectangle) event.getTarget();
+            Counter counter = (Counter) rectangle.getUserData();
 
-        if (counter.isSelected()) {
-            rectangle.setStrokeWidth(0.0);
-            counter.unselect();
-        } else {
-            rectangle.setStrokeWidth(6);
-            rectangle.setStroke(Color.GREEN);
-            counter.select();
-        }
-    }
+            if (counter.isSelected()) {
+                rectangle.setStrokeWidth(0.0);
+                counter.unselect();
+            } else {
+                rectangle.setStrokeWidth(6);
+                rectangle.setStroke(Color.GREEN);
+                counter.select();
+            }
+        } else if (event.getClickCount() == 2) {
+            System.out.println("two clicks");
+            Rectangle rectangle = (Rectangle) event.getTarget();
 
-    @Override
-    public void onMouseDoubleClickCounter(MouseEvent event) {
-        System.out.println("two clicks");
-        Rectangle rectangle = (Rectangle) event.getTarget();
+            Counter counter = (Counter) rectangle.getUserData();
 
-        Counter counter = (Counter) rectangle.getUserData();
-
-        Hex hex = (Hex) counter.getHex();
-        if (hex.isCountersStacked()) {
-            hex.unstackCounters();
-        } else {
-            hex.stackCounters();
+            Hex hex = counter.getHex();
+            if (hex.isCountersStacked()) {
+                hex.unstackCounters();
+            } else {
+                hex.stackCounters();
+            }
+            GameFunction.displayCountersInHex(hex);
         }
     }
 }
