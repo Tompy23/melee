@@ -3,28 +3,23 @@ package com.tompy.hexboard;
 import com.tompy.game.counter.Counter;
 import com.tompy.game.event.GameFunction;
 import com.tompy.game.state.GameStateMachine;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Hex {
+public class Hex extends Polygon {
     private final HexCoordinate coordinate;
-    private final Polygon polygon;
     private boolean selected;
-    private List<Rectangle> counters;
+    private List<Counter> counters;
     private boolean countersStacked;
 
     private Hex(Builder builder) {
+        super(builder.coordinates);
         coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
-        this.polygon = builder.polygon;
         selected = false;
         counters = new ArrayList<>();
         countersStacked = false;
@@ -32,10 +27,6 @@ public class Hex {
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    public Polygon getPolygon() {
-        return polygon;
     }
 
     public void select() {
@@ -78,7 +69,7 @@ public class Hex {
         return selected;
     }
 
-    public List<Rectangle> getCounters() {
+    public List<Counter> getCounters() {
         return Collections.unmodifiableList(counters);
     }
 
@@ -95,19 +86,17 @@ public class Hex {
     }
 
     public void addCounter(Counter newCounter) {
-        Rectangle newCounterView = new Rectangle();
-        newCounterView.setFill(new ImagePattern(newCounter.getImage()));
-        newCounterView.setUserData(newCounter);
-        newCounterView.setId("COUNTER" + newCounter.getId());
-        newCounterView.setStrokeWidth(6.0);
-        newCounterView.setStroke(Color.TRANSPARENT);
+
+        newCounter.setFill(new ImagePattern(newCounter.getImage()));
+        newCounter.setStrokeWidth(6.0);
+        newCounter.setStroke(Color.TRANSPARENT);
 
         GameStateMachine gsm = GameStateMachine.get();
-        newCounterView.setOnMouseEntered(gsm::onMouseEnterCounter);
-        newCounterView.setOnMouseExited(gsm::onMouseLeaveCounter);
-        newCounterView.setOnMouseClicked(gsm::onMouseClickCounter);
+        newCounter.setOnMouseEntered(gsm::onMouseEnterCounter);
+        newCounter.setOnMouseExited(gsm::onMouseLeaveCounter);
+        newCounter.setOnMouseClicked(gsm::onMouseClickCounter);
 
-        counters.add(newCounterView);
+        counters.add(newCounter);
 
         newCounter.addToHex(this);
 
@@ -115,29 +104,13 @@ public class Hex {
     }
 
     public void removeCounter(Counter oldCounter) {
-        for (Rectangle counter : counters) {
+        for (Counter counter : counters) {
             if (((Counter) counter.getUserData()).getId() == oldCounter.getId()) {
 
 
             }
         }
     }
-
-//    public void displayCounters() {
-//        if (!counters.isEmpty()) {
-//            if (counters.size() == 1) {
-//                ImageView counterImageView = counters.getFirst();
-//                Counter counter = (Counter) counterImageView.getUserData();
-//
-//            } else {
-//                if (countersStacked) {
-//
-//                } else {
-//
-//                }
-//            }
-//        }
-//    }
 
     @Override
     public boolean equals(Object other) {
@@ -158,7 +131,7 @@ public class Hex {
     public static final class Builder {
         private int col;
         private int row;
-        private Polygon polygon;
+        private double[] coordinates;
 
         public Builder setCol(int col) {
             this.col = col;
@@ -170,8 +143,8 @@ public class Hex {
             return this;
         }
 
-        public Builder setPolygon(Polygon polygon) {
-            this.polygon = polygon;
+        public Builder coordinates(double[] coordinates) {
+            this.coordinates = coordinates;
             return this;
         }
 

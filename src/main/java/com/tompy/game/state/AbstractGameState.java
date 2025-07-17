@@ -6,8 +6,6 @@ import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 public abstract class AbstractGameState implements GameState {
     @Override
@@ -28,44 +26,44 @@ public abstract class AbstractGameState implements GameState {
     @Override
     public void onClickHex(MouseEvent event) {
         // If selected, unselect and turn half-blue, else select and turn green
-        GameFunction.selectHexGreenOrBlue((Hex) ((Polygon) event.getTarget()).getUserData());
+        GameFunction.selectHexGreenOrBlue((Hex) event.getTarget());
     }
 
     @Override
     public void onMouseEnterHex(MouseEvent event) {
-        GameFunction.fillHexHalfBlue((Hex) ((Polygon) event.getTarget()).getUserData());
+        Hex hex = (Hex) event.getTarget();
+        GameFunction.fillHexHalfBlue(hex);
 
-        Polygon p = (Polygon) event.getTarget();
-        GameData.get().setHexWithMouse((Hex) p.getUserData());
+        GameData.get().setHexWithMouse(hex);
     }
 
     @Override
     public void onMouseLeaveHex(MouseEvent event) {
-        GameFunction.fillHexGreenOrTransparent((Hex) ((Polygon) event.getTarget()).getUserData());
+        Hex hex = (Hex) event.getTarget();
+        GameFunction.fillHexGreenOrTransparent(hex);
 
         GameData.get().setHexWithMouse(null);
     }
 
     @Override
     public void onMouseEnterCounter(MouseEvent event) {
-        Rectangle rectangle = (Rectangle) event.getTarget();
+        Counter counter = (Counter) event.getTarget();
 
-        rectangle.setStroke(Color.BLACK);
+        counter.setStroke(Color.BLACK);
 
-        Hex hex = GameFunction.getHex(rectangle);
+        Hex hex = counter.getHex();
         GameFunction.fillHexHalfBlue(hex);
         GameData.get().setHexWithMouse(hex);
     }
 
     @Override
     public void onMouseLeaveCounter(MouseEvent event) {
-        Rectangle rectangle = (Rectangle) event.getTarget();
-        Counter counter = (Counter) rectangle.getUserData();
+        Counter counter = (Counter) event.getTarget();
 
         if (counter.isSelected()) {
-            rectangle.setStroke(Color.GREEN);
+            counter.setStroke(Color.GREEN);
         } else {
-            rectangle.setStroke(Color.TRANSPARENT);
+            counter.setStroke(Color.TRANSPARENT);
         }
         GameFunction.fillHexGreenOrTransparent(counter.getHex());
 
@@ -74,27 +72,28 @@ public abstract class AbstractGameState implements GameState {
 
     @Override
     public void onMouseClickCounter(MouseEvent event) {
-        Rectangle rectangle = (Rectangle) event.getTarget();
-        Counter counter = (Counter) rectangle.getUserData();
+        Counter counter = (Counter) event.getTarget();
         if (event.getClickCount() == 1) {
             System.out.println("one click");
             GameFunction.unselectAllCountersInHex(GameData.get().getHexWithMouse());
 
             if (counter.isSelected()) {
-                rectangle.setStroke(Color.TRANSPARENT);
+                counter.setStroke(Color.TRANSPARENT);
                 counter.unselect();
             } else {
-                rectangle.setStroke(Color.GREEN);
+                counter.setStroke(Color.GREEN);
                 counter.select();
             }
-        } else if (event.getClickCount() == 2) {
-            System.out.println("two clicks");
+        } else {
+            if (event.getClickCount() == 2) {
+                System.out.println("two clicks");
 
-            Hex hex = counter.getHex();
-            if (hex.isCountersStacked()) {
-                hex.unstackCounters();
-            } else {
-                hex.stackCounters();
+                Hex hex = counter.getHex();
+                if (hex.isCountersStacked()) {
+                    hex.unstackCounters();
+                } else {
+                    hex.stackCounters();
+                }
             }
         }
         GameFunction.displayCountersInHex(counter.getHex());

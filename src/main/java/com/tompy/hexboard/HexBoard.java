@@ -1,7 +1,6 @@
 package com.tompy.hexboard;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 import java.util.*;
 
@@ -50,15 +49,12 @@ public class HexBoard {
                     finalCoordinates[k + 1] = coordinates[k + 1] + y;
                 }
 
-                Polygon hexShape = new Polygon(finalCoordinates);
-                hexShape.setFill(Color.TRANSPARENT);
-                hexShape.setStroke(Color.BLACK);
-                hexShape.setStrokeWidth(1.0);
-
-                Hex hex = Hex.builder().setCol(j).setRow(i).setPolygon(hexShape).build();
+                Hex hex = Hex.builder().setCol(j).setRow(i).coordinates(finalCoordinates).build();
+                hex.setFill(Color.TRANSPARENT);
+                hex.setStroke(Color.BLACK);
+                hex.setStrokeWidth(1.0);
                 hexes.add(hex);
                 hexMap.put(hex.getCoordinate(), hex);
-                hexShape.setUserData(hex);
             }
         }
     }

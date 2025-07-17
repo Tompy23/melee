@@ -81,10 +81,10 @@ public class GamePlayControllerImpl implements GamePlayController {
             }
 
             GameStateMachine stateMachine = GameStateMachine.get();
-            paneHexBoard.getChildren().add(hex.getPolygon());
-            hex.getPolygon().setOnMouseEntered(stateMachine::onMouseEnterHex);
-            hex.getPolygon().setOnMouseExited(stateMachine::onMouseLeaveHex);
-            hex.getPolygon().setOnMouseClicked(stateMachine::onClickHex);
+            paneHexBoard.getChildren().add(hex);
+            hex.setOnMouseEntered(stateMachine::onMouseEnterHex);
+            hex.setOnMouseExited(stateMachine::onMouseLeaveHex);
+            hex.setOnMouseClicked(stateMachine::onClickHex);
 
             Circle c = new Circle();
             c.setCenterX(x);

@@ -7,21 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class GameFunction {
-
-    public static Hex getHex(Rectangle rectangle) {
-        Counter counter = (Counter) rectangle.getUserData();
-        return counter.getHex();
-    }
 
     public static void selectHexGreenOrBlue(Hex hex) {
         if (hex.isSelected()) {
@@ -36,16 +28,16 @@ public class GameFunction {
     }
 
     public static void fillHexHalfBlue(Hex hex) {
-        hex.getPolygon().setOpacity(.5);
-        hex.getPolygon().setFill(Color.BLUE);
+        hex.setOpacity(.5);
+        hex.setFill(Color.BLUE);
     }
 
     public static void fillHexTransparent(Hex hex) {
-        hex.getPolygon().setFill(Color.TRANSPARENT);
+        hex.setFill(Color.TRANSPARENT);
     }
 
     public static void fillHexGreen(Hex hex) {
-        hex.getPolygon().setFill(Color.GREEN);
+        hex.setFill(Color.GREEN);
     }
 
     public static void fillHexGreenOrTransparent(Hex hex) {
@@ -69,9 +61,9 @@ public class GameFunction {
         Text text = new Text();
         text.setStyle("-fx-font: 10 arial;");
         text.setText(hex.getCoordinate().toString());
-        text.setX(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds())
+        text.setX(hex.localToParent(hex.getLayoutBounds())
                 .getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
-        text.setY(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds()).getCenterY() + 12);
+        text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 12);
         text.setId(hex.getCoordinate().toString());
         hexTextPane.getChildren().add(text);
     }
@@ -80,8 +72,7 @@ public class GameFunction {
         List<Node> toRemove = new ArrayList<>();
         for (Node child : GameData.get().getController().getHexBoardPane().getChildren()) {
             if (child.getId() != null && child.getId().startsWith("COUNTER")) {
-                Rectangle rectangle = (Rectangle) child;
-                Counter counter = (Counter) rectangle.getUserData();
+                Counter counter = (Counter) child;
                 if (counter.getHex().equals(hex)) {
                     toRemove.add(child);
                 }
@@ -90,34 +81,42 @@ public class GameFunction {
         GameData.get().getController().getHexBoardPane().getChildren().removeAll(toRemove);
 
 
-        List<Rectangle> counters = hex.getCounters();
+        List<Counter> counters = hex.getCounters();
         if (!counters.isEmpty()) {
             if (counters.size() == 1) {
-                Rectangle counterView = counters.getFirst();
-                Counter counter = (Counter) counterView.getUserData();
-                counterView.setWidth(counter.getImage().getWidth());
-                counterView.setHeight(counter.getImage().getHeight());
-                counterView.setX(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds())
+                Counter counter = counters.getFirst();
+                counter.setWidth(counter.getImage().getWidth());
+                counter.setHeight(counter.getImage().getHeight());
+                counter.setX(hex.localToParent(hex.getLayoutBounds())
                         .getCenterX() - (counter.getImage().getWidth() / 2));
-                counterView.setY(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds())
+                counter.setY(hex.localToParent(hex.getLayoutBounds())
                         .getCenterY() - (counter.getImage().getHeight() / 2));
-                GameData.get().getController().getHexBoardPane().getChildren().add(counterView);
+                if (counter.isSelected()) {
+                    counter.setStroke(Color.GREEN);
+                } else {
+                    counter.setStroke(Color.TRANSPARENT);
+                }
+                GameData.get().getController().getHexBoardPane().getChildren().add(counter);
             } else {
                 long offset = 0;
-                for (Rectangle counterView : counters) {
-                    Counter counter = (Counter) counterView.getUserData();
-                    counterView.setWidth(counter.getImage().getWidth());
-                    counterView.setHeight(counter.getImage().getHeight());
-                    counterView.setX(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds())
+                for (Counter counter : counters) {
+                    counter.setWidth(counter.getImage().getWidth());
+                    counter.setHeight(counter.getImage().getHeight());
+                    counter.setX(hex.localToParent(hex.getLayoutBounds())
                             .getCenterX() - (counter.getImage().getWidth() / 2) + offset);
-                    counterView.setY(hex.getPolygon().localToParent(hex.getPolygon().getLayoutBounds())
+                    counter.setY(hex.localToParent(hex.getLayoutBounds())
                             .getCenterY() - (counter.getImage().getHeight() / 2) - offset);
                     if (hex.isCountersStacked()) {
                         offset += 8;
                     } else {
                         offset += 12;
                     }
-                    GameData.get().getController().getHexBoardPane().getChildren().add(counterView);
+                    if (counter.isSelected()) {
+                        counter.setStroke(Color.GREEN);
+                    } else {
+                        counter.setStroke(Color.TRANSPARENT);
+                    }
+                    GameData.get().getController().getHexBoardPane().getChildren().add(counter);
                 }
             }
         }
@@ -126,8 +125,7 @@ public class GameFunction {
     public static void unselectAllCountersOutsideHex(Hex otherHex) {
         for (Hex hex : GameData.get().getHexBoard().getHexes()) {
             if (!hex.equals(otherHex)) {
-                for (Rectangle rectangle : hex.getCounters()) {
-                    Counter counter = (Counter) rectangle.getUserData();
+                for (Counter counter : hex.getCounters()) {
                     counter.unselect();
                 }
             }
@@ -135,19 +133,15 @@ public class GameFunction {
     }
 
     public static void selectAllCountersInHex(Hex hex) {
-        for (Rectangle rectangle : hex.getCounters()) {
-            Counter counter = (Counter) rectangle.getUserData();
+        for (Counter counter : hex.getCounters()) {
             counter.select();
         }
     }
 
     public static void unselectAllCountersInHex(Hex hex) {
         if (hex != null) {
-            for (Rectangle rectangle : hex.getCounters()) {
-                if (rectangle.getUserData() != null) {
-                    Counter counter = (Counter) rectangle.getUserData();
+            for (Counter counter : hex.getCounters()) {
                     counter.unselect();
-                }
             }
         }
     }
