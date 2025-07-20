@@ -5,7 +5,6 @@ import com.tompy.game.counter.Counter;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 public abstract class AbstractGameState implements GameState {
     @Override
@@ -66,7 +65,7 @@ public abstract class AbstractGameState implements GameState {
     }
 
     @Override
-    public void onMouseClickCounter(MouseEvent event) {
+    public void onClickCounter(MouseEvent event) {
         Counter counter = (Counter) event.getTarget();
         Hex hex = counter.getHex();
         if (event.getClickCount() == 1) {

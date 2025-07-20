@@ -35,6 +35,7 @@ public class CounterFactory {
         private CounterType type;
         private String imageName;
         private Hex hex;
+        private long movement;
 
         public CounterBuilder type(CounterType type) {
             this.type = type;
@@ -48,6 +49,11 @@ public class CounterFactory {
 
         public CounterBuilder hex(Hex hex) {
             this.hex = hex;
+            return this;
+        }
+
+        public CounterBuilder movement(long movement) {
+            this.movement = movement;
             return this;
         }
 

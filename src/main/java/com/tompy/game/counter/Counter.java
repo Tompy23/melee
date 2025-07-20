@@ -12,10 +12,13 @@ public class Counter extends Rectangle {
     private Hex hex;
     private boolean selected;
 
+    private final long movement;
+
     private Counter(Builder builder) {
         this.id = ++idIndex;
         setId("COUNTER" + this.id);
         this.image = builder.image;
+        this.movement = builder.movement;
     }
 
     public static Builder builder() {
@@ -56,9 +59,15 @@ public class Counter extends Rectangle {
 
     public static class Builder {
         private Image image;
+        private long movement;
 
         public Builder image(Image image) {
             this.image = image;
+            return this;
+        }
+
+        public Builder movement(long movement) {
+            this.movement = movement;
             return this;
         }
 

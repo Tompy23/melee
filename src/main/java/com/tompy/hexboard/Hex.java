@@ -94,7 +94,7 @@ public class Hex extends Polygon {
         GameStateMachine gsm = GameStateMachine.get();
         newCounter.setOnMouseEntered(gsm::onMouseEnterCounter);
         newCounter.setOnMouseExited(gsm::onMouseLeaveCounter);
-        newCounter.setOnMouseClicked(gsm::onMouseClickCounter);
+        newCounter.setOnMouseClicked(gsm::onClickCounter);
 
         counters.add(newCounter);
 

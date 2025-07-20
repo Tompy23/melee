@@ -36,11 +36,15 @@ public class HexBoard {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width * 2; j += 2) {
+                int row = i;
+                int col = j;
 
                 double x = border + j / 2.0 * hexWidth;
                 double y = border + (i * 1.5 * pixelSize);
                 if (i % 2.0 == 0) {
                     x += 1.0 / 2.0 * hexWidth;
+                } else {
+                    col--;
                 }
 
                 double[] finalCoordinates = new double[12];
@@ -49,7 +53,7 @@ public class HexBoard {
                     finalCoordinates[k + 1] = coordinates[k + 1] + y;
                 }
 
-                Hex hex = Hex.builder().setCol(j).setRow(i).coordinates(finalCoordinates).build();
+                Hex hex = Hex.builder().setCol(col).setRow(row).coordinates(finalCoordinates).build();
                 hex.setFill(Color.TRANSPARENT);
                 hex.setStroke(Color.BLACK);
                 hex.setStrokeWidth(1.0);

@@ -12,4 +12,6 @@ public interface GamePlayController {
     Pane getHexBoardPane();
 
     Pane getTextPane();
+
+    void enableMove1Button(boolean enable);
 }

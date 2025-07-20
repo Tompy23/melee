@@ -1,7 +1,5 @@
 package com.tompy.hexboard;
 
-import kotlin.experimental.ExperimentalObjCName;
-
 public class HexCoordinate {
     private final int col;
     private final int row;
@@ -54,6 +52,8 @@ public class HexCoordinate {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append(getQ()).append(" : ").append(getR()).append(" : " ).append(getS());
+        sb.append(System.lineSeparator());
         sb.append(col).append(" : ").append(row);
         return sb.toString();
     }

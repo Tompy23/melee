@@ -1,6 +1,6 @@
 package com.tompy.game.state;
 
-import com.tompy.game.GamePlayController;
+import com.tompy.hexboard.Hex;
 import javafx.stage.Stage;
 
 public class StateFactory {
@@ -23,18 +23,19 @@ public class StateFactory {
                 return new CommonGameStateImpl();
             case SCENE_CHANGE:
                 return new ChangeSceneStateImpl(builder.stage, builder.properties);
+            case MOVE_1:
+                return new Move1StateImpl(builder.originHex);
             default:
                 return null;
         }
     }
 
-
     public static class StateBuilder {
         private final StateFactory factory;
         private StateType type;
         private String properties;
-        private GamePlayController controller;
         private Stage stage;
+        private Hex originHex;
 
         public StateBuilder(StateFactory factory) {
             this.factory = factory;
@@ -50,13 +51,13 @@ public class StateFactory {
             return this;
         }
 
-        public StateBuilder controller(GamePlayController controller) {
-            this.controller = controller;
+        public StateBuilder stage(Stage stage) {
+            this.stage = stage;
             return this;
         }
 
-        public StateBuilder stage(Stage stage) {
-            this.stage = stage;
+        public StateBuilder originHex(Hex originHex) {
+            this.originHex = originHex;
             return this;
         }
 

@@ -1,14 +1,17 @@
 package com.tompy.game;
 
+import com.tompy.game.counter.Counter;
 import com.tompy.game.counter.CounterFactory;
 import com.tompy.game.counter.CounterType;
 import com.tompy.game.event.GameFunction;
-import com.tompy.game.state.ChangeSceneStateImpl;
 import com.tompy.game.state.GameStateMachine;
+import com.tompy.game.state.StateFactory;
+import com.tompy.game.state.StateType;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
@@ -31,6 +34,8 @@ public class GamePlayControllerImpl implements GamePlayController {
     private Pane paneHexBoard;
     @FXML
     private Pane paneText;
+    @FXML
+    private Button btnMove1;
 
     private double zoom = 1.0;
 
@@ -76,9 +81,6 @@ public class GamePlayControllerImpl implements GamePlayController {
 
             double x = board.getBorder() + j / 2.0 * hexWidth;
             double y = board.getBorder() + (i * 1.5 * board.getPixelSize());
-            if (i % 2.0 == 0) {
-                x += 1.0 / 2.0 * hexWidth;
-            }
 
             GameStateMachine stateMachine = GameStateMachine.get();
             paneHexBoard.getChildren().add(hex);
@@ -87,7 +89,7 @@ public class GamePlayControllerImpl implements GamePlayController {
             hex.setOnMouseClicked(stateMachine::onClickHex);
 
             Circle c = new Circle();
-            c.setCenterX(x);
+            c.setCenterX(x + hexWidth / 2);
             c.setCenterY(y);
             c.setRadius(3);
             paneHexDecorator.getChildren().add(c);
@@ -106,15 +108,17 @@ public class GamePlayControllerImpl implements GamePlayController {
         return paneText;
     }
 
+    @Override
+    public void enableMove1Button(boolean enable) {
+        btnMove1.setDisable(!enable);
+    }
+
     public void handleNextScene(ActionEvent event) {
         String nextScene = (String) GameData.get().getProperty("scene.next");
-        GameStateMachine.get().changeState(new ChangeSceneStateImpl(stage, nextScene));
+        GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.SCENE_CHANGE).properties(nextScene).stage(stage).build());
     }
 
     public void handleZoomIn(ActionEvent event) {
-        System.out.println("handleZoomIn");
-        System.out.println(event.toString());
-
         zoom += .1;
         if (zoom > 2.0) {
             zoom = 2.0;
@@ -124,9 +128,6 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleZoomOut(ActionEvent event) {
-        System.out.println("handleZoomOut");
-        System.out.println(event.toString());
-
         zoom -= .1;
         if (zoom < 0.3) {
             zoom = 0.3;
@@ -146,11 +147,25 @@ public class GamePlayControllerImpl implements GamePlayController {
 
     public void handleAddCounter(ActionEvent event) {
         CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
-                .hex(GameData.get().getHexBoard().getHex(0, 0)).build();
+                .hex(GameData.get().getHexBoard().getHex(0, 0)).movement(6).build();
     }
 
     public void handleAddCounter2(ActionEvent event) {
-        CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
-                .hex(GameData.get().getHexBoard().getHex(4, 2)).build();
+        CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator2.png")
+                .hex(GameData.get().getHexBoard().getHex(4, 2)).movement(5).build();
+    }
+
+    public void handleMove1(ActionEvent event) {
+        Hex originHex = null;
+        long hexCount = 0;
+        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+            if (hex.getCounters().stream().anyMatch(Counter::isSelected)) {
+                hexCount++;
+                originHex = hex;
+            }
+        }
+        if (hexCount == 1) {
+            GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.MOVE_1).originHex(originHex).build());
+        }
     }
 }
