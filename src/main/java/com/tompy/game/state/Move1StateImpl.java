@@ -5,13 +5,13 @@ import com.tompy.game.counter.Counter;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Move1StateImpl extends AbstractGameState {
     private final Hex originHex;
@@ -27,6 +27,13 @@ public class Move1StateImpl extends AbstractGameState {
         this.currentHex = originHex;
         this.neighbors = HexFunction.getNeighbors(originHex);
         this.showPossibleHexes();
+    }
+
+    @Override
+    public void beginState() {
+        counters.forEach(Counter::resetMovementExpended);
+        clearPossibleHexes();
+        showPossibleHexes();
     }
 
     @Override
@@ -72,6 +79,12 @@ public class Move1StateImpl extends AbstractGameState {
         sb.append("/");
         sb.append(hex.getEntryCost());
         GameFunction.showTextHex(hex, sb.toString());
+    }
+
+    @Override
+    public void onClickMove1(ActionEvent event) {
+        clearPossibleHexes();
+        GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.COMMON).build());
     }
 
     @Override
