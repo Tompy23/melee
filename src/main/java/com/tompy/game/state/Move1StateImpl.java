@@ -40,6 +40,8 @@ public class Move1StateImpl extends AbstractGameState {
     public void process(long l) {
         if (movedHex != null && !movedHex.equals(currentHex)) {
             clearPossibleHexes();
+            currentHex.stackCounters();
+            movedHex.stackCounters();
             counters.forEach(currentHex::removeCounter);
             counters.forEach(movedHex::addExistingCounter);
             currentHex = movedHex;

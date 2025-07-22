@@ -23,7 +23,7 @@ public class Hex extends Polygon {
         coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
         selected = false;
         counters = new ArrayList<>();
-        countersStacked = false;
+        countersStacked = true;
         this.entryCost = builder.entryCost;
     }
 
