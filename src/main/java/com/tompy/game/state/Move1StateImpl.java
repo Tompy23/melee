@@ -51,6 +51,7 @@ public class Move1StateImpl extends AbstractGameState {
             for (Counter counter : counters) {
                 if (counter.getMovement() - counter.getMovementExpended() == 0) {
                     movementEnds = true;
+                    break;
                 }
             }
             if (movementEnds) {
@@ -126,15 +127,15 @@ public class Move1StateImpl extends AbstractGameState {
     @Override
     public void onMouseLeaveCounter(MouseEvent event) {
         Counter counter = (Counter) event.getTarget();
-        leaveHexAction(counter.getHex());
+        leaveHexAction();
     }
 
     @Override
     public void onMouseLeaveHex(MouseEvent event) {
-        leaveHexAction((Hex) event.getTarget());
+        leaveHexAction();
     }
 
-    private void leaveHexAction(Hex hex) {
+    private void leaveHexAction() {
         GameData.get().setHexWithMouse(null);
     }
 }

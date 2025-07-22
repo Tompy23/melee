@@ -14,7 +14,7 @@ import java.util.List;
 public class Hex extends Polygon {
     private final HexCoordinate coordinate;
     private boolean selected;
-    private List<Counter> counters;
+    private final List<Counter> counters;
     private boolean countersStacked;
     private final long entryCost;
 
@@ -117,7 +117,7 @@ public class Hex extends Polygon {
         List<Counter> countersToRemove = new ArrayList<>();
         for (Counter counter : counters) {
 
-            if (counter.getId() == oldCounter.getId()) {
+            if (counter.getId().equals(oldCounter.getId())) {
                 countersToRemove.add(counter);
             }
         }
@@ -128,7 +128,7 @@ public class Hex extends Polygon {
 
     @Override
     public boolean equals(Object other) {
-        if (other == null || !(other instanceof Hex o)) {
+        if (!(other instanceof Hex o)) {
             return false;
         }
         if (this == other) {
