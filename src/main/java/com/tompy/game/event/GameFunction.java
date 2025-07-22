@@ -56,6 +56,18 @@ public class GameFunction {
         hexTextPane.getChildren().add(text);
     }
 
+    public static void showTextHex(Hex hex, String display) {
+        Pane hexTextPane = GameData.get().getController().getTextPane();
+        Text text = new Text();
+        text.setStyle("-fx-font: 16 arial;");
+        text.setText(display);
+        text.setX(
+                hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
+        text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 20);
+        text.setId(hex.getCoordinate().toString());
+        hexTextPane.getChildren().add(text);
+    }
+
     public static void displayCountersInHex(Hex hex) {
         List<Node> toRemove = new ArrayList<>();
         for (Node child : GameData.get().getController().getHexBoardPane().getChildren()) {

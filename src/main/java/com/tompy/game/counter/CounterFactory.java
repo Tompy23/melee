@@ -20,7 +20,7 @@ public class CounterFactory {
     private Counter create(CounterBuilder builder) {
         switch (builder.type) {
             case GLADIATOR:
-                Counter newCounter = Counter.builder().image(new Image(builder.imageName)).build();
+                Counter newCounter = Counter.builder().image(new Image(builder.imageName)).movement(builder.movement).build();
                 if (builder.hex != null) {
                     builder.hex.addCounter(newCounter);
                 }
