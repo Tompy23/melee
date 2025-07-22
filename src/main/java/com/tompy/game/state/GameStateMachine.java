@@ -1,6 +1,7 @@
 package com.tompy.game.state;
 
 import com.tompy.state.AbstractStateMachine;
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 public class GameStateMachine extends AbstractStateMachine<GameState> implements GameHandler {
@@ -63,5 +64,10 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
     @Override
     public void onClickCounter(MouseEvent event) {
         currentState.onClickCounter(event);
+    }
+
+    @Override
+    public void onClickMove1(ActionEvent event) {
+        currentState.onClickMove1(event);
     }
 }

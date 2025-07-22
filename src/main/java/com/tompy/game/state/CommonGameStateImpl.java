@@ -3,6 +3,8 @@ package com.tompy.game.state;
 import com.tompy.game.GameData;
 import com.tompy.game.counter.Counter;
 import com.tompy.hexboard.Hex;
+import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 
 public class CommonGameStateImpl extends AbstractGameState {
 
@@ -16,5 +18,20 @@ public class CommonGameStateImpl extends AbstractGameState {
             }
         }
         GameData.get().getController().enableMove1Button(hexesSelected == 1);
+    }
+
+    @Override
+    public void onClickMove1(ActionEvent event) {
+        Hex originHex = null;
+        long hexCount = 0;
+        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+            if (hex.getCounters().stream().anyMatch(Counter::isSelected)) {
+                hexCount++;
+                originHex = hex;
+            }
+        }
+        if (hexCount == 1) {
+            GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.MOVE_1).originHex(originHex).build());
+        }
     }
 }

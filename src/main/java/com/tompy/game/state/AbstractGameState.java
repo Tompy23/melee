@@ -4,6 +4,7 @@ import com.tompy.game.GameData;
 import com.tompy.game.counter.Counter;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 public abstract class AbstractGameState implements GameState {
@@ -104,5 +105,10 @@ public abstract class AbstractGameState implements GameState {
             }
         }
         GameFunction.displayCountersInHex(hex);
+    }
+
+    @Override
+    public void onClickMove1(ActionEvent event) {
+
     }
 }

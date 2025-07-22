@@ -13,12 +13,14 @@ public class Counter extends Rectangle {
     private boolean selected;
 
     private final long movement;
+    private long movementExpended;
 
     private Counter(Builder builder) {
         this.id = ++idIndex;
         setId("COUNTER" + this.id);
         this.image = builder.image;
         this.movement = builder.movement;
+        this.movementExpended = 0;
     }
 
     public static Builder builder() {
@@ -51,6 +53,30 @@ public class Counter extends Rectangle {
 
     public Hex getHex() {
         return hex;
+    }
+
+    public void setHex(Hex hex) {
+        this.hex = hex;
+    }
+
+    public long getCounterId() {
+        return id;
+    }
+
+    public long getMovement() {
+        return movement;
+    }
+
+    public long getMovementExpended() {
+        return movementExpended;
+    }
+
+    public void expendMovement(long count) {
+        movementExpended += count;
+    }
+
+    public void resetMovementExpended() {
+        movementExpended = 0;
     }
 
     public Node getStyleableNode() {

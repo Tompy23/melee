@@ -16,6 +16,7 @@ public class Hex extends Polygon {
     private boolean selected;
     private List<Counter> counters;
     private boolean countersStacked;
+    private final long entryCost;
 
     private Hex(Builder builder) {
         super(builder.coordinates);
@@ -23,6 +24,7 @@ public class Hex extends Polygon {
         selected = false;
         counters = new ArrayList<>();
         countersStacked = false;
+        this.entryCost = builder.entryCost;
     }
 
     public static Builder builder() {
@@ -61,6 +63,10 @@ public class Hex extends Polygon {
         return new CubeCoordinate(getQ(), getR(), getS());
     }
 
+    public long getEntryCost() {
+        return entryCost;
+    }
+
     public HexCoordinate getCoordinate() {
         return coordinate;
     }
@@ -96,20 +102,28 @@ public class Hex extends Polygon {
         newCounter.setOnMouseExited(gsm::onMouseLeaveCounter);
         newCounter.setOnMouseClicked(gsm::onClickCounter);
 
-        counters.add(newCounter);
+        addExistingCounter(newCounter);
+    }
 
-        newCounter.addToHex(this);
+    public void addExistingCounter(Counter counter) {
+        counters.add(counter);
+
+        counter.addToHex(this);
 
         GameFunction.displayCountersInHex(this);
     }
 
     public void removeCounter(Counter oldCounter) {
+        List<Counter> countersToRemove = new ArrayList<>();
         for (Counter counter : counters) {
-            if (((Counter) counter.getUserData()).getId() == oldCounter.getId()) {
 
-
+            if (counter.getId() == oldCounter.getId()) {
+                countersToRemove.add(counter);
             }
         }
+        counters.removeAll(countersToRemove);
+
+        GameFunction.displayCountersInHex(this);
     }
 
     @Override
@@ -132,6 +146,7 @@ public class Hex extends Polygon {
         private int col;
         private int row;
         private double[] coordinates;
+        private long entryCost = 1;
 
         public Builder setCol(int col) {
             this.col = col;
@@ -145,6 +160,11 @@ public class Hex extends Polygon {
 
         public Builder coordinates(double[] coordinates) {
             this.coordinates = coordinates;
+            return this;
+        }
+
+        public Builder entryCost(long entryCost) {
+            this.entryCost = entryCost;
             return this;
         }
 

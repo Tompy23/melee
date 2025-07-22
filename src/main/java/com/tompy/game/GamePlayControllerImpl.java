@@ -156,16 +156,6 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleMove1(ActionEvent event) {
-        Hex originHex = null;
-        long hexCount = 0;
-        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
-            if (hex.getCounters().stream().anyMatch(Counter::isSelected)) {
-                hexCount++;
-                originHex = hex;
-            }
-        }
-        if (hexCount == 1) {
-            GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.MOVE_1).originHex(originHex).build());
-        }
+        GameStateMachine.get().onClickMove1(event);
     }
 }

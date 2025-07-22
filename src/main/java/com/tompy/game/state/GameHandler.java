@@ -1,5 +1,6 @@
 package com.tompy.game.state;
 
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 public interface GameHandler {
@@ -15,4 +16,6 @@ public interface GameHandler {
     void onMouseLeaveCounter(MouseEvent event);
 
     void onClickCounter(MouseEvent event);
+
+    void onClickMove1(ActionEvent event);
 }

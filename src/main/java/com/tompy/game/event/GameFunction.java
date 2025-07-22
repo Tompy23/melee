@@ -45,6 +45,7 @@ public class GameFunction {
     }
 
     public static void showHexCoordinates(Hex hex) {
+        removeText(hex.getCoordinate().toString());
         Pane hexTextPane = GameData.get().getController().getTextPane();
         Text text = new Text();
         text.setStyle("-fx-font: 10 arial;");
@@ -52,6 +53,19 @@ public class GameFunction {
         text.setX(
                 hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
         text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 12);
+        text.setId(hex.getCoordinate().toString());
+        hexTextPane.getChildren().add(text);
+    }
+
+    public static void showTextHex(Hex hex, String display) {
+        removeText(hex.getCoordinate().toString());
+        Pane hexTextPane = GameData.get().getController().getTextPane();
+        Text text = new Text();
+        text.setStyle("-fx-font: 16 arial;");
+        text.setText(display);
+        text.setX(
+                hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
+        text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 20);
         text.setId(hex.getCoordinate().toString());
         hexTextPane.getChildren().add(text);
     }
