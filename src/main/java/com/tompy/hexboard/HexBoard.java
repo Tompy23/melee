@@ -87,7 +87,7 @@ public class HexBoard {
         return Collections.unmodifiableList(hexes);
     }
 
-    public Hex getHex(int q, int r) {
+    public Hex getHex(long q, long r) {
         return hexMap.get(HexCoordinate.builder().setCol(q).setRow(r).build());
     }
 

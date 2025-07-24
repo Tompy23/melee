@@ -1,8 +1,8 @@
 package com.tompy.hexboard;
 
 public class HexCoordinate {
-    private final int col;
-    private final int row;
+    private final long col;
+    private final long row;
 
     public HexCoordinate(Builder builder) {
         this.col = builder.col;
@@ -13,23 +13,23 @@ public class HexCoordinate {
         return new Builder();
     }
 
-    public int getCol() {
+    public long getCol() {
         return col;
     }
 
-    public int getRow() {
+    public long getRow() {
         return row;
     }
 
-    public int getQ() {
+    public long getQ() {
         return (col - row) / 2;
     }
 
-    public int getR() {
+    public long getR() {
         return row;
     }
 
-    public int getS() {
+    public long getS() {
         return -getQ()-getR();
     }
 
@@ -46,7 +46,7 @@ public class HexCoordinate {
 
     @Override
     public int hashCode() {
-        return col * row;
+        return (int) (col * row);
     }
 
     @Override
@@ -59,15 +59,15 @@ public class HexCoordinate {
     }
 
     public static final class Builder {
-        private int col;
-        private int row;
+        private long col;
+        private long row;
 
-        public Builder setCol(int col) {
+        public Builder setCol(long col) {
             this.col = col;
             return this;
         }
 
-        public Builder setRow(int row) {
+        public Builder setRow(long row) {
             this.row = row;
             return this;
         }

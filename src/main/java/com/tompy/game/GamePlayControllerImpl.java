@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -76,8 +77,8 @@ public class GamePlayControllerImpl implements GamePlayController {
         for (Hex hex : board.getHexes()) {
             double hexWidth = SQRT3 * board.getPixelSize();
 
-            int j = hex.getCol();
-            int i = hex.getRow();
+            long j = hex.getCol();
+            long i = hex.getRow();
 
             double x = board.getBorder() + j / 2.0 * hexWidth;
             double y = board.getBorder() + (i * 1.5 * board.getPixelSize());
@@ -157,5 +158,13 @@ public class GamePlayControllerImpl implements GamePlayController {
 
     public void handleMove1(ActionEvent event) {
         GameStateMachine.get().onClickMove1(event);
+    }
+
+    public void handleTestHexPointer(ActionEvent event) {
+        GameStateMachine.get().onClickTestPointer(event);
+    }
+
+    public void handleMouseMove(MouseEvent event) {
+        GameStateMachine.get().onMouseMove(event);
     }
 }

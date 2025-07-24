@@ -6,6 +6,7 @@ import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
+import kotlin.internal.OnlyInputTypes;
 
 public abstract class AbstractGameState implements GameState {
     @Override
@@ -109,6 +110,16 @@ public abstract class AbstractGameState implements GameState {
 
     @Override
     public void onClickMove1(ActionEvent event) {
+
+    }
+
+    @Override
+    public void onClickTestPointer(ActionEvent event) {
+
+    }
+
+    @Override
+    public void onMouseMove(MouseEvent event) {
 
     }
 }

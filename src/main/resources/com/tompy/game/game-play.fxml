@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@game-play.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.game.GamePlayControllerImpl">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@game-play.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.game.GamePlayControllerImpl">
    <children>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -13,7 +13,7 @@
                      <children>
                         <Pane fx:id="paneBackImage" prefHeight="200.0" prefWidth="200.0" />
                         <Pane fx:id="paneHexDecorator" prefHeight="200.0" prefWidth="200.0" />
-                        <Pane fx:id="paneHexBoard" prefHeight="275.0" prefWidth="390.0" />
+                        <Pane fx:id="paneHexBoard" onMouseMoved="#handleMouseMove" prefHeight="275.0" prefWidth="390.0" />
                         <Pane fx:id="paneText" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </StackPane>
@@ -26,7 +26,7 @@
                   <Button fx:id="btnAddCounter" mnemonicParsing="false" onAction="#handleAddCounter" text="Add Counter" />
                   <Button fx:id="btnAddCounter2" mnemonicParsing="false" onAction="#handleAddCounter2" text="Add Counter #2" />
                   <Button fx:id="btnMove1" disable="true" mnemonicParsing="false" onAction="#handleMove1" text="Move #1" />
-                  <Button disable="true" mnemonicParsing="false" text="Rotate Counter" />
+                  <Button mnemonicParsing="false" onAction="#handleTestHexPointer" text="Test Hex Pointer" />
                </children></HBox>
          </top>
          <right>

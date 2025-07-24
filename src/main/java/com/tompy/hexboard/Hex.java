@@ -2,9 +2,6 @@ package com.tompy.hexboard;
 
 import com.tompy.game.counter.Counter;
 import com.tompy.game.event.GameFunction;
-import com.tompy.game.state.GameStateMachine;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
@@ -39,23 +36,23 @@ public class Hex extends Polygon {
         selected = false;
     }
 
-    public int getCol() {
+    public long getCol() {
         return coordinate.getCol();
     }
 
-    public int getRow() {
+    public long getRow() {
         return coordinate.getRow();
     }
 
-    public int getQ() {
+    public long getQ() {
         return coordinate.getQ();
     }
 
-    public int getR() {
+    public long getR() {
         return coordinate.getR();
     }
 
-    public int getS() {
+    public long getS() {
         return coordinate.getS();
     }
 
@@ -91,21 +88,7 @@ public class Hex extends Polygon {
         return countersStacked;
     }
 
-    public void addCounter(Counter newCounter) {
-
-        newCounter.setFill(new ImagePattern(newCounter.getImage()));
-        newCounter.setStrokeWidth(6.0);
-        newCounter.setStroke(Color.TRANSPARENT);
-
-        GameStateMachine gsm = GameStateMachine.get();
-        newCounter.setOnMouseEntered(gsm::onMouseEnterCounter);
-        newCounter.setOnMouseExited(gsm::onMouseLeaveCounter);
-        newCounter.setOnMouseClicked(gsm::onClickCounter);
-
-        addExistingCounter(newCounter);
-    }
-
-    public void addExistingCounter(Counter counter) {
+    public void addCounter(Counter counter) {
         counters.add(counter);
 
         counter.addToHex(this);
@@ -139,7 +122,7 @@ public class Hex extends Polygon {
 
     @Override
     public int hashCode() {
-        return coordinate.hashCode();
+        return (int) coordinate.hashCode();
     }
 
     public static final class Builder {

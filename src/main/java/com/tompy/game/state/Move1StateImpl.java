@@ -43,7 +43,7 @@ public class Move1StateImpl extends AbstractGameState {
             currentHex.stackCounters();
             movedHex.stackCounters();
             counters.forEach(currentHex::removeCounter);
-            counters.forEach(movedHex::addExistingCounter);
+            counters.forEach(movedHex::addCounter);
             currentHex = movedHex;
             neighbors = HexFunction.getNeighbors(currentHex);
             counters.forEach(c -> c.expendMovement(currentHex.getEntryCost()));

@@ -70,4 +70,14 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
     public void onClickMove1(ActionEvent event) {
         currentState.onClickMove1(event);
     }
+
+    @Override
+    public void onClickTestPointer(ActionEvent event) {
+        changeState(StateFactory.get().buidler().type(StateType.TEST_POINTER).build());
+    }
+
+    @Override
+    public void onMouseMove(MouseEvent event) {
+        currentState.onMouseMove(event);
+    }
 }

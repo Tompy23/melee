@@ -1,31 +1,31 @@
 package com.tompy.hexboard;
 
-public class CubeCoordinate {
-    private final long q;
-    private final long r;
-    private final long s;
+public class DoubleCubeCoordinate {
+    private final double q;
+    private final double r;
+    private final double s;
 
-    public CubeCoordinate(long q, long r, long s) {
+    public DoubleCubeCoordinate(double q, double r, double s) {
         this.q = q;
         this.r = r;
         this.s = s;
     }
 
-    public CubeCoordinate(long q, long r) {
+    public DoubleCubeCoordinate(double q, double r) {
         this.q = q;
         this.r = r;
         this.s = -q - r;
     }
 
-    public long getQ() {
+    public double getQ() {
         return q;
     }
 
-    public long getR() {
+    public double getR() {
         return r;
     }
 
-    public long getS() {
+    public double getS() {
         return s;
     }
 

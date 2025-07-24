@@ -12,6 +12,8 @@ public class GameData {
     private final HexBoard hexBoard;
     private final Properties properties;
     private Hex hexWithMouse;
+    private double mouseX;
+    private double mouseY;
 
     private GameData(Builder builder) {
         this.controller = Objects.requireNonNull(builder.controller, "Game Play Controller cannot be null.");
@@ -54,6 +56,19 @@ public class GameData {
 
     public Hex getHexWithMouse() {
         return hexWithMouse;
+    }
+
+    public double getMouseX() {
+        return mouseX;
+    }
+
+    public double getMouseY() {
+        return mouseY;
+    }
+
+    public void setMousePointer(double x, double y) {
+        this.mouseX = x;
+        this.mouseY = y;
     }
 
     public static class Builder {

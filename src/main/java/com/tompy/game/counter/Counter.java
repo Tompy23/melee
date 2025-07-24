@@ -1,8 +1,11 @@
 package com.tompy.game.counter;
 
+import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Counter extends Rectangle {
@@ -21,6 +24,15 @@ public class Counter extends Rectangle {
         this.image = builder.image;
         this.movement = builder.movement;
         this.movementExpended = 0;
+
+        this.setFill(new ImagePattern(image));
+        this.setStrokeWidth(6.0);
+        this.setStroke(Color.TRANSPARENT);
+
+        GameStateMachine gsm = GameStateMachine.get();
+        this.setOnMouseEntered(gsm::onMouseEnterCounter);
+        this.setOnMouseExited(gsm::onMouseLeaveCounter);
+        this.setOnMouseClicked(gsm::onClickCounter);
     }
 
     public static Builder builder() {

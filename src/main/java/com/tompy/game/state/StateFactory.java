@@ -25,6 +25,8 @@ public class StateFactory {
                 return new ChangeSceneStateImpl(builder.stage, builder.properties);
             case MOVE_1:
                 return new Move1StateImpl(builder.originHex);
+            case TEST_POINTER:
+                return new TestHexPointerState();
             default:
                 return null;
         }

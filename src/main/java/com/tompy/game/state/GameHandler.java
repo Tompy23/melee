@@ -18,4 +18,8 @@ public interface GameHandler {
     void onClickCounter(MouseEvent event);
 
     void onClickMove1(ActionEvent event);
+
+    void onClickTestPointer(ActionEvent event);
+
+    void onMouseMove(MouseEvent event);
 }
