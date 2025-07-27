@@ -1,6 +1,6 @@
 package com.tompy.game.state;
 
-public enum StateType {
+public enum GameStateType {
     COMMON,
     SCENE_CHANGE,
     MOVE_1,

@@ -1,12 +1,11 @@
 package com.tompy.game;
 
-import com.tompy.game.counter.Counter;
 import com.tompy.game.counter.CounterFactory;
 import com.tompy.game.counter.CounterType;
 import com.tompy.game.event.GameFunction;
 import com.tompy.game.state.GameStateMachine;
-import com.tompy.game.state.StateFactory;
-import com.tompy.game.state.StateType;
+import com.tompy.game.state.GameStateFactory;
+import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
 import javafx.event.ActionEvent;
@@ -116,7 +115,7 @@ public class GamePlayControllerImpl implements GamePlayController {
 
     public void handleNextScene(ActionEvent event) {
         String nextScene = (String) GameData.get().getProperty("scene.next");
-        GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.SCENE_CHANGE).properties(nextScene).stage(stage).build());
+        GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.SCENE_CHANGE).properties(nextScene).stage(stage).build());
     }
 
     public void handleZoomIn(ActionEvent event) {

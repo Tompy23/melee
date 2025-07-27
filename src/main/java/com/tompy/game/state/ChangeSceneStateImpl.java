@@ -26,6 +26,6 @@ public class ChangeSceneStateImpl extends AbstractGameState {
 
     @Override
     public void process(long l) {
-        GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.COMMON).build());
+        GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.COMMON).build());
     }
 }

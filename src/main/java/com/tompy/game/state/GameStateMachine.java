@@ -73,7 +73,7 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
 
     @Override
     public void onClickTestPointer(ActionEvent event) {
-        changeState(StateFactory.get().buidler().type(StateType.TEST_POINTER).build());
+        changeState(GameStateFactory.get().buidler().type(GameStateType.TEST_POINTER).build());
     }
 
     @Override

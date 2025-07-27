@@ -1,10 +1,12 @@
 package com.tompy.hexboard;
 
+import com.tompy.state.State;
+import com.tompy.state.StateMachine;
 import javafx.scene.paint.Color;
 
 import java.util.*;
 
-public class HexBoard {
+public class HexBoard implements StateMachine<State>{
     private static final double SQRT3 = Math.sqrt(3);
     private final int border;
     private final int pixelSize;
@@ -12,6 +14,7 @@ public class HexBoard {
     private final int width;
     private final List<Hex> hexes;
     private final Map<HexCoordinate, Hex> hexMap;
+    private State currentState;
 
     public HexBoard(Builder builder) {
         this.border = builder.border;
@@ -97,6 +100,30 @@ public class HexBoard {
 
     public void unselectAllHexes() {
         hexes.forEach(Hex::unselect);
+    }
+
+    @Override
+    public void changeState(State newState) {
+        if (currentState != null) {
+            currentState.endState();
+        }
+        currentState = newState;
+        if (currentState != null) {
+            currentState.beginState();
+        }
+    }
+
+    @Override
+    public void process(long l) {
+        if (currentState != null) {
+            currentState.process(l);
+        }
+        hexes.forEach(h -> h.process(l));
+    }
+
+    @Override
+    public boolean stopThread() {
+        return false;
     }
 
     public static final class Builder {

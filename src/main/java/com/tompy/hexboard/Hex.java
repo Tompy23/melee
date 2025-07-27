@@ -2,18 +2,20 @@ package com.tompy.hexboard;
 
 import com.tompy.game.counter.Counter;
 import com.tompy.game.event.GameFunction;
+import com.tompy.state.StateMachine;
 import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Hex extends Polygon {
+public class Hex extends Polygon implements StateMachine<HexState> {
     private final HexCoordinate coordinate;
     private boolean selected;
     private final List<Counter> counters;
     private boolean countersStacked;
     private final long entryCost;
+    private HexState currentState;
 
     private Hex(Builder builder) {
         super(builder.coordinates);
@@ -123,6 +125,29 @@ public class Hex extends Polygon {
     @Override
     public int hashCode() {
         return (int) coordinate.hashCode();
+    }
+
+    @Override
+    public void changeState(HexState newState) {
+        if (currentState != null) {
+            currentState.endState();
+        }
+        currentState = newState;
+        if (currentState != null) {
+            currentState.beginState();
+        }
+    }
+
+    @Override
+    public void process(long l) {
+        if (currentState != null) {
+            currentState.process(l);
+        }
+    }
+
+    @Override
+    public boolean stopThread() {
+        return false;
     }
 
     public static final class Builder {

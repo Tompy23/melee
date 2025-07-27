@@ -55,7 +55,7 @@ public class Move1StateImpl extends AbstractGameState {
                 }
             }
             if (movementEnds) {
-                GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.COMMON).build());
+                GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.COMMON).build());
             } else {
                 showPossibleHexes();
             }
@@ -87,7 +87,7 @@ public class Move1StateImpl extends AbstractGameState {
     @Override
     public void onClickMove1(ActionEvent event) {
         clearPossibleHexes();
-        GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.COMMON).build());
+        GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.COMMON).build());
     }
 
     @Override

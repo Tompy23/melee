@@ -3,21 +3,21 @@ package com.tompy.game.state;
 import com.tompy.hexboard.Hex;
 import javafx.stage.Stage;
 
-public class StateFactory {
-    private static StateFactory singletonStateFactory;
+public class GameStateFactory {
+    private static GameStateFactory singletonGameStateFactory;
 
-    public static StateFactory get() {
-        if (singletonStateFactory == null) {
-            singletonStateFactory = new StateFactory();
+    public static GameStateFactory get() {
+        if (singletonGameStateFactory == null) {
+            singletonGameStateFactory = new GameStateFactory();
         }
-        return singletonStateFactory;
+        return singletonGameStateFactory;
     }
 
-    public StateBuilder buidler() {
-        return new StateBuilder(this);
+    public GameStateBuilder buidler() {
+        return new GameStateBuilder(this);
     }
 
-    private GameState create(StateBuilder builder) {
+    private GameState create(GameStateBuilder builder) {
         switch (builder.type) {
             case COMMON:
                 return new CommonGameStateImpl();
@@ -32,33 +32,33 @@ public class StateFactory {
         }
     }
 
-    public static class StateBuilder {
-        private final StateFactory factory;
-        private StateType type;
+    public static class GameStateBuilder {
+        private final GameStateFactory factory;
+        private GameStateType type;
         private String properties;
         private Stage stage;
         private Hex originHex;
 
-        public StateBuilder(StateFactory factory) {
+        public GameStateBuilder(GameStateFactory factory) {
             this.factory = factory;
         }
 
-        public StateBuilder type(StateType type) {
+        public GameStateBuilder type(GameStateType type) {
             this.type = type;
             return this;
         }
 
-        public StateBuilder properties(String properties) {
+        public GameStateBuilder properties(String properties) {
             this.properties = properties;
             return this;
         }
 
-        public StateBuilder stage(Stage stage) {
+        public GameStateBuilder stage(Stage stage) {
             this.stage = stage;
             return this;
         }
 
-        public StateBuilder originHex(Hex originHex) {
+        public GameStateBuilder originHex(Hex originHex) {
             this.originHex = originHex;
             return this;
         }

@@ -14,6 +14,16 @@ import java.util.List;
 public class GameFunction {
 
     public static void selectHexSetProperties(Hex hex) {
+//        if (!hex.isSelected()) {
+//            hex.select();
+//        } else {
+//            hex.unselect();
+//        }
+//        if (hex.isSelected()) {
+//            hex.changeState(HexStateFactory.get().builder().type(HexStateType.SELECTED).hex(hex).initialColor(Color.GREEN).secondaryColor(Color.TRANSPARENT).opaqueness(1.0).build());
+//        } else {
+//            hex.changeState(null);
+//        }
         if (hex.isSelected()) {
             hex.unselect();
             enterHexSetProperties(hex);
@@ -39,9 +49,7 @@ public class GameFunction {
     }
 
     public static void removeText(String hexId) {
-        GameData.get().getController().getTextPane().getChildren().stream().filter(n -> n.getId().equals(hexId))
-                .findFirst()
-                .ifPresent(value -> GameData.get().getController().getTextPane().getChildren().remove(value));
+        GameData.get().getController().getTextPane().getChildren().stream().filter(n -> n.getId().equals(hexId)).findFirst().ifPresent(value -> GameData.get().getController().getTextPane().getChildren().remove(value));
     }
 
     public static void showHexCoordinates(Hex hex) {
@@ -50,8 +58,7 @@ public class GameFunction {
         Text text = new Text();
         text.setStyle("-fx-font: 10 arial;");
         text.setText(hex.getCoordinate().toString());
-        text.setX(
-                hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
+        text.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
         text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 12);
         text.setId(hex.getCoordinate().toString());
         hexTextPane.getChildren().add(text);
@@ -63,8 +70,7 @@ public class GameFunction {
         Text text = new Text();
         text.setStyle("-fx-font: 16 arial;");
         text.setText(display);
-        text.setX(
-                hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
+        text.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
         text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 20);
         text.setId(hex.getCoordinate().toString());
         hexTextPane.getChildren().add(text);
@@ -89,20 +95,16 @@ public class GameFunction {
                 Counter counter = counters.getFirst();
                 counter.setWidth(counter.getImage().getWidth());
                 counter.setHeight(counter.getImage().getHeight());
-                counter.setX(
-                        hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2));
-                counter.setY(
-                        hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2));
+                counter.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2));
+                counter.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2));
                 GameData.get().getController().getHexBoardPane().getChildren().add(counter);
             } else {
                 long offset = 0;
                 for (Counter counter : counters) {
                     counter.setWidth(counter.getImage().getWidth());
                     counter.setHeight(counter.getImage().getHeight());
-                    counter.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage()
-                            .getWidth() / 2) + offset);
-                    counter.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage()
-                            .getHeight() / 2) - offset);
+                    counter.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2) + offset);
+                    counter.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2) - offset);
                     if (hex.isCountersStacked()) {
                         offset += 8;
                     } else {
