@@ -1,5 +1,6 @@
-package com.tompy.hexboard;
+package com.tompy.hexboard.state;
 
+import com.tompy.hexboard.Hex;
 import javafx.scene.paint.Color;
 
 public class HexStateFactory {
@@ -19,7 +20,11 @@ public class HexStateFactory {
     public HexState create(HexStateBuilder builder) {
         switch (builder.type) {
             case SELECTED:
-                return new HexStateSelectedImpl(builder.hex, builder.initialColor, builder.secondaryColor, builder.opaqueness);
+                HexState commonState = new HexStateCommonImpl(builder.hex, builder.switch1);
+                HexState selectedState = new HexStateSelectedImpl(builder.hex, commonState, builder.initialColor, builder.secondaryColor, builder.opaqueness);
+                return new HexStateShowCoordinatesImpl(builder.hex, selectedState);
+            case COMMON:
+                return new HexStateCommonImpl(builder.hex, builder.switch1);
             default:
                 return null;
         }
@@ -32,6 +37,7 @@ public class HexStateFactory {
         private Color initialColor;
         private Color secondaryColor;
         private double opaqueness;
+        private boolean switch1;
 
         public HexStateBuilder(HexStateFactory factory) {
             hexStateFactory = factory;
@@ -59,6 +65,11 @@ public class HexStateFactory {
 
         public HexStateBuilder opaqueness(double opaqueness) {
             this.opaqueness = opaqueness;
+            return this;
+        }
+
+        public HexStateBuilder switch1(boolean switch1) {
+            this.switch1 = switch1;
             return this;
         }
 

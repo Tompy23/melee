@@ -1,4 +1,4 @@
-package com.tompy.game.counter;
+package com.tompy.counter;
 
 public enum CounterType {
     GLADIATOR

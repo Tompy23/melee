@@ -1,7 +1,7 @@
 package com.tompy.game.state;
 
 import com.tompy.game.GameData;
-import com.tompy.game.counter.Counter;
+import com.tompy.counter.Counter;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
 import javafx.event.ActionEvent;
@@ -21,28 +21,6 @@ public abstract class AbstractGameState implements GameState {
     @Override
     public void process(long l) {
 
-    }
-
-    @Override
-    public void onClickHex(MouseEvent event) {
-        // If selected, unselect and turn half-blue, else select and turn green
-        GameFunction.selectHexSetProperties((Hex) event.getTarget());
-    }
-
-    @Override
-    public void onMouseEnterHex(MouseEvent event) {
-        Hex hex = (Hex) event.getTarget();
-        GameFunction.enterHexSetProperties(hex);
-
-        GameData.get().setHexWithMouse(hex);
-    }
-
-    @Override
-    public void onMouseLeaveHex(MouseEvent event) {
-        Hex hex = (Hex) event.getTarget();
-        GameFunction.exitHexSetProperties(hex);
-
-        GameData.get().setHexWithMouse(null);
     }
 
     @Override

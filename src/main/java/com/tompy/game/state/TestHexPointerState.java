@@ -44,19 +44,4 @@ public class TestHexPointerState extends AbstractGameState {
         sb.append("MOUSE:  ").append(GameData.get().getMouseX()).append(" : ").append(GameData.get().getMouseY());
         System.out.println(sb.toString());
     }
-
-    @Override
-    public void onClickHex(MouseEvent event) {
-        // If selected, unselect and turn half-blue, else select and turn green
-        GameData.get().getHexBoard().getHexes().forEach(Hex::unselect);
-        GameFunction.selectHexSetProperties((Hex) event.getTarget());
-    }
-
-    @Override
-    public void onMouseEnterHex(MouseEvent event) {
-    }
-
-    @Override
-    public void onMouseLeaveHex(MouseEvent event) {
-    }
 }

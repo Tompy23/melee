@@ -1,4 +1,4 @@
-package com.tompy.game.counter;
+package com.tompy.counter;
 
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;

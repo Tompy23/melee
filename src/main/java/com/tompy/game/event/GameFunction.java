@@ -1,7 +1,7 @@
 package com.tompy.game.event;
 
 import com.tompy.game.GameData;
-import com.tompy.game.counter.Counter;
+import com.tompy.counter.Counter;
 import com.tompy.hexboard.Hex;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -12,28 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameFunction {
-
-    public static void selectHexSetProperties(Hex hex) {
-//        if (!hex.isSelected()) {
-//            hex.select();
-//        } else {
-//            hex.unselect();
-//        }
-//        if (hex.isSelected()) {
-//            hex.changeState(HexStateFactory.get().builder().type(HexStateType.SELECTED).hex(hex).initialColor(Color.GREEN).secondaryColor(Color.TRANSPARENT).opaqueness(1.0).build());
-//        } else {
-//            hex.changeState(null);
-//        }
-        if (hex.isSelected()) {
-            hex.unselect();
-            enterHexSetProperties(hex);
-            removeText(hex.getCoordinate().toString());
-        } else {
-            hex.select();
-            hex.setFill(Color.GREEN);
-            showHexCoordinates(hex);
-        }
-    }
 
     public static void enterHexSetProperties(Hex hex) {
         hex.setOpacity(.5);
@@ -50,18 +28,6 @@ public class GameFunction {
 
     public static void removeText(String hexId) {
         GameData.get().getController().getTextPane().getChildren().stream().filter(n -> n.getId().equals(hexId)).findFirst().ifPresent(value -> GameData.get().getController().getTextPane().getChildren().remove(value));
-    }
-
-    public static void showHexCoordinates(Hex hex) {
-        removeText(hex.getCoordinate().toString());
-        Pane hexTextPane = GameData.get().getController().getTextPane();
-        Text text = new Text();
-        text.setStyle("-fx-font: 10 arial;");
-        text.setText(hex.getCoordinate().toString());
-        text.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
-        text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 12);
-        text.setId(hex.getCoordinate().toString());
-        hexTextPane.getChildren().add(text);
     }
 
     public static void showTextHex(Hex hex, String display) {

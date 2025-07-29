@@ -37,21 +37,6 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
     }
 
     @Override
-    public void onClickHex(MouseEvent event) {
-        currentState.onClickHex(event);
-    }
-
-    @Override
-    public void onMouseEnterHex(MouseEvent event) {
-        currentState.onMouseEnterHex(event);
-    }
-
-    @Override
-    public void onMouseLeaveHex(MouseEvent event) {
-        currentState.onMouseLeaveHex(event);
-    }
-
-    @Override
     public void onMouseEnterCounter(MouseEvent event) {
         currentState.onMouseEnterCounter(event);
     }

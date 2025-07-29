@@ -1,7 +1,7 @@
 package com.tompy.game.state;
 
 import com.tompy.game.GameData;
-import com.tompy.game.counter.Counter;
+import com.tompy.counter.Counter;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
@@ -96,11 +96,6 @@ public class Move1StateImpl extends AbstractGameState {
         clickHexAction(counter.getHex(), event.getButton().equals(MouseButton.SECONDARY));
     }
 
-    @Override
-    public void onClickHex(MouseEvent event) {
-        clickHexAction((Hex) event.getTarget(), event.getButton().equals(MouseButton.SECONDARY));
-    }
-
     private void clickHexAction(Hex hex, boolean rightClick) {
         if (!rightClick) {
             if (neighbors.contains(hex)) {
@@ -115,10 +110,10 @@ public class Move1StateImpl extends AbstractGameState {
         enterHexAction(counter.getHex());
     }
 
-    @Override
-    public void onMouseEnterHex(MouseEvent event) {
-        enterHexAction((Hex) event.getTarget());
-    }
+//    @Override
+//    public void onMouseEnterHex(MouseEvent event) {
+//        enterHexAction((Hex) event.getTarget());
+//    }
 
     private void enterHexAction(Hex hex) {
         GameData.get().setHexWithMouse(hex);
@@ -127,11 +122,6 @@ public class Move1StateImpl extends AbstractGameState {
     @Override
     public void onMouseLeaveCounter(MouseEvent event) {
         Counter counter = (Counter) event.getTarget();
-        leaveHexAction();
-    }
-
-    @Override
-    public void onMouseLeaveHex(MouseEvent event) {
         leaveHexAction();
     }
 

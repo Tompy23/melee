@@ -1,4 +1,4 @@
-package com.tompy.game.counter;
+package com.tompy.counter;
 
 import com.tompy.hexboard.Hex;
 import javafx.scene.image.Image;

@@ -1,13 +1,15 @@
 package com.tompy.game;
 
-import com.tompy.game.counter.CounterFactory;
-import com.tompy.game.counter.CounterType;
+import com.tompy.counter.CounterFactory;
+import com.tompy.counter.CounterType;
 import com.tompy.game.event.GameFunction;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
+import com.tompy.hexboard.state.HexStateFactory;
+import com.tompy.hexboard.state.HexStateType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -84,9 +86,10 @@ public class GamePlayControllerImpl implements GamePlayController {
 
             GameStateMachine stateMachine = GameStateMachine.get();
             paneHexBoard.getChildren().add(hex);
-            hex.setOnMouseEntered(stateMachine::onMouseEnterHex);
-            hex.setOnMouseExited(stateMachine::onMouseLeaveHex);
-            hex.setOnMouseClicked(stateMachine::onClickHex);
+            hex.setOnMouseEntered(hex::handleEnter);
+            hex.setOnMouseExited(hex::handleExit);
+            hex.setOnMouseClicked(hex::handleClick);
+            hex.changeState(HexStateFactory.get().builder().type(HexStateType.COMMON).switch1(false).hex(hex).build());
 
             Circle c = new Circle();
             c.setCenterX(x + hexWidth / 2);
@@ -140,7 +143,7 @@ public class GamePlayControllerImpl implements GamePlayController {
         HexBoard board = GameData.get().getHexBoard();
         board.unselectAllHexes();
         for (Hex hex : board.getHexes()) {
-            GameFunction.exitHexSetProperties(hex);
+            //GameFunction.exitHexSetProperties(hex);
             GameFunction.removeText(hex.getCoordinate().toString());
         }
     }
