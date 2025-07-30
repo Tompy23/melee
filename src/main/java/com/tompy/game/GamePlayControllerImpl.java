@@ -140,11 +140,12 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleUnselect(ActionEvent event) {
+        // TODO THis is going to go away once we have all the stuff coordinated
         HexBoard board = GameData.get().getHexBoard();
         board.unselectAllHexes();
         for (Hex hex : board.getHexes()) {
             //GameFunction.exitHexSetProperties(hex);
-            GameFunction.removeText(hex.getCoordinate().toString());
+            //GameFunction.removeText(hex.getCoordinate().toString());
         }
     }
 

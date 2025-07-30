@@ -1,15 +1,18 @@
 package com.tompy.counter;
 
+import com.tompy.counter.state.CounterState;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;
+import com.tompy.state.StateMachine;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-public class Counter extends Rectangle {
+public class Counter extends Rectangle implements StateMachine<CounterState> {
     private static long idIndex = 0;
+    private CounterState currentState;
     private final long id;
     private final Image image;
     private Hex hex;
@@ -93,6 +96,29 @@ public class Counter extends Rectangle {
 
     public Node getStyleableNode() {
         return super.getStyleableNode();
+    }
+
+    @Override
+    public void changeState(CounterState newState) {
+        if (currentState != null) {
+            currentState.endState();
+        }
+        currentState = newState;
+        if (currentState != null) {
+            currentState.beginState();
+        }
+    }
+
+    @Override
+    public void process(long l) {
+        if (currentState != null) {
+            currentState.process(l);
+        }
+    }
+
+    @Override
+    public boolean stopThread() {
+        return false;
     }
 
     public static class Builder {
