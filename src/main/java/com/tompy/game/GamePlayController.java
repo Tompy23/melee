@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 
 public interface GamePlayController {
 
+    void setGameData(GameData gameData);
+
     void setStage(Stage stage);
 
     void drawHexBoard();

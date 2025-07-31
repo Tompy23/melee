@@ -11,8 +11,8 @@
                <content>
                   <StackPane fx:id="stackBoard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="476.0" prefWidth="718.0">
                      <children>
-                        <Pane fx:id="paneBackImage" prefHeight="200.0" prefWidth="200.0" />
-                        <Pane fx:id="paneHexDecorator" prefHeight="200.0" prefWidth="200.0" />
+                        <Pane fx:id="paneBackImage" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
+                        <Pane fx:id="paneHexDecorator" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
                         <Pane fx:id="paneHexBoard" onMouseMoved="#handleMouseMove" prefHeight="275.0" prefWidth="390.0" />
                         <Pane fx:id="paneText" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
                      </children>

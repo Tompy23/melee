@@ -1,11 +1,9 @@
 package com.tompy.game.state;
 
 import com.tompy.game.GameData;
-import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.DoubleCubeCoordinate;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
-import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 

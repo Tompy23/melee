@@ -35,4 +35,14 @@ public class HexStateSelectedImpl extends AbstractHexStateDecorator {
     public void process(long l) {
         super.process(l);
     }
+
+    @Override
+    public void handleExit() {
+
+    }
+
+    @Override
+    public void handleEnter() {
+
+    }
 }

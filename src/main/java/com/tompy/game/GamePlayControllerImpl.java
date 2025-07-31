@@ -2,9 +2,8 @@ package com.tompy.game;
 
 import com.tompy.counter.CounterFactory;
 import com.tompy.counter.CounterType;
-import com.tompy.game.event.GameFunction;
-import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateFactory;
+import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
@@ -39,9 +38,16 @@ public class GamePlayControllerImpl implements GamePlayController {
     @FXML
     private Button btnMove1;
 
-    private double zoom = 1.0;
+    //private double zoom = 1.0;
 
     private Stage stage;
+
+    private GameData gameData;
+
+    @Override
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
+    }
 
     @Override
     public void setStage(Stage stage) {
@@ -76,6 +82,12 @@ public class GamePlayControllerImpl implements GamePlayController {
         paneText.setPrefHeight(panelHeight);
 
         for (Hex hex : board.getHexes()) {
+            paneHexBoard.getChildren().add(hex);
+            hex.setOnMouseEntered(hex::handleEnter);
+            hex.setOnMouseExited(hex::handleExit);
+            hex.setOnMouseClicked(hex::handleClick);
+            hex.changeState(HexStateFactory.get().builder().type(HexStateType.COMMON).switch1(false).hex(hex).build());
+
             double hexWidth = SQRT3 * board.getPixelSize();
 
             long j = hex.getCol();
@@ -83,13 +95,6 @@ public class GamePlayControllerImpl implements GamePlayController {
 
             double x = board.getBorder() + j / 2.0 * hexWidth;
             double y = board.getBorder() + (i * 1.5 * board.getPixelSize());
-
-            GameStateMachine stateMachine = GameStateMachine.get();
-            paneHexBoard.getChildren().add(hex);
-            hex.setOnMouseEntered(hex::handleEnter);
-            hex.setOnMouseExited(hex::handleExit);
-            hex.setOnMouseClicked(hex::handleClick);
-            hex.changeState(HexStateFactory.get().builder().type(HexStateType.COMMON).switch1(false).hex(hex).build());
 
             Circle c = new Circle();
             c.setCenterX(x + hexWidth / 2);
@@ -122,6 +127,7 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleZoomIn(ActionEvent event) {
+        double zoom = gameData.getZoom();
         zoom += .1;
         if (zoom > 2.0) {
             zoom = 2.0;
@@ -131,6 +137,7 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleZoomOut(ActionEvent event) {
+        double zoom = gameData.getZoom();
         zoom -= .1;
         if (zoom < 0.3) {
             zoom = 0.3;
@@ -143,10 +150,6 @@ public class GamePlayControllerImpl implements GamePlayController {
         // TODO THis is going to go away once we have all the stuff coordinated
         HexBoard board = GameData.get().getHexBoard();
         board.unselectAllHexes();
-        for (Hex hex : board.getHexes()) {
-            //GameFunction.exitHexSetProperties(hex);
-            //GameFunction.removeText(hex.getCoordinate().toString());
-        }
     }
 
     public void handleAddCounter(ActionEvent event) {

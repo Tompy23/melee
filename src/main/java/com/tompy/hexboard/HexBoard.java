@@ -1,12 +1,14 @@
 package com.tompy.hexboard;
 
+import com.tompy.game.GameData;
+import com.tompy.game.PaneCoordinates;
 import com.tompy.state.State;
 import com.tompy.state.StateMachine;
 import javafx.scene.paint.Color;
 
 import java.util.*;
 
-public class HexBoard implements StateMachine<State>{
+public class HexBoard implements StateMachine<State> {
     private static final double SQRT3 = Math.sqrt(3);
     private final int border;
     private final int pixelSize;
@@ -14,9 +16,11 @@ public class HexBoard implements StateMachine<State>{
     private final int width;
     private final List<Hex> hexes;
     private final Map<HexCoordinate, Hex> hexMap;
+    private final GameData gameData;
     private State currentState;
 
     public HexBoard(Builder builder) {
+        this.gameData = builder.gameData;
         this.border = builder.border;
         this.pixelSize = builder.pixelSize;
         this.height = builder.height;
@@ -56,7 +60,8 @@ public class HexBoard implements StateMachine<State>{
                     finalCoordinates[k + 1] = coordinates[k + 1] + y;
                 }
 
-                Hex hex = Hex.builder().setCol(col).setRow(row).coordinates(finalCoordinates).build();
+                Hex hex = Hex.builder().setCol(col).setRow(row).coordinates(finalCoordinates).gameData(gameData)
+                        .paneCoordinates(new PaneCoordinates(x, y)).build();
                 hex.setFill(Color.TRANSPARENT);
                 hex.setStroke(Color.BLACK);
                 hex.setStrokeWidth(1.0);
@@ -131,6 +136,7 @@ public class HexBoard implements StateMachine<State>{
         private int pixelSize;
         private int height;
         private int width;
+        private GameData gameData;
 
         public Builder border(int border) {
             this.border = border;
@@ -149,6 +155,11 @@ public class HexBoard implements StateMachine<State>{
 
         public Builder width(int width) {
             this.width = width;
+            return this;
+        }
+
+        public Builder gameData(GameData gameData) {
+            this.gameData = gameData;
             return this;
         }
 

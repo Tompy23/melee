@@ -17,4 +17,19 @@ public abstract class AbstractHexStateDecorator extends AbstractHexState {
     public void process(long l) {
         wrappedState.process(l);
     }
+
+    @Override
+    public void handleClick() {
+        wrappedState.handleClick();
+    }
+
+    @Override
+    public void handleEnter() {
+        wrappedState.handleEnter();
+    }
+
+    @Override
+    public void handleExit() {
+        wrappedState.handleExit();
+    }
 }

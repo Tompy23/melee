@@ -2,5 +2,7 @@ package com.tompy.hexboard.state;
 
 public enum HexStateType {
     COMMON,
-    SELECTED
+    SELECTED,
+    MOVE1,
+    MOVE1_NEIGHBOR
 }

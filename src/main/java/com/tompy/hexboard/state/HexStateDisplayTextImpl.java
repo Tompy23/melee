@@ -3,25 +3,32 @@ package com.tompy.hexboard.state;
 import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class HexStateShowCoordinatesImpl extends AbstractHexStateDecorator {
+public class HexStateDisplayTextImpl extends AbstractHexStateDecorator {
     private Text text;
+    private final String style;
+    private final long xOffset;
+    private final long yOffset;
+    private final String display;
 
-    public HexStateShowCoordinatesImpl(Hex hex, HexState wrappedState) {
+    public HexStateDisplayTextImpl(Hex hex, HexState wrappedState, String style, long xOffset, long yOffset, String display) {
         this.hex = hex;
         this.wrappedState = wrappedState;
+        this.style = style;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        this.display = display;
     }
 
     @Override
     public void beginState() {
         Pane hexTextPane = GameData.get().getController().getTextPane();
         text = new Text();
-        text.setStyle("-fx-font: 10 arial;");
-        text.setText(hex.getCoordinate().toString());
-        text.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
-        text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 20);
+        text.setStyle(style);
+        text.setText(display);
+        text.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (xOffset + text.getLayoutBounds().getWidth() / 2.0));
+        text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + yOffset);
         text.setId(hex.getCoordinate().toString());
         hexTextPane.getChildren().add(text);
         super.beginState();
@@ -32,16 +39,5 @@ public class HexStateShowCoordinatesImpl extends AbstractHexStateDecorator {
         Pane hexTextPane = GameData.get().getController().getTextPane();
         hexTextPane.getChildren().remove(text);
         super.endState();
-    }
-
-
-    @Override
-    public void handleEnter() {
-        wrappedState.handleEnter();
-    }
-
-    @Override
-    public void handleExit() {
-        wrappedState.handleExit();
     }
 }

@@ -1,6 +1,8 @@
 package com.tompy.hexboard;
 
 import com.tompy.counter.Counter;
+import com.tompy.game.GameData;
+import com.tompy.game.PaneCoordinates;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.state.HexState;
 import com.tompy.state.StateMachine;
@@ -13,11 +15,13 @@ import java.util.List;
 
 public class Hex extends Polygon implements StateMachine<HexState> {
     private final HexCoordinate coordinate;
+    private final List<Counter> counters;
+    private final long entryCost;
+    private final PaneCoordinates paneCoordinates;
+    private final GameData gameData;
     private boolean selected;
     private boolean hasMouse;
-    private final List<Counter> counters;
     private boolean countersStacked;
-    private final long entryCost;
     private HexState currentState;
 
     private Hex(Builder builder) {
@@ -28,6 +32,8 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         countersStacked = true;
         this.entryCost = builder.entryCost;
         this.hasMouse = false;
+        this.paneCoordinates = builder.paneCoordinates;
+        this.gameData = builder.gameData;
     }
 
     public static Builder builder() {
@@ -40,6 +46,11 @@ public class Hex extends Polygon implements StateMachine<HexState> {
 
     public void unselect() {
         selected = false;
+    }
+
+    public PaneCoordinates getPaneCoordinates() {
+        return new PaneCoordinates(paneCoordinates.getX() * gameData.getZoom(),
+                paneCoordinates.getY() * gameData.getZoom());
     }
 
     public long getCol() {
@@ -155,6 +166,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     }
 
     public void handleClick(MouseEvent event) {
+        System.out.println("Hex::click");
         currentState.handleClick();
     }
 
@@ -170,6 +182,8 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         private int col;
         private int row;
         private double[] coordinates;
+        private PaneCoordinates paneCoordinates;
+        private GameData gameData;
         private long entryCost = 1;
 
         public Builder setCol(int col) {
@@ -184,6 +198,16 @@ public class Hex extends Polygon implements StateMachine<HexState> {
 
         public Builder coordinates(double[] coordinates) {
             this.coordinates = coordinates;
+            return this;
+        }
+
+        public Builder paneCoordinates(PaneCoordinates paneCoordinates) {
+            this.paneCoordinates = paneCoordinates;
+            return this;
+        }
+
+        public Builder gameData(GameData gameData) {
+            this.gameData = gameData;
             return this;
         }
 

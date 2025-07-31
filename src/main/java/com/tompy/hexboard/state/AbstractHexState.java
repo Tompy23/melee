@@ -7,11 +7,7 @@ public abstract class AbstractHexState implements HexState {
 
     @Override
     public void handleClick() {
-        if (hex.isSelected()) {
-            hex.unselect();
-        } else {
-            hex.select();
-        }
+
     }
 
     @Override
@@ -21,6 +17,21 @@ public abstract class AbstractHexState implements HexState {
 
     @Override
     public void handleExit() {
+
+    }
+
+    @Override
+    public void beginState() {
+
+    }
+
+    @Override
+    public void endState() {
+
+    }
+
+    @Override
+    public void process(long l) {
 
     }
 }

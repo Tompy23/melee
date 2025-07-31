@@ -4,29 +4,23 @@ import com.tompy.hexboard.Hex;
 import javafx.scene.paint.Color;
 
 public class HexStateCommonImpl extends AbstractHexState {
-    private final boolean selected;
 
-    public HexStateCommonImpl(Hex hex, boolean selected) {
+    public HexStateCommonImpl(Hex hex) {
         this.hex = hex;
-        this.selected = selected;
     }
 
     @Override
-    public void beginState() {
-
-    }
-
-    @Override
-    public void endState() {
-
-    }
-
-    @Override
-    public void process(long l) {
-        if (hex.isSelected() && !selected) {
-            hex.changeState(HexStateFactory.get().builder().type(HexStateType.SELECTED).hex(hex).switch1(true).initialColor(Color.GREEN).secondaryColor(Color.TRANSPARENT).opaqueness(0.5).build());
-        } else if (!hex.isSelected() && selected) {
-            hex.changeState(HexStateFactory.get().builder().type(HexStateType.COMMON).hex(hex).switch1(false).build());
+    public void handleClick() {
+        if (hex.isSelected()) {
+            hex.unselect();
+            hex.changeState(
+                    HexStateFactory.get().builder().type(HexStateType.COMMON).hex(hex).switch1(false).build());
+        } else {
+            hex.select();
+            hex.changeState(HexStateFactory.get().builder().type(HexStateType.SELECTED).hex(hex).switch1(true)
+                    .initialColor(Color.GREEN).secondaryColor(Color.TRANSPARENT).opaqueness(0.5)
+                    .style("-fx-font: 10 arial;").xOffset(-2).yOffset(20).display(hex.getCoordinate().toString())
+                    .build());
         }
     }
 

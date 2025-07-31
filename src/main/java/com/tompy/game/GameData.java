@@ -11,9 +11,11 @@ public class GameData {
     private final GamePlayController controller;
     private final HexBoard hexBoard;
     private final Properties properties;
+
     private Hex hexWithMouse;
     private double mouseX;
     private double mouseY;
+    private double zoom;
 
     private GameData(Builder builder) {
         this.controller = Objects.requireNonNull(builder.controller, "Game Play Controller cannot be null.");
@@ -22,8 +24,11 @@ public class GameData {
         int height = Integer.parseInt(properties.getProperty("board.height"));
         int width = Integer.parseInt(properties.getProperty("board.width"));
         int border = Integer.parseInt(properties.getProperty("board.border"));
-        this.hexBoard = HexBoard.builder().pixelSize(pixelSize).height(height).width(width).border(border).build();
+        this.hexBoard = HexBoard.builder().pixelSize(pixelSize).height(height).width(width).border(border).gameData(this).build();
+        this.controller.setGameData(this);
+        this.zoom = 1.0;
         gameDataSingleton = this;
+
     }
 
     public static Builder builder() {
@@ -64,6 +69,14 @@ public class GameData {
 
     public double getMouseY() {
         return mouseY;
+    }
+
+    public void setZoom(double zoom) {
+        this.zoom = zoom;
+    }
+
+    public double getZoom() {
+        return zoom;
     }
 
     public void setMousePointer(double x, double y) {
