@@ -36,20 +36,20 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
         return false;
     }
 
-    @Override
-    public void onMouseEnterCounter(MouseEvent event) {
-        currentState.onMouseEnterCounter(event);
-    }
-
-    @Override
-    public void onMouseLeaveCounter(MouseEvent event) {
-        currentState.onMouseLeaveCounter(event);
-    }
-
-    @Override
-    public void onClickCounter(MouseEvent event) {
-        currentState.onClickCounter(event);
-    }
+//    @Override
+//    public void onMouseEnterCounter(MouseEvent event) {
+//        currentState.onMouseEnterCounter(event);
+//    }
+//
+//    @Override
+//    public void onMouseLeaveCounter(MouseEvent event) {
+//        currentState.onMouseLeaveCounter(event);
+//    }
+//
+//    @Override
+//    public void onClickCounter(MouseEvent event) {
+//        currentState.onClickCounter(event);
+//    }
 
     @Override
     public void onClickMove1(ActionEvent event) {
@@ -58,7 +58,7 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
 
     @Override
     public void onClickTestPointer(ActionEvent event) {
-        changeState(GameStateFactory.get().buidler().type(GameStateType.TEST_POINTER).build());
+        changeState(GameStateFactory.buidler().type(GameStateType.TEST_POINTER).build());
     }
 
     @Override

@@ -1,11 +1,15 @@
 package com.tompy.counter;
 
 import com.tompy.counter.state.CounterState;
+import com.tompy.counter.state.CounterStateFactory;
+import com.tompy.counter.state.CounterStateType;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.hexboard.Hex;
 import com.tompy.state.StateMachine;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -16,7 +20,6 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
     private final long id;
     private final Image image;
     private Hex hex;
-    private boolean selected;
 
     private final long movement;
     private long movementExpended;
@@ -32,10 +35,16 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
         this.setStrokeWidth(6.0);
         this.setStroke(Color.TRANSPARENT);
 
-        GameStateMachine gsm = GameStateMachine.get();
-        this.setOnMouseEntered(gsm::onMouseEnterCounter);
-        this.setOnMouseExited(gsm::onMouseLeaveCounter);
-        this.setOnMouseClicked(gsm::onClickCounter);
+        setOnMouseClicked(this::handleClick);
+        setOnMouseEntered(this::handleEnter);
+        setOnMouseExited(this::handleExit);
+
+        changeState(CounterStateFactory.builder().type(CounterStateType.COMMON).counter(this).build());
+
+//        GameStateMachine gsm = GameStateMachine.get();
+//        this.setOnMouseEntered(gsm::onMouseEnterCounter);
+//        this.setOnMouseExited(gsm::onMouseLeaveCounter);
+//        this.setOnMouseClicked(gsm::onClickCounter);
     }
 
     public static Builder builder() {
@@ -51,19 +60,15 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
     }
 
     public boolean isSelected() {
-        return selected;
+        return currentState.isSelected();
     }
 
     public void select() {
-        selected = true;
-    }
-
-    public void select(boolean selected) {
-        this.selected = selected;
+        currentState.select();
     }
 
     public void unselect() {
-        selected = false;
+        currentState.unselect();
     }
 
     public Hex getHex() {
@@ -140,4 +145,15 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
         }
     }
 
+    public void handleClick(MouseEvent event) {
+        currentState.handleClick(event);
+    }
+
+    public void handleEnter(MouseEvent event) {
+        currentState.handleEnter(event);
+    }
+
+    public void handleExit(MouseEvent event) {
+        currentState.handleExit(event);
+    }
 }

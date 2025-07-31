@@ -1,4 +1,4 @@
-package com.tompy.hexboard;
+package com.tompy.hexboard.state;
 
 public interface HexHandler {
     void handleClick();

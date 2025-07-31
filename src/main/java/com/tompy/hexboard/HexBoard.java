@@ -2,6 +2,8 @@ package com.tompy.hexboard;
 
 import com.tompy.game.GameData;
 import com.tompy.game.PaneCoordinates;
+import com.tompy.hexboard.state.HexStateFactory;
+import com.tompy.hexboard.state.HexStateType;
 import com.tompy.state.State;
 import com.tompy.state.StateMachine;
 import javafx.scene.paint.Color;
@@ -104,7 +106,8 @@ public class HexBoard implements StateMachine<State> {
     }
 
     public void unselectAllHexes() {
-        hexes.forEach(Hex::unselect);
+        hexes.forEach(
+                h -> h.changeState(HexStateFactory.builder().type(HexStateType.COMMON).hex(h).switch1(false).build()));
     }
 
     @Override

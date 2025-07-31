@@ -15,8 +15,8 @@ public class HexStateFactory {
         return singletonHexStateFactory;
     }
 
-    public HexStateBuilder builder() {
-        return new HexStateBuilder(singletonHexStateFactory);
+    public static HexStateBuilder builder() {
+        return new HexStateBuilder();
     }
 
     public HexState create(HexStateBuilder builder) {
@@ -56,8 +56,8 @@ public class HexStateFactory {
         private String display;
         private GameState gameState;
 
-        public HexStateBuilder(HexStateFactory factory) {
-            hexStateFactory = factory;
+        public HexStateBuilder() {
+            hexStateFactory = HexStateFactory.get();
         }
 
         public HexStateBuilder hex(Hex hex) {

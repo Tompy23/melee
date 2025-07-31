@@ -60,14 +60,14 @@ public class Move1StateImpl extends AbstractGameState {
                 }
             }
             if (movementEnds) {
-                GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.COMMON).build());
+                GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.COMMON).build());
                 GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(
-                        HexStateFactory.get().builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
+                        HexStateFactory.builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
             } else {
                 GameData.get().getHexBoard().getHexes().forEach(
-                        h -> h.changeState(HexStateFactory.get().builder().hex(h).type(HexStateType.MOVE1).build()));
+                        h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.MOVE1).build()));
                 neighbors.forEach(n -> n.changeState(
-                        HexStateFactory.get().builder().hex(n).type(HexStateType.MOVE1_NEIGHBOR)
+                        HexStateFactory.builder().hex(n).type(HexStateType.MOVE1_NEIGHBOR)
                                 .initialColor(Color.GRAY).secondaryColor(Color.CHOCOLATE).opaqueness(0.5)
                                 .gameState(this).hex2(movedHexProperty).style("-fx-font: 16 arial;").xOffset(-2)
                                 .yOffset(20).display(addMovementPointText(n)).build()));
@@ -88,27 +88,27 @@ public class Move1StateImpl extends AbstractGameState {
 
     @Override
     public void onClickMove1(ActionEvent event) {
-        GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.COMMON).build());
+        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.COMMON).build());
         GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(
-                HexStateFactory.get().builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
+                HexStateFactory.builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
     }
 
-    @Override
-    public void onClickCounter(MouseEvent event) {
-        Counter counter = (Counter) event.getTarget();
-        if (!event.getButton().equals(MouseButton.SECONDARY)) {
-            movedHexProperty.set(counter.getHex());
-        }
-    }
-
-    @Override
-    public void onMouseEnterCounter(MouseEvent event) {
-        Counter counter = (Counter) event.getTarget();
-        GameData.get().setHexWithMouse(counter.getHex());
-    }
-
-    @Override
-    public void onMouseLeaveCounter(MouseEvent event) {
-        GameData.get().setHexWithMouse(null);
-    }
+//    @Override
+//    public void onClickCounter(MouseEvent event) {
+//        Counter counter = (Counter) event.getTarget();
+//        if (!event.getButton().equals(MouseButton.SECONDARY)) {
+//            movedHexProperty.set(counter.getHex());
+//        }
+//    }
+//
+//    @Override
+//    public void onMouseEnterCounter(MouseEvent event) {
+//        Counter counter = (Counter) event.getTarget();
+//        GameData.get().setHexWithMouse(counter.getHex());
+//    }
+//
+//    @Override
+//    public void onMouseLeaveCounter(MouseEvent event) {
+//        GameData.get().setHexWithMouse(null);
+//    }
 }

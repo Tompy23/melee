@@ -30,7 +30,7 @@ public class CommonGameStateImpl extends AbstractGameState {
             }
         }
         if (hexCount == 1) {
-            GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.MOVE_1).originHex(originHex).build());
+            GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.MOVE_1).originHex(originHex).build());
         }
     }
 }

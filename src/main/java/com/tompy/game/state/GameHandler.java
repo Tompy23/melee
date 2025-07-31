@@ -5,11 +5,11 @@ import javafx.scene.input.MouseEvent;
 
 public interface GameHandler {
 
-    void onMouseEnterCounter(MouseEvent event);
-
-    void onMouseLeaveCounter(MouseEvent event);
-
-    void onClickCounter(MouseEvent event);
+//    void onMouseEnterCounter(MouseEvent event);
+//
+//    void onMouseLeaveCounter(MouseEvent event);
+//
+//    void onClickCounter(MouseEvent event);
 
     void onClickMove1(ActionEvent event);
 

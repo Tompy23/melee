@@ -13,7 +13,7 @@ public class GameApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.SCENE_CHANGE).stage(stage).properties("first.properties").build());
+        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).stage(stage).properties("first.properties").build());
         new GameTimer().start();
     }
 

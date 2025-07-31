@@ -1,5 +1,6 @@
 package com.tompy.game;
 
+import com.tompy.counter.Counter;
 import com.tompy.counter.CounterFactory;
 import com.tompy.counter.CounterType;
 import com.tompy.game.state.GameStateFactory;
@@ -123,7 +124,7 @@ public class GamePlayControllerImpl implements GamePlayController {
 
     public void handleNextScene(ActionEvent event) {
         String nextScene = (String) GameData.get().getProperty("scene.next");
-        GameStateMachine.get().changeState(GameStateFactory.get().buidler().type(GameStateType.SCENE_CHANGE).properties(nextScene).stage(stage).build());
+        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).properties(nextScene).stage(stage).build());
     }
 
     public void handleZoomIn(ActionEvent event) {
@@ -148,18 +149,24 @@ public class GamePlayControllerImpl implements GamePlayController {
 
     public void handleUnselect(ActionEvent event) {
         // TODO THis is going to go away once we have all the stuff coordinated
-        HexBoard board = GameData.get().getHexBoard();
-        board.unselectAllHexes();
+        // Dangerous for sure
+        GameData.get().getHexBoard().unselectAllHexes();
     }
 
     public void handleAddCounter(ActionEvent event) {
-        CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
+        Counter counter = CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
                 .hex(GameData.get().getHexBoard().getHex(0, 0)).movement(6).build();
+        counter.setOnMouseClicked(counter::handleClick);
+        counter.setOnMouseEntered(counter::handleEnter);
+        counter.setOnMouseExited(counter::handleExit);
     }
 
     public void handleAddCounter2(ActionEvent event) {
-        CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator2.png")
+        Counter counter = CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator2.png")
                 .hex(GameData.get().getHexBoard().getHex(4, 2)).movement(5).build();
+        counter.setOnMouseClicked(counter::handleClick);
+        counter.setOnMouseEntered(counter::handleEnter);
+        counter.setOnMouseExited(counter::handleExit);
     }
 
     public void handleMove1(ActionEvent event) {

@@ -6,15 +6,26 @@ import com.tompy.hexboard.Hex;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public class CounterStateCommonImpl extends AbstractCounterState {
+public class CounterStateSelectedImpl extends AbstractCounterState {
 
-    public CounterStateCommonImpl(Counter counter) {
+    public CounterStateSelectedImpl(Counter counter) {
         this.counter = counter;
     }
 
     @Override
+    public void beginState() {
+        counter.setStrokeWidth(5);
+        counter.setStroke(Color.GREEN);
+    }
+
+    public void endState() {
+        counter.setStroke(Color.TRANSPARENT);
+    }
+
+    @Override
     public void handleClick(MouseEvent event) {
-        turnSelected();
+        returnToCommon();
+
         Hex hex = counter.getHex();
 
         int clicks = event.getClickCount();
@@ -26,12 +37,12 @@ public class CounterStateCommonImpl extends AbstractCounterState {
             }
 
             if (hex.isCountersStacked()) {
-                selectAllCountersInHex(hex);
+                unselectAllCountersInHex(hex);
             } else {
                 if (!control) {
                     unselectAllCountersInHex(hex);
                 }
-                counter.select();
+                counter.unselect();
             }
         } else {
             if (clicks == 2) {
@@ -39,7 +50,7 @@ public class CounterStateCommonImpl extends AbstractCounterState {
                     hex.unstackCounters();
                 } else {
                     hex.stackCounters();
-                    unselectAllCountersInHex(hex);
+                    selectAllCountersInHex(hex);
                 }
             }
         }
@@ -47,22 +58,16 @@ public class CounterStateCommonImpl extends AbstractCounterState {
     }
 
     @Override
-    public void handleEnter(MouseEvent event) {
-        counter.setStrokeWidth(3);
-        counter.setStroke(Color.BLACK);
+    public void unselect() {
+        returnToCommon();
+    }
+
+    private void returnToCommon() {
+        counter.changeState(CounterStateFactory.builder().type(CounterStateType.COMMON).counter(counter).build());
     }
 
     @Override
-    public void handleExit(MouseEvent event) {
-        counter.setStroke(Color.TRANSPARENT);
-    }
-
-    @Override
-    public void select() {
-        turnSelected();
-    }
-
-    private void turnSelected() {
-        counter.changeState(CounterStateFactory.builder().type(CounterStateType.SELECTED).counter(counter).build());
+    public boolean isSelected() {
+        return true;
     }
 }

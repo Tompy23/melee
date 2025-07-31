@@ -13,8 +13,8 @@ public class GameStateFactory {
         return singletonGameStateFactory;
     }
 
-    public GameStateBuilder buidler() {
-        return new GameStateBuilder(this);
+    public static GameStateBuilder buidler() {
+        return new GameStateBuilder();
     }
 
     private GameState create(GameStateBuilder builder) {
@@ -39,8 +39,8 @@ public class GameStateFactory {
         private Stage stage;
         private Hex originHex;
 
-        public GameStateBuilder(GameStateFactory factory) {
-            this.factory = factory;
+        public GameStateBuilder() {
+            this.factory = GameStateFactory.get();
         }
 
         public GameStateBuilder type(GameStateType type) {
