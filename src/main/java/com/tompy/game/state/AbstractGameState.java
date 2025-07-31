@@ -28,7 +28,7 @@ public abstract class AbstractGameState implements GameState {
         Counter counter = (Counter) event.getTarget();
 
         GameFunction.enterCounterSetProperties(counter);
-        GameFunction.enterHexSetProperties(counter.getHex());
+        counter.getHex().handleEnter(event);
 
         GameData.get().setHexWithMouse(counter.getHex());
     }
@@ -38,7 +38,7 @@ public abstract class AbstractGameState implements GameState {
         Counter counter = (Counter) event.getTarget();
 
         GameFunction.exitCounterSetProperties(counter);
-        GameFunction.exitHexSetProperties(counter.getHex());
+        counter.getHex().handleExit(event);
 
         GameData.get().setHexWithMouse(null);
     }

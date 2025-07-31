@@ -166,7 +166,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     }
 
     public void handleClick(MouseEvent event) {
-        System.out.println("Hex::click");
         currentState.handleClick();
     }
 

@@ -1,46 +1,15 @@
 package com.tompy.game.event;
 
-import com.tompy.game.GameData;
 import com.tompy.counter.Counter;
+import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameFunction {
-
-    public static void enterHexSetProperties(Hex hex) {
-        hex.setOpacity(.5);
-        hex.setFill(Color.BLUE);
-    }
-
-    public static void exitHexSetProperties(Hex hex) {
-        if (hex.isSelected()) {
-            hex.setFill(Color.GREEN);
-        } else {
-            hex.setFill(Color.TRANSPARENT);
-        }
-    }
-
-    public static void removeText(String hexId) {
-        GameData.get().getController().getTextPane().getChildren().stream().filter(n -> n.getId().equals(hexId)).findFirst().ifPresent(value -> GameData.get().getController().getTextPane().getChildren().remove(value));
-    }
-
-    public static void showTextHex(Hex hex, String display) {
-        removeText(hex.getCoordinate().toString());
-        Pane hexTextPane = GameData.get().getController().getTextPane();
-        Text text = new Text();
-        text.setStyle("-fx-font: 16 arial;");
-        text.setText(display);
-        text.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (-2 + text.getLayoutBounds().getWidth() / 2.0));
-        text.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() + 20);
-        text.setId(hex.getCoordinate().toString());
-        hexTextPane.getChildren().add(text);
-    }
 
     public static void displayCountersInHex(Hex hex) {
         List<Node> toRemove = new ArrayList<>();
@@ -61,16 +30,20 @@ public class GameFunction {
                 Counter counter = counters.getFirst();
                 counter.setWidth(counter.getImage().getWidth());
                 counter.setHeight(counter.getImage().getHeight());
-                counter.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2));
-                counter.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2));
+                counter.setX(
+                        hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2));
+                counter.setY(
+                        hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2));
                 GameData.get().getController().getHexBoardPane().getChildren().add(counter);
             } else {
                 long offset = 0;
                 for (Counter counter : counters) {
                     counter.setWidth(counter.getImage().getWidth());
                     counter.setHeight(counter.getImage().getHeight());
-                    counter.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2) + offset);
-                    counter.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2) - offset);
+                    counter.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage()
+                            .getWidth() / 2) + offset);
+                    counter.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage()
+                            .getHeight() / 2) - offset);
                     if (hex.isCountersStacked()) {
                         offset += 8;
                     } else {

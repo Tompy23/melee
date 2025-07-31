@@ -44,7 +44,6 @@ public class Move1StateImpl extends AbstractGameState {
     @Override
     public void process(long l) {
         if (movedHexProperty.isChanged()) {
-            System.out.println("moving");
             Hex movedHex = movedHexProperty.get();
             currentHex.stackCounters();
             movedHex.stackCounters();
