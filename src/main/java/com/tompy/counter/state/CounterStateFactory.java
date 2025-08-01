@@ -18,13 +18,14 @@ public class CounterStateFactory {
     }
 
 
-
     public CounterState create(CounterStateBuilder builder) {
-        switch(builder.type) {
+        switch (builder.type) {
             case COMMON:
                 return new CounterStateCommonImpl(builder.counter);
             case SELECTED:
                 return new CounterStateSelectedImpl(builder.counter);
+            case NO_CLICK_WRAPPER:
+                return new CounterStateNoClickWrapperStateImpl(builder.counter, builder.previousState);
             default:
                 return null;
         }
@@ -34,6 +35,7 @@ public class CounterStateFactory {
         private CounterStateFactory factory;
         private CounterStateType type;
         private Counter counter;
+        private CounterState previousState;
 
         public CounterStateBuilder() {
             this.factory = CounterStateFactory.get();
@@ -46,6 +48,11 @@ public class CounterStateFactory {
 
         public CounterStateBuilder counter(Counter counter) {
             this.counter = counter;
+            return this;
+        }
+
+        public CounterStateBuilder previousState(CounterState previousState) {
+            this.previousState = previousState;
             return this;
         }
 

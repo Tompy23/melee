@@ -32,4 +32,9 @@ public abstract class AbstractHexStateDecorator extends AbstractHexState {
     public void handleExit() {
         wrappedState.handleExit();
     }
+
+    @Override
+    public boolean isSelected() {
+        return wrappedState.isSelected();
+    }
 }

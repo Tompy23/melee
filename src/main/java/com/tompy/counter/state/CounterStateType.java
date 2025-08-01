@@ -2,5 +2,6 @@ package com.tompy.counter.state;
 
 public enum CounterStateType {
     COMMON,
-    SELECTED
+    SELECTED,
+    NO_CLICK_WRAPPER
 }

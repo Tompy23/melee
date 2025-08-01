@@ -34,4 +34,9 @@ public abstract class AbstractHexState implements HexState {
     public void process(long l) {
 
     }
+
+    @Override
+    public boolean isSelected() {
+        return false;
+    }
 }

@@ -54,7 +54,7 @@ public abstract class AbstractCounterState implements CounterState {
         return false;
     }
 
-    public void unselectAllCountersOutsideHex(Hex otherHex) {
+    protected void unselectAllCountersOutsideHex(Hex otherHex) {
         for (Hex hex : GameData.get().getHexBoard().getHexes()) {
             if (otherHex != null && !hex.equals(otherHex)) {
                 hex.getCounters().forEach(Counter::unselect);
@@ -62,13 +62,13 @@ public abstract class AbstractCounterState implements CounterState {
         }
     }
 
-    public void selectAllCountersInHex(Hex hex) {
+    protected void selectAllCountersInHex(Hex hex) {
         if (hex != null) {
             hex.getCounters().forEach(Counter::select);
         }
     }
 
-    public void unselectAllCountersInHex(Hex hex) {
+    protected void unselectAllCountersInHex(Hex hex) {
         if (hex != null) {
             hex.getCounters().forEach(Counter::unselect);
         }

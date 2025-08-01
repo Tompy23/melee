@@ -19,33 +19,21 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     private final long entryCost;
     private final PaneCoordinates paneCoordinates;
     private final GameData gameData;
-    private boolean selected;
-    private boolean hasMouse;
     private boolean countersStacked;
     private HexState currentState;
 
     private Hex(Builder builder) {
         super(builder.coordinates);
         coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
-        selected = false;
         counters = new ArrayList<>();
         countersStacked = true;
         this.entryCost = builder.entryCost;
-        this.hasMouse = false;
         this.paneCoordinates = builder.paneCoordinates;
         this.gameData = builder.gameData;
     }
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    public void select() {
-        selected = true;
-    }
-
-    public void unselect() {
-        selected = false;
     }
 
     public PaneCoordinates getPaneCoordinates() {
@@ -86,7 +74,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     }
 
     public boolean isSelected() {
-        return selected;
+        return currentState.isSelected();
     }
 
     public List<Counter> getCounters() {
@@ -154,10 +142,19 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     }
 
     @Override
+    public void continueState(HexState newState) {
+        if (currentState != null) {
+            currentState.endState();
+        }
+        currentState = newState;
+    }
+
+    @Override
     public void process(long l) {
         if (currentState != null) {
             currentState.process(l);
         }
+        counters.forEach(c -> c.process(l));
     }
 
     @Override

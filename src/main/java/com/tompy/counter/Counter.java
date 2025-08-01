@@ -40,11 +40,6 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
         setOnMouseExited(this::handleExit);
 
         changeState(CounterStateFactory.builder().type(CounterStateType.COMMON).counter(this).build());
-
-//        GameStateMachine gsm = GameStateMachine.get();
-//        this.setOnMouseEntered(gsm::onMouseEnterCounter);
-//        this.setOnMouseExited(gsm::onMouseLeaveCounter);
-//        this.setOnMouseClicked(gsm::onClickCounter);
     }
 
     public static Builder builder() {
@@ -112,6 +107,14 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
         if (currentState != null) {
             currentState.beginState();
         }
+    }
+
+    @Override
+    public void continueState(CounterState newState){
+        if (currentState != null) {
+            currentState.endState();
+        }
+        currentState = newState;
     }
 
     @Override

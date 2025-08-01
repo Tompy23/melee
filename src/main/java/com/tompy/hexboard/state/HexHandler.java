@@ -6,4 +6,6 @@ public interface HexHandler {
     void handleEnter();
 
     void handleExit();
+
+    boolean isSelected();
 }

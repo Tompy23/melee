@@ -45,4 +45,9 @@ public class HexStateSelectedImpl extends AbstractHexStateDecorator {
     public void handleEnter() {
 
     }
+
+    @Override
+    public boolean isSelected() {
+        return true;
+    }
 }

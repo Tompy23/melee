@@ -92,23 +92,4 @@ public class Move1StateImpl extends AbstractGameState {
         GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(
                 HexStateFactory.builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
     }
-
-//    @Override
-//    public void onClickCounter(MouseEvent event) {
-//        Counter counter = (Counter) event.getTarget();
-//        if (!event.getButton().equals(MouseButton.SECONDARY)) {
-//            movedHexProperty.set(counter.getHex());
-//        }
-//    }
-//
-//    @Override
-//    public void onMouseEnterCounter(MouseEvent event) {
-//        Counter counter = (Counter) event.getTarget();
-//        GameData.get().setHexWithMouse(counter.getHex());
-//    }
-//
-//    @Override
-//    public void onMouseLeaveCounter(MouseEvent event) {
-//        GameData.get().setHexWithMouse(null);
-//    }
 }

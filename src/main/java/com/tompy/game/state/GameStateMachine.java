@@ -36,21 +36,6 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
         return false;
     }
 
-//    @Override
-//    public void onMouseEnterCounter(MouseEvent event) {
-//        currentState.onMouseEnterCounter(event);
-//    }
-//
-//    @Override
-//    public void onMouseLeaveCounter(MouseEvent event) {
-//        currentState.onMouseLeaveCounter(event);
-//    }
-//
-//    @Override
-//    public void onClickCounter(MouseEvent event) {
-//        currentState.onClickCounter(event);
-//    }
-
     @Override
     public void onClickMove1(ActionEvent event) {
         currentState.onClickMove1(event);

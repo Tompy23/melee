@@ -11,6 +11,14 @@ public interface StateMachine<T extends State> {
     void changeState(T newState);
 
     /**
+     * Returns the machine to a previous state but does not execute begin/end.
+     * Careful with this one.
+     *
+     * @param newState
+     */
+    void continueState(T newState);
+
+    /**
      * Called from the thread
      * @param l - The time since last call
      */

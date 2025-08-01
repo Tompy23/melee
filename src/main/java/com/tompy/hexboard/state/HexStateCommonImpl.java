@@ -12,12 +12,10 @@ public class HexStateCommonImpl extends AbstractHexState {
     @Override
     public void handleClick() {
         if (hex.isSelected()) {
-            hex.unselect();
             hex.changeState(
-                    HexStateFactory.get().builder().type(HexStateType.COMMON).hex(hex).switch1(false).build());
+                    HexStateFactory.builder().type(HexStateType.COMMON).hex(hex).switch1(false).build());
         } else {
-            hex.select();
-            hex.changeState(HexStateFactory.get().builder().type(HexStateType.SELECTED).hex(hex).switch1(true)
+            hex.changeState(HexStateFactory.builder().type(HexStateType.SELECTED).hex(hex).switch1(true)
                     .initialColor(Color.GREEN).secondaryColor(Color.TRANSPARENT).opaqueness(0.5)
                     .style("-fx-font: 10 arial;").xOffset(-2).yOffset(20).display(hex.getCoordinate().toString())
                     .build());
