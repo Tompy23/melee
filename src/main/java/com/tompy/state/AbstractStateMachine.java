@@ -18,6 +18,11 @@ public abstract class AbstractStateMachine<T extends State> implements StateMach
     }
 
     @Override
+    public T getCurrentState() {
+        return currentState;
+    }
+
+    @Override
     public void process(long l) {
         if (currentState != null) {
             currentState.process(l);

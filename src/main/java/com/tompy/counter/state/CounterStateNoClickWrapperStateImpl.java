@@ -4,11 +4,10 @@ import com.tompy.counter.Counter;
 import javafx.scene.input.MouseEvent;
 
 public class CounterStateNoClickWrapperStateImpl extends AbstractCounterStateDecorator {
-    private CounterState previousState;
 
     public CounterStateNoClickWrapperStateImpl(Counter counter, CounterState previousState) {
         this.counter = counter;
-        this.previousState = previousState;
+        this.counter.setPreviousState(previousState);
         this.wrappedState = previousState;
     }
 
@@ -19,7 +18,8 @@ public class CounterStateNoClickWrapperStateImpl extends AbstractCounterStateDec
 
     @Override
     public void handleClick(MouseEvent event) {
-
+        Counter counter = (Counter) event.getTarget();
+        counter.getHex().handleClick(event);
     }
 
     @Override

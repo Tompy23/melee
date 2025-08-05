@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 public class Counter extends Rectangle implements StateMachine<CounterState> {
     private static long idIndex = 0;
     private CounterState currentState;
+    private CounterState previousState;
     private final long id;
     private final Image image;
     private Hex hex;
@@ -118,6 +119,11 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
     }
 
     @Override
+    public CounterState getCurrentState() {
+        return currentState;
+    }
+
+    @Override
     public void process(long l) {
         if (currentState != null) {
             currentState.process(l);
@@ -146,6 +152,14 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
         public Counter build() {
             return new Counter(this);
         }
+    }
+
+    public CounterState getPreviousState() {
+        return previousState;
+    }
+
+    public void setPreviousState(CounterState previousState) {
+        this.previousState = previousState;
     }
 
     public void handleClick(MouseEvent event) {

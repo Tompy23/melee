@@ -19,6 +19,13 @@ public interface StateMachine<T extends State> {
     void continueState(T newState);
 
     /**
+     * Return the current state
+     *
+     * @return current state
+     */
+    T getCurrentState();
+
+    /**
      * Called from the thread
      * @param l - The time since last call
      */

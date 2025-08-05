@@ -150,6 +150,11 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     }
 
     @Override
+    public HexState getCurrentState() {
+        return currentState;
+    }
+
+    @Override
     public void process(long l) {
         if (currentState != null) {
             currentState.process(l);

@@ -73,4 +73,5 @@ public abstract class AbstractCounterState implements CounterState {
             hex.getCounters().forEach(Counter::unselect);
         }
     }
+
 }

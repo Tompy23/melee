@@ -127,6 +127,11 @@ public class HexBoard implements StateMachine<State> {
     }
 
     @Override
+    public State getCurrentState() {
+        return currentState;
+    }
+
+    @Override
     public void process(long l) {
         if (currentState != null) {
             currentState.process(l);
