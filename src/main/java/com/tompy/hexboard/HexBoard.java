@@ -18,11 +18,10 @@ public class HexBoard implements StateMachine<State> {
     private final int width;
     private final List<Hex> hexes;
     private final Map<HexCoordinate, Hex> hexMap;
-    private final GameData gameData;
     private State currentState;
 
     public HexBoard(Builder builder) {
-        this.gameData = builder.gameData;
+        GameData gameData = builder.gameData;
         this.border = builder.border;
         this.pixelSize = builder.pixelSize;
         this.height = builder.height;

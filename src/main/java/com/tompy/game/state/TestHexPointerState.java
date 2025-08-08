@@ -29,10 +29,9 @@ public class TestHexPointerState extends AbstractGameState {
 
     @Override
     public void process(long l) {
-        DoubleCubeCoordinate dcc = new DoubleCubeCoordinate(GameData.get().getMouseX(), GameData.get().getMouseY());
         Hex hex = HexFunction.pixelToHex(GameData.get().getMouseX(), GameData.get().getMouseY());
-        //System.out.println((currentHex != null ? currentHex.toString() : "NULL") + " /// " + hex.toString());
-        if (hex != currentHex) {
+
+        if (hex != currentHex && hex != null) {
             if (currentHex != null) {
                 currentHex.setFill(Color.TRANSPARENT);
             }
@@ -40,30 +39,12 @@ public class TestHexPointerState extends AbstractGameState {
             hex.setFill(Color.BLACK);
             currentHex = hex;
         }
-
-
-        //        StringBuilder sb = new StringBuilder();
-        //        sb.append(GameData.get().getMouseX()).append(" : ").append(GameData.get().getMouseY());
-        //        System.out.println(sb.toString());
-
-        if (start == 0) {
-            start = l;
-        }
-        if (l - start > 10000) {
-            //GameStateMachine.get().changeState(StateFactory.get().buidler().type(StateType.COMMON).build());
-        }
-
     }
 
     @Override
     public void onMouseMove(MouseEvent event) {
-        System.out.println("TEST HEX");
-        //GameData.get().setMousePointer(event.getSceneX(), event.getSceneY());
         Point2D point = GameData.get().getController().getHexBoardPane()
                 .sceneToLocal(event.getSceneX(), event.getSceneY());
         GameData.get().setMousePointer(point.getX(), point.getY());
-        StringBuilder sb = new StringBuilder();
-        sb.append("MOUSE:  ").append(GameData.get().getMouseX()).append(" : ").append(GameData.get().getMouseY());
-        System.out.println(sb.toString());
     }
 }

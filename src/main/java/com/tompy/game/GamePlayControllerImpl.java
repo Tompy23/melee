@@ -87,7 +87,7 @@ public class GamePlayControllerImpl implements GamePlayController {
             hex.setOnMouseEntered(hex::handleEnter);
             hex.setOnMouseExited(hex::handleExit);
             hex.setOnMouseClicked(hex::handleClick);
-            hex.changeState(HexStateFactory.get().builder().type(HexStateType.COMMON).switch1(false).hex(hex).build());
+            hex.changeState(HexStateFactory.builder().type(HexStateType.COMMON).switch1(false).hex(hex).build());
 
             double hexWidth = SQRT3 * board.getPixelSize();
 

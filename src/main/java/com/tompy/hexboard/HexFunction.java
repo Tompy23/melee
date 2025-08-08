@@ -26,6 +26,13 @@ public class HexFunction {
         return returnValue;
     }
 
+    public static long distance2(Hex from, Hex to) {
+        long dcol = Math.abs(from.getCol() - to.getCol());
+        long drow = Math.abs(from.getRow() - to.getRow());
+
+        return drow + Math.max(0, (dcol - drow) / 2);
+    }
+
     public static long distance(Hex from, Hex to) {
         CubeCoordinate cube = cubeSubtract(from, to);
         return Math.max(Math.abs(cube.getQ()), Math.max(Math.abs(cube.getR()), Math.abs(cube.getS())));
@@ -54,22 +61,16 @@ public class HexFunction {
     }
 
     public static Hex pixelToHex(double x, double y) {
+        x -= GameData.get().getHexBoard().getBorder()*1.5;
+        y -= GameData.get().getHexBoard().getBorder();
         x /= GameData.get().getHexBoard().getPixelSize();
         y /= GameData.get().getHexBoard().getPixelSize();
-        DoubleCubeCoordinate cubedCoordinates = new DoubleCubeCoordinate((SQRT3 / 3 * x) - (1.0 / 3) * y, (2.0 / 3) * y,
-                (((-1 * (SQRT3 / 3 * x) - (1.0 / 3) * y)) - (2.0 / 3) * y));
 
-        System.out.println(cubedCoordinates);
-
+        double q = (SQRT3 / 3 * x) - (1.0 / 3) * y;
+        double r = (2.0 / 3) * y;
+        DoubleCubeCoordinate cubedCoordinates = new DoubleCubeCoordinate(q, r, -q - r);
         CubeCoordinate roundCoordinate = cubeRound(cubedCoordinates);
-
-        System.out.println(roundCoordinate);
-
         HexCoordinate hexCoordinate = fromAxial(roundCoordinate);
-
-        System.out.println(hexCoordinate);
-
-        count = 0;
 
         return GameData.get().getHexBoard().getHex(hexCoordinate.getCol(), hexCoordinate.getR());
     }
@@ -85,9 +86,9 @@ public class HexFunction {
         Long r = Math.round(doubleCubeCoordinate.getR());
         Long s = Math.round(doubleCubeCoordinate.getS());
 
-        double qDiff = Math.abs(q.doubleValue() - doubleCubeCoordinate.getQ());
-        double rDiff = Math.abs(r.doubleValue() - doubleCubeCoordinate.getR());
-        double sDiff = Math.abs(s.doubleValue() - doubleCubeCoordinate.getS());
+        double qDiff = Math.abs(q - doubleCubeCoordinate.getQ());
+        double rDiff = Math.abs(r - doubleCubeCoordinate.getR());
+        double sDiff = Math.abs(s - doubleCubeCoordinate.getS());
 
         if (qDiff > rDiff && qDiff > sDiff) {
             q = -r - s;
