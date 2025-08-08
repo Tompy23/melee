@@ -36,6 +36,8 @@ public class HexStateFactory {
                         builder.opaqueness, builder.secondaryColor, builder.hex2);
                 return new HexStateDisplayTextImpl(builder.hex, move1State, builder.style, builder.xOffset,
                         builder.yOffset, builder.display);
+            case NOTHING:
+                return new HexStateNothingImpl();
             default:
                 return null;
         }

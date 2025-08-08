@@ -4,53 +4,11 @@ import com.tompy.counter.Counter;
 import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameFunction {
-
-//    public static void onClickCounter(MouseEvent event) {
-//        Counter counter = (Counter) event.getTarget();
-//        Hex hex = counter.getHex();
-//        if (event.getClickCount() == 1) {
-//            if (!event.isControlDown()) {
-//                GameFunction.unselectAllCountersOutsideHex(hex);
-//            }
-//
-//            if (hex.isCountersStacked()) {
-//                if (counter.isSelected()) {
-//                    GameFunction.unselectAllCountersInHex(hex);
-//                } else {
-//                    GameFunction.selectAllCountersInHex(hex);
-//                }
-//            } else {
-//                if (!event.isControlDown()) {
-//                    GameFunction.unselectAllCountersInHex(hex);
-//                }
-//                if (counter.isSelected()) {
-//                    counter.unselect();
-//                } else {
-//                    counter.select();
-//                }
-//            }
-//        } else {
-//            if (event.getClickCount() == 2) {
-//                if (hex.isCountersStacked()) {
-//                    hex.unstackCounters();
-//                } else {
-//                    hex.stackCounters();
-//                    if (counter.isSelected()) {
-//                        GameFunction.selectAllCountersInHex(hex);
-//                    } else {
-//                        GameFunction.unselectAllCountersInHex(hex);
-//                    }
-//                }
-//            }
-//        }
-//        GameFunction.displayCountersInHex(hex);
-//    }
 
     public static void displayCountersInHex(Hex hex) {
         List<Node> toRemove = new ArrayList<>();
@@ -95,52 +53,4 @@ public class GameFunction {
             }
         }
     }
-
-//    public static void unselectAllCountersOutsideHex(Hex otherHex) {
-//        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
-//            if (otherHex != null && !hex.equals(otherHex)) {
-//                hex.getCounters().forEach(Counter::unselect);
-//            }
-//        }
-//    }
-//
-//    public static void selectAllCountersInHex(Hex hex) {
-//        if (hex != null) {
-//            hex.getCounters().forEach(Counter::select);
-//        }
-//    }
-//
-//    public static void unselectAllCountersInHex(Hex hex) {
-//        if (hex != null) {
-//            hex.getCounters().forEach(Counter::unselect);
-//        }
-//    }
-//
-//    public static void selectCounter(Counter counter) {
-//        counter.select();
-//        counter.setStroke(Color.GREEN);
-//    }
-//
-//    public static void unSelectCounter(Counter counter) {
-//        counter.unselect();
-//        counter.setStroke(Color.TRANSPARENT);
-//    }
-
-//    public static void enterCounterSetProperties(Counter counter) {
-//        if (counter.getHex().isCountersStacked()) {
-//            counter.getHex().getCounters().forEach(c -> c.setStroke(Color.BLACK));
-//        } else {
-//            counter.setStroke(Color.BLACK);
-//        }
-//    }
-//
-//    public static void exitCounterSetProperties(Counter counter) {
-//        for (Counter thisCounter : counter.getHex().getCounters()) {
-//            if (thisCounter.isSelected()) {
-//                thisCounter.setStroke(Color.GREEN);
-//            } else {
-//                thisCounter.setStroke(Color.TRANSPARENT);
-//            }
-//        }
-//    }
 }

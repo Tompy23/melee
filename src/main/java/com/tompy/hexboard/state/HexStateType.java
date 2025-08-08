@@ -4,5 +4,6 @@ public enum HexStateType {
     COMMON,
     SELECTED,
     MOVE1,
-    MOVE1_NEIGHBOR
+    MOVE1_NEIGHBOR,
+    NOTHING
 }

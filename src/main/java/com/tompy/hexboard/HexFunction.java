@@ -10,6 +10,8 @@ public class HexFunction {
 
     private final static int[] directionVector = new int[]{2, 0, 1, -1, -1, -1, -2, 0, -1, 1, 1, 1};
 
+    private static int count = 0;
+
     public static List<Hex> getNeighbors(Hex hex) {
         List<Hex> returnValue = new ArrayList<>();
         for (int i = 0; i < 12; i += 2) {
@@ -56,11 +58,19 @@ public class HexFunction {
         y /= GameData.get().getHexBoard().getPixelSize();
         DoubleCubeCoordinate cubedCoordinates = new DoubleCubeCoordinate((SQRT3 / 3 * x) - (1.0 / 3) * y, (2.0 / 3) * y,
                 (((-1 * (SQRT3 / 3 * x) - (1.0 / 3) * y)) - (2.0 / 3) * y));
+
         System.out.println(cubedCoordinates);
+
         CubeCoordinate roundCoordinate = cubeRound(cubedCoordinates);
+
         System.out.println(roundCoordinate);
+
         HexCoordinate hexCoordinate = fromAxial(roundCoordinate);
+
         System.out.println(hexCoordinate);
+
+        count = 0;
+
         return GameData.get().getHexBoard().getHex(hexCoordinate.getCol(), hexCoordinate.getR());
     }
 
@@ -90,7 +100,6 @@ public class HexFunction {
         }
 
         return new CubeCoordinate(q, r, s);
-
     }
 
     public static CubeCoordinate toAxial(HexCoordinate coordinate) {
