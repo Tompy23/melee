@@ -36,6 +36,8 @@ public class HexStateFactory {
                         builder.opaqueness, builder.secondaryColor, builder.hex2);
                 return new HexStateDisplayTextImpl(builder.hex, move1State, builder.style, builder.xOffset,
                         builder.yOffset, builder.display);
+            case DRAW_LINE:
+                return new HexStateDrawLineImpl(builder.hex, builder.hex2, builder.hex3);
             case NOTHING:
                 return new HexStateNothingImpl();
             default:
@@ -47,6 +49,7 @@ public class HexStateFactory {
         private HexStateFactory hexStateFactory;
         private Hex hex;
         private GameProperty<Hex> hex2;
+        private GameProperty<Hex> hex3;
         private HexStateType type;
         private Color initialColor;
         private Color secondaryColor;
@@ -69,6 +72,11 @@ public class HexStateFactory {
 
         public HexStateBuilder hex2(GameProperty<Hex> hex2) {
             this.hex2 = hex2;
+            return this;
+        }
+
+        public HexStateBuilder hex3(GameProperty<Hex> hex3) {
+            this.hex3 = hex3;
             return this;
         }
 

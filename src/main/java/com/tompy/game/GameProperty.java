@@ -21,6 +21,10 @@ public class GameProperty<T> {
         return value;
     }
 
+    public T peek() {
+        return value;
+    }
+
     public boolean isChanged() {
         return isChanged;
     }

@@ -33,8 +33,8 @@ public class Move1StateImpl extends AbstractGameState {
     @Override
     public void beginState() {
         counters.forEach(Counter::resetMovementExpended);
-        GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.get().builder().hex(h).type(HexStateType.MOVE1).build()));
-        neighbors.forEach(n -> n.changeState(HexStateFactory.get().builder().hex(n).type(HexStateType.MOVE1_NEIGHBOR).initialColor(Color.GRAY).opaqueness(0.5).secondaryColor(Color.CHOCOLATE).gameState(this).hex2(movedHexProperty).style("-fx-font: 16 arial;").xOffset(-2).yOffset(20).display(addMovementPointText(n)).build()));
+        GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.MOVE1).build()));
+        neighbors.forEach(n -> n.changeState(HexStateFactory.builder().hex(n).type(HexStateType.MOVE1_NEIGHBOR).initialColor(Color.GRAY).opaqueness(0.5).secondaryColor(Color.CHOCOLATE).gameState(this).hex2(movedHexProperty).style("-fx-font: 16 arial;").xOffset(-2).yOffset(20).display(addMovementPointText(n)).build()));
         for (Hex hex : GameData.get().getHexBoard().getHexes()) {
             hex.getCounters().forEach(c -> c.changeState(CounterStateFactory.builder().type(CounterStateType.NO_CLICK_WRAPPER).counter(c).previousState(c.getCurrentState()).build()));
         }

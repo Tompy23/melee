@@ -47,6 +47,11 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
     }
 
     @Override
+    public void onClickDrawLine(ActionEvent event) {
+        changeState(GameStateFactory.buidler().type(GameStateType.DRAW_LINE).build());
+    }
+
+    @Override
     public void onMouseMove(MouseEvent event) {
         currentState.onMouseMove(event);
     }

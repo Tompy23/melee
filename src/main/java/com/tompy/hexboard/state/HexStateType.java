@@ -5,5 +5,6 @@ public enum HexStateType {
     SELECTED,
     MOVE1,
     MOVE1_NEIGHBOR,
-    NOTHING
+    NOTHING,
+    DRAW_LINE
 }

@@ -38,6 +38,8 @@ public class GamePlayControllerImpl implements GamePlayController {
     private Pane paneText;
     @FXML
     private Button btnMove1;
+    @FXML
+    private Button btnDrawLine;
 
     //private double zoom = 1.0;
 
@@ -179,5 +181,9 @@ public class GamePlayControllerImpl implements GamePlayController {
 
     public void handleMouseMove(MouseEvent event) {
         GameStateMachine.get().onMouseMove(event);
+    }
+
+    public void handleDrawLine(ActionEvent event) {
+        GameStateMachine.get().onClickDrawLine(event);
     }
 }

@@ -27,6 +27,8 @@ public class GameStateFactory {
                 return new Move1StateImpl(builder.originHex);
             case TEST_POINTER:
                 return new TestHexPointerState();
+            case DRAW_LINE:
+                return new DrawLineGameStateImpl();
             default:
                 return null;
         }

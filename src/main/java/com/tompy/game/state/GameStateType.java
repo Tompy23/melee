@@ -4,5 +4,6 @@ public enum GameStateType {
     COMMON,
     SCENE_CHANGE,
     MOVE_1,
-    TEST_POINTER
+    TEST_POINTER,
+    DRAW_LINE
 }

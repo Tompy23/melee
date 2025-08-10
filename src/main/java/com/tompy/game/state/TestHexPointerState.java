@@ -1,7 +1,6 @@
 package com.tompy.game.state;
 
 import com.tompy.game.GameData;
-import com.tompy.hexboard.DoubleCubeCoordinate;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import com.tompy.hexboard.state.HexStateFactory;

@@ -10,8 +10,6 @@ public class HexFunction {
 
     private final static int[] directionVector = new int[]{2, 0, 1, -1, -1, -1, -2, 0, -1, 1, 1, 1};
 
-    private static int count = 0;
-
     public static List<Hex> getNeighbors(Hex hex) {
         List<Hex> returnValue = new ArrayList<>();
         for (int i = 0; i < 12; i += 2) {
@@ -40,15 +38,6 @@ public class HexFunction {
 
     private static CubeCoordinate cubeSubtract(Hex a, Hex b) {
         return new CubeCoordinate(a.getQ() - b.getQ(), a.getR() - b.getR(), a.getS() - b.getS());
-    }
-
-    public static List<Hex> lineDraw(Hex from, Hex to) {
-        List<Hex> returnValue = new ArrayList<>();
-        long distance = distance(from, to);
-        for (int i = 0; i < distance; i++) {
-
-        }
-        return returnValue;
     }
 
     private static long lerp(long a, long b, long t) {

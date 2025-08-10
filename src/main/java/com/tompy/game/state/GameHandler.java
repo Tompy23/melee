@@ -16,4 +16,6 @@ public interface GameHandler {
     void onClickTestPointer(ActionEvent event);
 
     void onMouseMove(MouseEvent event);
+
+    void onClickDrawLine(ActionEvent event);
 }
