@@ -1,5 +1,6 @@
 package com.tompy.game;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tompy.counter.Counter;
 import com.tompy.counter.CounterFactory;
 import com.tompy.counter.CounterType;
@@ -10,6 +11,7 @@ import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
 import com.tompy.hexboard.state.HexStateFactory;
 import com.tompy.hexboard.state.HexStateType;
+import com.tompy.hexboard.terrain.LayoutDescription;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,6 +23,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class GamePlayControllerImpl implements GamePlayController {
     private static final double SQRT3 = Math.sqrt(3);
@@ -55,6 +60,15 @@ public class GamePlayControllerImpl implements GamePlayController {
     @Override
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    @Override
+    public void drawHexBoardWithLayout() {
+        drawHexBoard();
+
+//        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+//            paneHexDecorator.getChildren().add(hex.fillTerrain());
+//        }
     }
 
     @Override
@@ -99,6 +113,8 @@ public class GamePlayControllerImpl implements GamePlayController {
             double x = board.getBorder() + j / 2.0 * hexWidth;
             double y = board.getBorder() + (i * 1.5 * board.getPixelSize());
 
+            paneHexDecorator.getChildren().add(hex.fillTerrain());
+
             Circle c = new Circle();
             c.setCenterX(x + hexWidth / 2);
             c.setCenterY(y);
@@ -130,17 +146,17 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleZoomIn(ActionEvent event) {
-        double zoom = gameData.getZoom();
+        double zoom = stackBoard.getScaleX();
         zoom += .1;
-        if (zoom > 2.0) {
-            zoom = 2.0;
+        if (zoom > 1.0) {
+            zoom = 1.0;
         }
         stackBoard.setScaleX(zoom);
         stackBoard.setScaleY(zoom);
     }
 
     public void handleZoomOut(ActionEvent event) {
-        double zoom = gameData.getZoom();
+        double zoom = stackBoard.getScaleX();
         zoom -= .1;
         if (zoom < 0.3) {
             zoom = 0.3;

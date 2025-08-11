@@ -4,7 +4,7 @@ public class HexCoordinate {
     private final long col;
     private final long row;
 
-    public HexCoordinate(Builder builder) {
+    private HexCoordinate(Builder builder) {
         this.col = builder.col;
         this.row = builder.row;
     }

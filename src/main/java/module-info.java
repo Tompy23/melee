@@ -12,8 +12,10 @@ module com.tompy.game {
     requires com.almasb.fxgl.all;
     requires jdk.xml.dom;
 
-    opens com.tompy.game to javafx.fxml;
+    opens com.tompy.game to javafx.fxml, com.fasterxml.jackson.databind;
     exports com.tompy.game;
     exports com.tompy.game.state;
     opens com.tompy.game.state to javafx.fxml;
+    exports com.tompy.hexboard.terrain;
+    opens com.tompy.hexboard.terrain to com.fasterxml.jackson.databind, javafx.fxml;
 }

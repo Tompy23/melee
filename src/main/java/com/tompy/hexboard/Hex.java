@@ -5,6 +5,7 @@ import com.tompy.game.GameData;
 import com.tompy.game.PaneCoordinates;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.state.HexState;
+import com.tompy.hexboard.terrain.Terrain;
 import com.tompy.state.StateMachine;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
@@ -15,21 +16,25 @@ import java.util.List;
 
 public class Hex extends Polygon implements StateMachine<HexState> {
     private final HexCoordinate coordinate;
+    private final double[] polygonCoordinates;
     private final List<Counter> counters;
     private final long entryCost;
     private final PaneCoordinates paneCoordinates;
     private final GameData gameData;
     private boolean countersStacked;
     private HexState currentState;
+    private Terrain terrain;
 
     private Hex(Builder builder) {
         super(builder.coordinates);
+        polygonCoordinates = builder.coordinates;
         coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
         counters = new ArrayList<>();
         countersStacked = true;
         this.entryCost = builder.entryCost;
         this.paneCoordinates = builder.paneCoordinates;
         this.gameData = builder.gameData;
+        this.terrain = builder.terrain;
     }
 
     public static Builder builder() {
@@ -66,7 +71,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     }
 
     public long getEntryCost() {
-        return entryCost;
+        return terrain.getEntryCost();
     }
 
     public HexCoordinate getCoordinate() {
@@ -112,6 +117,21 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         counters.removeAll(countersToRemove);
 
         GameFunction.displayCountersInHex(this);
+    }
+
+    public Terrain getTerrain() {
+        return terrain;
+    }
+
+    public Polygon fillTerrain() {
+        Polygon p = new Polygon(polygonCoordinates);
+        p.setOpacity(1.0);
+        p.setFill(terrain.fill());
+        return p;
+    }
+
+    public double[] getPolygonCoordinates() {
+        return polygonCoordinates;
     }
 
     @Override
@@ -186,6 +206,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         private PaneCoordinates paneCoordinates;
         private GameData gameData;
         private long entryCost = 1;
+        private Terrain terrain;
 
         public Builder setCol(int col) {
             this.col = col;
@@ -214,6 +235,11 @@ public class Hex extends Polygon implements StateMachine<HexState> {
 
         public Builder entryCost(long entryCost) {
             this.entryCost = entryCost;
+            return this;
+        }
+
+        public Builder terrain(Terrain terrain) {
+            this.terrain = terrain;
             return this;
         }
 

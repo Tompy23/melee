@@ -4,6 +4,10 @@ import com.tompy.game.GameData;
 import com.tompy.game.PaneCoordinates;
 import com.tompy.hexboard.state.HexStateFactory;
 import com.tompy.hexboard.state.HexStateType;
+import com.tompy.hexboard.terrain.Layout;
+import com.tompy.hexboard.terrain.LayoutDescription;
+import com.tompy.hexboard.terrain.Terrain;
+import com.tompy.hexboard.terrain.TerrainFactory;
 import com.tompy.state.State;
 import com.tompy.state.StateMachine;
 import javafx.scene.paint.Color;
@@ -30,6 +34,8 @@ public class HexBoard implements StateMachine<State> {
         hexes = new ArrayList<>();
         hexMap = new HashMap<>();
 
+        Map<HexCoordinate, Layout> layoutMap = builder.layout;
+
         double[] coordinates = new double[12];
 
         int angle = 30;
@@ -46,6 +52,7 @@ public class HexBoard implements StateMachine<State> {
             for (int j = 0; j < width * 2; j += 2) {
                 int row = i;
                 int col = j;
+                HexCoordinate hexCoordinate = HexCoordinate.builder().setRow(row).setCol(col).build();
 
                 double x = border + j / 2.0 * hexWidth;
                 double y = border + (i * 1.5 * pixelSize);
@@ -61,8 +68,14 @@ public class HexBoard implements StateMachine<State> {
                     finalCoordinates[k + 1] = coordinates[k + 1] + y;
                 }
 
+                Terrain terrain = TerrainFactory.builder().type("CLEAR").entryCost(1).build();
+                Layout layout = layoutMap.get(hexCoordinate);
+                if (layout != null) {
+                    terrain = TerrainFactory.builder().type(layoutMap.get(hexCoordinate).getTerrain()).entryCost(layout.getEntry()).build();
+                }
+
                 Hex hex = Hex.builder().setCol(col).setRow(row).coordinates(finalCoordinates).gameData(gameData)
-                        .paneCoordinates(new PaneCoordinates(x, y)).build();
+                        .paneCoordinates(new PaneCoordinates(x, y)).terrain(terrain).build();
                 hex.setFill(Color.TRANSPARENT);
                 hex.setStroke(Color.BLACK);
                 hex.setStrokeWidth(1.0);
@@ -149,6 +162,7 @@ public class HexBoard implements StateMachine<State> {
         private int height;
         private int width;
         private GameData gameData;
+        private Map<HexCoordinate, Layout> layout;
 
         public Builder border(int border) {
             this.border = border;
@@ -172,6 +186,11 @@ public class HexBoard implements StateMachine<State> {
 
         public Builder gameData(GameData gameData) {
             this.gameData = gameData;
+            return this;
+        }
+
+        public Builder layout(Map<HexCoordinate, Layout> layout) {
+            this.layout = layout;
             return this;
         }
 

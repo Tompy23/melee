@@ -1,0 +1,25 @@
+{
+  "layouts": [
+    {
+      "x": 4,
+      "y": 0,
+      "terrain": "WALL"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "terrain": "WALL"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "terrain": "WALL"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "terrain": "WATER",
+      "entry": 2
+    }
+  ]
+}

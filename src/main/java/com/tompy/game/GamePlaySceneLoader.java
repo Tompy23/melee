@@ -1,5 +1,8 @@
 package com.tompy.game;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tompy.hexboard.Hex;
+import com.tompy.hexboard.terrain.LayoutDescription;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -21,11 +24,28 @@ public class GamePlaySceneLoader {
         stage.setScene(scene);
         stage.show();
 
+        LayoutDescription layoutDescription = null;
+        if (sceneProperties.containsKey("board.layout")) {
+            InputStream boardLayoutStream = getFileFromResourceAsStream(sceneProperties.getProperty("board.layout"));
+            ObjectMapper mapper = new ObjectMapper();
+
+            try {
+                layoutDescription = (LayoutDescription) mapper.readValue(boardLayoutStream, LayoutDescription.class);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+                throw new RuntimeException("Now board layout");
+            }
+        }
+
         GamePlayController gpc = fxmlLoader.getController();
         gpc.setStage(stage);
-        GameData.builder().controller(gpc).properties(sceneProperties).init();
+        GameData.builder().controller(gpc).properties(sceneProperties).layoutMap(layoutDescription == null ? null : layoutDescription.getLayouts()).init();
 
-        gpc.drawHexBoard();
+        if (sceneProperties.containsKey("board.layout")) {
+            gpc.drawHexBoardWithLayout();
+        } else {
+            gpc.drawHexBoard();
+        }
     }
 
     private InputStream getFileFromResourceAsStream(String fileName) {

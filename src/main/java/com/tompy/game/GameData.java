@@ -2,7 +2,10 @@ package com.tompy.game;
 
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
+import com.tompy.hexboard.HexCoordinate;
+import com.tompy.hexboard.terrain.Layout;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -24,7 +27,7 @@ public class GameData {
         int height = Integer.parseInt(properties.getProperty("board.height"));
         int width = Integer.parseInt(properties.getProperty("board.width"));
         int border = Integer.parseInt(properties.getProperty("board.border"));
-        this.hexBoard = HexBoard.builder().pixelSize(pixelSize).height(height).width(width).border(border).gameData(this).build();
+        this.hexBoard = HexBoard.builder().pixelSize(pixelSize).height(height).width(width).border(border).gameData(this).layout(builder.layoutMap).build();
         this.controller.setGameData(this);
         this.zoom = 1.0;
         gameDataSingleton = this;
@@ -87,6 +90,7 @@ public class GameData {
     public static class Builder {
         private GamePlayController controller;
         private Properties properties;
+        private Map<HexCoordinate, Layout> layoutMap;
 
         public Builder controller(GamePlayController controller) {
             this.controller = controller;
@@ -95,6 +99,11 @@ public class GameData {
 
         public Builder properties(Properties properties) {
             this.properties = properties;
+            return this;
+        }
+
+        public Builder layoutMap(Map<HexCoordinate, Layout> layoutMap) {
+            this.layoutMap = layoutMap;
             return this;
         }
 
