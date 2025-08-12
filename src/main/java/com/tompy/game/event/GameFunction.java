@@ -33,6 +33,7 @@ public class GameFunction {
                         hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2));
                 counter.setY(
                         hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2));
+                //counter.handleSelection();
                 GameData.get().getController().getHexBoardPane().getChildren().add(counter);
             } else {
                 long offset = 0;

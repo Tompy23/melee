@@ -21,6 +21,7 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
     private final long id;
     private final Image image;
     private Hex hex;
+    private boolean selected;
 
     private final long movement;
     private long movementExpended;
@@ -56,15 +57,19 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
     }
 
     public boolean isSelected() {
-        return currentState.isSelected();
+        return selected;
     }
 
     public void select() {
-        currentState.select();
+        selected = true;
     }
 
     public void unselect() {
-        currentState.unselect();
+        selected = false;
+    }
+
+    public void toggleSelect() {
+        selected = !selected;
     }
 
     public Hex getHex() {

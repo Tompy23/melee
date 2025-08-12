@@ -12,11 +12,6 @@ public class CounterStateNoClickWrapperStateImpl extends AbstractCounterStateDec
     }
 
     @Override
-    public void process(long l) {
-
-    }
-
-    @Override
     public void handleClick(MouseEvent event) {
         Counter counter = (Counter) event.getTarget();
         counter.getHex().handleClick(event);
@@ -31,15 +26,4 @@ public class CounterStateNoClickWrapperStateImpl extends AbstractCounterStateDec
     public void handleExit(MouseEvent event) {
 
     }
-
-    @Override
-    public void select() {
-
-    }
-
-    @Override
-    public void unselect() {
-
-    }
-
 }

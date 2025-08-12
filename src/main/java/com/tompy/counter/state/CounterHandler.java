@@ -8,10 +8,4 @@ public interface CounterHandler {
     void handleEnter(MouseEvent event);
 
     void handleExit(MouseEvent event);
-
-    void unselect();
-
-    void select();
-
-    boolean isSelected();
 }

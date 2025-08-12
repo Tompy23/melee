@@ -6,17 +6,22 @@ import com.tompy.hexboard.Hex;
 import javafx.event.ActionEvent;
 
 public class CommonGameStateImpl extends AbstractGameState {
-
+    private static long pause = 0;
+    private static final long WAIT = 10000;
     @Override
     public void process(long l) {
-        int hexesSelected = 0;
-        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
-            long selected = hex.getCounters().stream().filter(Counter::isSelected).count();
-            if (selected > 0) {
-                hexesSelected++;
+        if (l > pause) {
+            pause += WAIT;
+
+            int hexesSelected = 0;
+            for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+                long selected = hex.getCounters().stream().filter(Counter::isSelected).count();
+                if (selected > 0) {
+                    hexesSelected++;
+                }
             }
+            GameData.get().getController().enableMove1Button(hexesSelected == 1);
         }
-        GameData.get().getController().enableMove1Button(hexesSelected == 1);
     }
 
     @Override

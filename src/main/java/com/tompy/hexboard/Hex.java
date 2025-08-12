@@ -18,7 +18,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     private final HexCoordinate coordinate;
     private final double[] polygonCoordinates;
     private final List<Counter> counters;
-    private final long entryCost;
     private final PaneCoordinates paneCoordinates;
     private final GameData gameData;
     private boolean countersStacked;
@@ -31,7 +30,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         coordinate = HexCoordinate.builder().setCol(builder.col).setRow(builder.row).build();
         counters = new ArrayList<>();
         countersStacked = true;
-        this.entryCost = builder.entryCost;
         this.paneCoordinates = builder.paneCoordinates;
         this.gameData = builder.gameData;
         this.terrain = builder.terrain;
@@ -205,7 +203,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         private double[] coordinates;
         private PaneCoordinates paneCoordinates;
         private GameData gameData;
-        private long entryCost = 1;
         private Terrain terrain;
 
         public Builder setCol(int col) {
@@ -230,11 +227,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
 
         public Builder gameData(GameData gameData) {
             this.gameData = gameData;
-            return this;
-        }
-
-        public Builder entryCost(long entryCost) {
-            this.entryCost = entryCost;
             return this;
         }
 

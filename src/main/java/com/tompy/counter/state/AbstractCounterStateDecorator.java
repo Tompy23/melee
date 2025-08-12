@@ -19,15 +19,4 @@ public abstract class AbstractCounterStateDecorator extends AbstractCounterState
     public void handleExit(MouseEvent event) {
         wrappedState.handleExit(event);
     }
-
-    @Override
-    public void select() {
-        wrappedState.select();
-    }
-
-    @Override
-    public void unselect() {
-        wrappedState.unselect();
-    }
-
 }

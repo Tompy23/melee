@@ -22,8 +22,6 @@ public class CounterStateFactory {
         switch (builder.type) {
             case COMMON:
                 return new CounterStateCommonImpl(builder.counter);
-            case SELECTED:
-                return new CounterStateSelectedImpl(builder.counter);
             case NO_CLICK_WRAPPER:
                 return new CounterStateNoClickWrapperStateImpl(builder.counter, builder.previousState);
             default:
