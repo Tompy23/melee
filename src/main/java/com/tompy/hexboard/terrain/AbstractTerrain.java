@@ -19,4 +19,14 @@ public abstract class AbstractTerrain implements Terrain {
     public long getEntryCost() {
         return entryCost;
     }
+
+    @Override
+    public boolean noEntry() {
+        return entryCost == -1;
+    }
+
+    @Override
+    public boolean allowLos() {
+        return true;
+    }
 }

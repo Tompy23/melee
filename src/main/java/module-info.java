@@ -11,6 +11,7 @@ module com.tompy.game {
     requires org.kordamp.ikonli.javafx;
     requires com.almasb.fxgl.all;
     requires jdk.xml.dom;
+    requires annotations;
 
     opens com.tompy.game to javafx.fxml, com.fasterxml.jackson.databind;
     exports com.tompy.game;

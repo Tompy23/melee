@@ -29,6 +29,8 @@ public class GameStateFactory {
                 return new TestHexPointerState();
             case DRAW_LINE:
                 return new DrawLineGameStateImpl();
+            case FIND_PATH:
+                return new PathGameStateImpl();
             default:
                 return null;
         }

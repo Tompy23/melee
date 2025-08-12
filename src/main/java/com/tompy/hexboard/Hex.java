@@ -128,6 +128,14 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         return p;
     }
 
+    public boolean allowLos() {
+        return terrain.allowLos();
+    }
+
+    public boolean noEntry() {
+        return terrain.noEntry();
+    }
+
     public double[] getPolygonCoordinates() {
         return polygonCoordinates;
     }

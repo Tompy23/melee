@@ -6,4 +6,8 @@ public interface Terrain {
     Paint fill();
 
     long getEntryCost();
+
+    boolean noEntry();
+
+    boolean allowLos();
 }

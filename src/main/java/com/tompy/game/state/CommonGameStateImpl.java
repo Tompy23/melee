@@ -38,4 +38,9 @@ public class CommonGameStateImpl extends AbstractGameState {
             GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.MOVE_1).originHex(originHex).build());
         }
     }
+
+    @Override
+    public void onClickHandleFindPath(ActionEvent event) {
+
+    }
 }

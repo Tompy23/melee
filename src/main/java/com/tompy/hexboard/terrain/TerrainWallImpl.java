@@ -13,4 +13,14 @@ public class TerrainWallImpl extends AbstractTerrain {
     public Paint fill() {
         return Color.BLACK;
     }
+
+    @Override
+    public boolean allowLos() {
+        return false;
+    }
+
+    @Override
+    public boolean noEntry() {
+        return true;
+    }
 }

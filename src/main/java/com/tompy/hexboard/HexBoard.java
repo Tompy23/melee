@@ -52,7 +52,6 @@ public class HexBoard implements StateMachine<State> {
             for (int j = 0; j < width * 2; j += 2) {
                 int row = i;
                 int col = j;
-                HexCoordinate hexCoordinate = HexCoordinate.builder().setRow(row).setCol(col).build();
 
                 double x = border + j / 2.0 * hexWidth;
                 double y = border + (i * 1.5 * pixelSize);
@@ -61,6 +60,7 @@ public class HexBoard implements StateMachine<State> {
                 } else {
                     col--;
                 }
+                HexCoordinate hexCoordinate = HexCoordinate.builder().setRow(row).setCol(col).build();
 
                 double[] finalCoordinates = new double[12];
                 for (int k = 0; k < 12; k += 2) {

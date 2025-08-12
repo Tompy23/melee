@@ -18,4 +18,6 @@ public interface GameHandler {
     void onMouseMove(MouseEvent event);
 
     void onClickDrawLine(ActionEvent event);
+
+    void onClickHandleFindPath(ActionEvent event);
 }

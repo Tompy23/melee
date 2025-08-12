@@ -52,6 +52,11 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
     }
 
     @Override
+    public void onClickHandleFindPath(ActionEvent event) {
+        changeState((GameStateFactory.buidler().type(GameStateType.FIND_PATH).build()));
+    }
+
+    @Override
     public void onMouseMove(MouseEvent event) {
         currentState.onMouseMove(event);
     }

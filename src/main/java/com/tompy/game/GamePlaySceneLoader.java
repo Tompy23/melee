@@ -33,7 +33,7 @@ public class GamePlaySceneLoader {
                 layoutDescription = (LayoutDescription) mapper.readValue(boardLayoutStream, LayoutDescription.class);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
-                throw new RuntimeException("Now board layout");
+                throw new RuntimeException("No board layout");
             }
         }
 

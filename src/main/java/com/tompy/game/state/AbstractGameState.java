@@ -38,4 +38,9 @@ public abstract class AbstractGameState implements GameState {
     public void onClickDrawLine(ActionEvent event) {
 
     }
+
+    @Override
+    public void onClickHandleFindPath(ActionEvent event) {
+        
+    }
 }

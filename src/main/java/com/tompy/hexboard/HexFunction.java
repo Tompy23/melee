@@ -16,7 +16,7 @@ public class HexFunction {
             long x = hex.getCoordinate().getCol() + directionVector[i];
             long y = hex.getCoordinate().getR() + directionVector[i + 1];
             Hex neighbor = GameData.get().getHexBoard().getHex(x, y);
-            if (neighbor != null) {
+            if (neighbor != null && !neighbor.noEntry()) {
                 returnValue.add(neighbor);
             }
         }

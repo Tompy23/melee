@@ -202,4 +202,8 @@ public class GamePlayControllerImpl implements GamePlayController {
     public void handleDrawLine(ActionEvent event) {
         GameStateMachine.get().onClickDrawLine(event);
     }
+
+    public void handleFindPath(ActionEvent event) {
+        GameStateMachine.get().onClickHandleFindPath(event);
+    }
 }

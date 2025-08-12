@@ -5,5 +5,6 @@ public enum GameStateType {
     SCENE_CHANGE,
     MOVE_1,
     TEST_POINTER,
-    DRAW_LINE
+    DRAW_LINE,
+    FIND_PATH
 }
