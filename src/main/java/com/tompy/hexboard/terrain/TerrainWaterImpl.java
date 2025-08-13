@@ -15,6 +15,11 @@ public class TerrainWaterImpl extends AbstractTerrain {
     }
 
     @Override
+    public long getEntryCost() {
+        return 2;
+    }
+
+    @Override
     public Paint fill() {
         ImagePattern pattern = new ImagePattern(image);
         return pattern;

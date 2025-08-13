@@ -5,6 +5,7 @@ import com.tompy.game.GameData;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import javafx.scene.Node;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -54,50 +55,33 @@ public class GameFunction {
         }
     }
 
-    public static List<Hex> findPath(Hex start, Hex target) {
-        Map<Hex, Hex> parentMap = new HashMap<>();
-        Set<Hex> visited = new HashSet<>();
-        Map<Hex, Long> distances = new HashMap<>();
-        GameData.get().getHexBoard().getHexes().forEach(h -> distances.put(h, Long.MAX_VALUE));
-        PriorityQueue<Hex> priorityQueue = new PriorityQueue<>(HexPriorityComparator::hexPriorityCompare);
-        priorityQueue.add(start);
-        distances.put(start, 0L);
-        HexPriorityComparator.startHex = start;
-        Hex current = null;
+    public static List<Hex> bfsFindPathCost(Hex start, Hex target) {
+        Map<Hex, Hex> cameFrom = new HashMap<>();
+        PriorityQueue<HexNode> grid = new PriorityQueue<>();
+        HexNode startNode = new HexNode(start, 0L);
+        grid.add(startNode);
+        cameFrom.put(start, null);
+        Map<Hex, Long> costSoFar = new HashMap<>();
+        costSoFar.put(start, 0L);
 
-        while (!priorityQueue.isEmpty()) {
-            current = priorityQueue.poll();
+        while (!grid.isEmpty()) {
+            HexNode current = grid.poll();
 
-            if (!visited.contains(target)) {
-                visited.add(current);
+            for (Hex neighbor : HexFunction.getNeighbors(current.getHex())) {
+                long newCost = costSoFar.get(current.getHex()) + neighbor.getEntryCost();
 
-                if (current.equals(target)) {
-                    return reconstructPath(start, target, parentMap);
-                }
-
-                List<Hex> neighbors = HexFunction.getNeighbors(current);
-                for (Hex neighbor : neighbors) {
-                    if (!visited.contains(neighbor)) {
-                        //long predictedDistance = HexFunction.distance(next, target);
-                        long neighborDistance = HexFunction.distance2(current, neighbor);
-                        long totalDistance = neighborDistance + HexFunction.distance2(current, start);
-                        if (totalDistance < distances.get(neighbor)) {
-                            distances.put(neighbor, totalDistance);
-                            parentMap.put(neighbor, current);
-                            priorityQueue.add(neighbor);
-                        }
-
-                        long newCost = distances.get(current) + neighbor.getEntryCost();
-                        if (!distances.containsKey(neighbor) || newCost < distances.get(neighbor)) {
-                            distances.put(neighbor, newCost);
-                        }
-                    }
+                if (!cameFrom.containsKey(neighbor) || newCost < costSoFar.get(neighbor)) {
+                    costSoFar.put(neighbor, newCost);
+                    grid.add(new HexNode(neighbor, newCost));
+                    cameFrom.put(neighbor, current.getHex());
                 }
             }
         }
 
-        return null;
+        return reconstructPath(start, target, cameFrom);
     }
+
+
 
     public static List<Hex> bfsFindPath(Hex start, Hex target) {
         Map<Hex, Hex> cameFrom = new HashMap<>();
@@ -130,11 +114,36 @@ public class GameFunction {
         return path;
     }
 
-    private static class HexPriorityComparator {
-        private static Hex startHex;
+    private static class HexNode implements Comparable<HexNode> {
+        private Hex hex;
+        private long costFromStart;
 
-        public static int hexPriorityCompare(Hex h1, Hex h2) {
-            return HexFunction.distance2(h1, startHex) < HexFunction.distance2(h2, startHex) ? 1 : 0;
+        public HexNode(Hex hex, long cost) {
+            this.hex = hex;
+            this.costFromStart = cost;
+        }
+
+        public Hex getHex() {
+            return hex;
+        }
+
+        @Override
+        public int compareTo(@NotNull HexNode o) {
+            return Math.toIntExact(costFromStart - o.costFromStart);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof HexNode)) {
+                return false;
+            }
+            HexNode node = (HexNode)o;
+            return node.getHex().equals(hex);
+        }
+
+        @Override
+        public int hashCode() {
+            return hex.hashCode() * Math.toIntExact(costFromStart);
         }
     }
 }

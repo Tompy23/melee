@@ -36,7 +36,7 @@ public class PathGameStateImpl extends AbstractGameState {
             hexLine.forEach(h -> h.setFill(Color.TRANSPARENT));
             hexLine.clear();
 
-            hexLine = GameFunction.bfsFindPath(startHexProp.get(), targetHexProp.get());
+            hexLine = GameFunction.bfsFindPathCost(startHexProp.get(), targetHexProp.get());
 
             for (Hex h : hexLine) {
                 h.setOpacity(.6);
