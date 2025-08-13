@@ -1,7 +1,7 @@
 package com.tompy.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tompy.hexboard.Hex;
+import com.tompy.game.play.GamePlayApplication;
 import com.tompy.hexboard.terrain.LayoutDescription;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,22 +11,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class GamePlaySceneLoader {
+public class GameSceneLoader {
 
-    public void loadScene(Stage stage, String propertiesFilename) throws IOException {
+    public FXMLLoader loadScene(Stage stage, String propertiesFilename, SceneLoader sceneLoader) throws IOException {
         Properties sceneProperties = new Properties();
         sceneProperties.load(getFileFromResourceAsStream(propertiesFilename));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(GameApplication.class.getResource(sceneProperties.getProperty("fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(GamePlayApplication.class.getResource(sceneProperties.getProperty(GameConstants.FXML)));
         Scene scene = new Scene(fxmlLoader.load());
 
-        stage.setTitle(sceneProperties.getProperty("title"));
+        stage.setTitle(sceneProperties.getProperty(GameConstants.TITLE));
         stage.setScene(scene);
         stage.show();
 
         LayoutDescription layoutDescription = null;
-        if (sceneProperties.containsKey("board.layout")) {
-            InputStream boardLayoutStream = getFileFromResourceAsStream(sceneProperties.getProperty("board.layout"));
+        if (sceneProperties.containsKey(GameConstants.BOARD_LAYOUT)) {
+            InputStream boardLayoutStream = getFileFromResourceAsStream(sceneProperties.getProperty(GameConstants.BOARD_LAYOUT));
             ObjectMapper mapper = new ObjectMapper();
 
             try {
@@ -37,15 +37,16 @@ public class GamePlaySceneLoader {
             }
         }
 
-        GamePlayController gpc = fxmlLoader.getController();
-        gpc.setStage(stage);
-        GameData.builder().controller(gpc).properties(sceneProperties).layoutMap(layoutDescription == null ? null : layoutDescription.getLayouts()).init();
+        GameController gpc = sceneLoader.loadSceneController(fxmlLoader, stage, sceneProperties, layoutDescription);
+        GameData.builder().properties(sceneProperties).layoutMap(layoutDescription.getLayouts()).hexBoard(gpc.getHexBoardPane()).text(gpc.getTextPane()).init();
 
-        if (sceneProperties.containsKey("board.layout")) {
+        if (sceneProperties.containsKey(GameConstants.BOARD_LAYOUT)) {
             gpc.drawHexBoardWithLayout();
         } else {
             gpc.drawHexBoard();
         }
+
+        return fxmlLoader;
     }
 
     private InputStream getFileFromResourceAsStream(String fileName) {

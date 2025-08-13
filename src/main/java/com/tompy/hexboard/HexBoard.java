@@ -5,7 +5,6 @@ import com.tompy.game.PaneCoordinates;
 import com.tompy.hexboard.state.HexStateFactory;
 import com.tompy.hexboard.state.HexStateType;
 import com.tompy.hexboard.terrain.Layout;
-import com.tompy.hexboard.terrain.LayoutDescription;
 import com.tompy.hexboard.terrain.Terrain;
 import com.tompy.hexboard.terrain.TerrainFactory;
 import com.tompy.state.State;
@@ -71,10 +70,11 @@ public class HexBoard implements StateMachine<State> {
                 Terrain terrain = TerrainFactory.builder().type("CLEAR").entryCost(1).build();
                 Layout layout = layoutMap.get(hexCoordinate);
                 if (layout != null) {
-                    terrain = TerrainFactory.builder().type(layoutMap.get(hexCoordinate).getTerrain()).entryCost(layout.getEntry()).build();
+                    terrain = TerrainFactory.builder().type(layoutMap.get(hexCoordinate).getTerrain())
+                            .entryCost(layout.getEntry()).build();
                 }
 
-                Hex hex = Hex.builder().setCol(col).setRow(row).coordinates(finalCoordinates).gameData(gameData)
+                Hex hex = Hex.builder().setCol(col).setRow(row).coordinates(finalCoordinates)
                         .paneCoordinates(new PaneCoordinates(x, y)).terrain(terrain).build();
                 hex.setFill(Color.TRANSPARENT);
                 hex.setStroke(Color.BLACK);

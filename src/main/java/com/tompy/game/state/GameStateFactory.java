@@ -1,12 +1,17 @@
 package com.tompy.game.state;
 
+import com.tompy.game.state.play.*;
 import com.tompy.hexboard.Hex;
 import javafx.stage.Stage;
 
 public class GameStateFactory {
     private static GameStateFactory singletonGameStateFactory;
 
-    public static GameStateFactory get() {
+    private GameStateFactory() {
+
+    }
+
+    private static GameStateFactory get() {
         if (singletonGameStateFactory == null) {
             singletonGameStateFactory = new GameStateFactory();
         }

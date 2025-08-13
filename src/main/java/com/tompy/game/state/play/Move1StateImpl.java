@@ -1,10 +1,14 @@
-package com.tompy.game.state;
+package com.tompy.game.state.play;
 
 import com.tompy.counter.Counter;
 import com.tompy.counter.state.CounterStateFactory;
 import com.tompy.counter.state.CounterStateType;
 import com.tompy.game.GameData;
 import com.tompy.game.GameProperty;
+import com.tompy.game.state.AbstractGameState;
+import com.tompy.game.state.GameStateFactory;
+import com.tompy.game.state.GameStateMachine;
+import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import com.tompy.hexboard.state.HexStateFactory;

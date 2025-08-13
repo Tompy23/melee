@@ -1,7 +1,12 @@
-package com.tompy.game.state;
+package com.tompy.game.state.play;
 
 import com.tompy.game.GameData;
 import com.tompy.counter.Counter;
+import com.tompy.game.play.GamePlayData;
+import com.tompy.game.state.AbstractGameState;
+import com.tompy.game.state.GameStateFactory;
+import com.tompy.game.state.GameStateMachine;
+import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import javafx.event.ActionEvent;
 
@@ -20,7 +25,7 @@ public class CommonGameStateImpl extends AbstractGameState {
                     hexesSelected++;
                 }
             }
-            GameData.get().getController().enableMove1Button(hexesSelected == 1);
+            GamePlayData.get().getController().enableMove1Button(hexesSelected == 1);
         }
     }
 
@@ -35,7 +40,8 @@ public class CommonGameStateImpl extends AbstractGameState {
             }
         }
         if (hexCount == 1) {
-            GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.MOVE_1).originHex(originHex).build());
+            GameStateMachine.get().changeState(
+                    GameStateFactory.buidler().type(GameStateType.MOVE_1).originHex(originHex).build());
         }
     }
 

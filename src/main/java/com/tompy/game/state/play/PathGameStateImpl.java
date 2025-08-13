@@ -1,8 +1,9 @@
-package com.tompy.game.state;
+package com.tompy.game.state.play;
 
 import com.tompy.game.GameData;
 import com.tompy.game.GameProperty;
 import com.tompy.game.event.GameFunction;
+import com.tompy.game.state.AbstractGameState;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.state.HexStateFactory;
 import com.tompy.hexboard.state.HexStateType;

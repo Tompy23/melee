@@ -1,6 +1,8 @@
-package com.tompy.game.state;
+package com.tompy.game.state.play;
 
 import com.tompy.game.GameData;
+import com.tompy.game.play.GamePlayData;
+import com.tompy.game.state.AbstractGameState;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import com.tompy.hexboard.state.HexStateFactory;
@@ -42,7 +44,7 @@ public class TestHexPointerState extends AbstractGameState {
 
     @Override
     public void onMouseMove(MouseEvent event) {
-        Point2D point = GameData.get().getController().getHexBoardPane()
+        Point2D point = GamePlayData.get().getController().getHexBoardPane()
                 .sceneToLocal(event.getSceneX(), event.getSceneY());
         GameData.get().setMousePointer(point.getX(), point.getY());
     }

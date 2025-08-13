@@ -1,6 +1,8 @@
 package com.tompy.counter.state;
 
 import com.tompy.counter.Counter;
+import com.tompy.counter.state.play.CounterStateCommonImpl;
+import com.tompy.counter.state.play.CounterStateNoClickWrapperStateImpl;
 
 public class CounterStateFactory {
     private static CounterStateFactory singletonFactory;

@@ -1,6 +1,9 @@
-package com.tompy.hexboard.state;
+package com.tompy.hexboard.state.play;
 
 import com.tompy.hexboard.Hex;
+import com.tompy.hexboard.state.AbstractHexState;
+import com.tompy.hexboard.state.HexStateFactory;
+import com.tompy.hexboard.state.HexStateType;
 import javafx.scene.paint.Color;
 
 public class HexStateCommonImpl extends AbstractHexState {

@@ -1,6 +1,8 @@
-package com.tompy.counter.state;
+package com.tompy.counter.state.play;
 
 import com.tompy.counter.Counter;
+import com.tompy.counter.state.AbstractCounterStateDecorator;
+import com.tompy.counter.state.CounterState;
 import javafx.scene.input.MouseEvent;
 
 public class CounterStateNoClickWrapperStateImpl extends AbstractCounterStateDecorator {

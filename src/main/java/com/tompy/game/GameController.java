@@ -3,11 +3,7 @@ package com.tompy.game;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.InputStream;
-
-public interface GamePlayController {
-
-    void setGameData(GameData gameData);
+public interface GameController {
 
     void setStage(Stage stage);
 
@@ -18,6 +14,4 @@ public interface GamePlayController {
     Pane getHexBoardPane();
 
     Pane getTextPane();
-
-    void enableMove1Button(boolean enable);
 }

@@ -1,7 +1,8 @@
-package com.tompy.hexboard.state;
+package com.tompy.hexboard.state.play;
 
 import com.tompy.game.GameProperty;
 import com.tompy.hexboard.Hex;
+import com.tompy.hexboard.state.AbstractHexState;
 
 public class HexStateDrawLineImpl extends AbstractHexState {
     GameProperty<Hex> originHex;

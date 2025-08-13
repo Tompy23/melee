@@ -19,7 +19,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     private final double[] polygonCoordinates;
     private final List<Counter> counters;
     private final PaneCoordinates paneCoordinates;
-    private final GameData gameData;
     private boolean countersStacked;
     private HexState currentState;
     private Terrain terrain;
@@ -31,7 +30,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         counters = new ArrayList<>();
         countersStacked = true;
         this.paneCoordinates = builder.paneCoordinates;
-        this.gameData = builder.gameData;
         this.terrain = builder.terrain;
     }
 
@@ -40,8 +38,9 @@ public class Hex extends Polygon implements StateMachine<HexState> {
     }
 
     public PaneCoordinates getPaneCoordinates() {
-        return new PaneCoordinates(paneCoordinates.getX() * gameData.getZoom(),
-                paneCoordinates.getY() * gameData.getZoom());
+        return paneCoordinates;
+//        return new PaneCoordinates(paneCoordinates.getX() * gameData.getZoom(),
+//                paneCoordinates.getY() * gameData.getZoom());
     }
 
     public long getCol() {
@@ -101,7 +100,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
 
         counter.addToHex(this);
 
-        GameFunction.displayCountersInHex(this);
+        GameFunction.displayCountersInHex(this, GameData.get().getPaneHexBoard());
     }
 
     public void removeCounter(Counter oldCounter) {
@@ -114,7 +113,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         }
         counters.removeAll(countersToRemove);
 
-        GameFunction.displayCountersInHex(this);
+        GameFunction.displayCountersInHex(this, GameData.get().getPaneHexBoard());
     }
 
     public Terrain getTerrain() {
@@ -210,7 +209,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         private int row;
         private double[] coordinates;
         private PaneCoordinates paneCoordinates;
-        private GameData gameData;
         private Terrain terrain;
 
         public Builder setCol(int col) {
@@ -230,11 +228,6 @@ public class Hex extends Polygon implements StateMachine<HexState> {
 
         public Builder paneCoordinates(PaneCoordinates paneCoordinates) {
             this.paneCoordinates = paneCoordinates;
-            return this;
-        }
-
-        public Builder gameData(GameData gameData) {
-            this.gameData = gameData;
             return this;
         }
 

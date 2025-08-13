@@ -3,6 +3,7 @@ package com.tompy.hexboard.state;
 import com.tompy.game.GameProperty;
 import com.tompy.game.state.GameState;
 import com.tompy.hexboard.Hex;
+import com.tompy.hexboard.state.play.*;
 import javafx.scene.paint.Color;
 
 public class HexStateFactory {

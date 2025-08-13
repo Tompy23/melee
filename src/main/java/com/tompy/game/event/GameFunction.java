@@ -1,19 +1,20 @@
 package com.tompy.game.event;
 
 import com.tompy.counter.Counter;
-import com.tompy.game.GameData;
+import com.tompy.game.play.GamePlayData;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class GameFunction {
 
-    public static void displayCountersInHex(Hex hex) {
+    public static void displayCountersInHex(Hex hex, Pane hexBoardPane) {
         List<Node> toRemove = new ArrayList<>();
-        for (Node child : GameData.get().getController().getHexBoardPane().getChildren()) {
+        for (Node child : GamePlayData.get().getController().getHexBoardPane().getChildren()) {
             if (child.getId() != null && child.getId().startsWith("COUNTER")) {
                 Counter counter = (Counter) child;
                 if (counter.getHex().equals(hex)) {
@@ -21,7 +22,7 @@ public class GameFunction {
                 }
             }
         }
-        GameData.get().getController().getHexBoardPane().getChildren().removeAll(toRemove);
+        hexBoardPane.getChildren().removeAll(toRemove);
 
 
         List<Counter> counters = hex.getCounters();
@@ -34,7 +35,7 @@ public class GameFunction {
                         hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage().getWidth() / 2));
                 counter.setY(
                         hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage().getHeight() / 2));
-                GameData.get().getController().getHexBoardPane().getChildren().add(counter);
+                hexBoardPane.getChildren().add(counter);
             } else {
                 long offset = 0;
                 for (Counter counter : counters) {
@@ -49,7 +50,7 @@ public class GameFunction {
                     } else {
                         offset += 12;
                     }
-                    GameData.get().getController().getHexBoardPane().getChildren().add(counter);
+                    hexBoardPane.getChildren().add(counter);
                 }
             }
         }

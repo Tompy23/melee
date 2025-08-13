@@ -1,8 +1,10 @@
-package com.tompy.game.state;
+package com.tompy.game.state.play;
 
 import com.tompy.game.GameData;
+import com.tompy.game.play.GamePlayData;
 import com.tompy.game.GameProperty;
 import com.tompy.game.PaneCoordinates;
+import com.tompy.game.state.AbstractGameState;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import com.tompy.hexboard.state.HexStateFactory;
@@ -35,7 +37,7 @@ public class DrawLineGameStateImpl extends AbstractGameState {
         if (startHexProp.isChanged() || targetHexProp.isChanged() && startHexProp.peek() != null) {
             // reset
             if (line != null) {
-                GameData.get().getController().getTextPane().getChildren().remove(line);
+                GamePlayData.get().getController().getTextPane().getChildren().remove(line);
             }
 
             hexLine.forEach(h -> h.setFill(Color.TRANSPARENT));
@@ -52,7 +54,7 @@ public class DrawLineGameStateImpl extends AbstractGameState {
             double targetY = targetHex.getPaneCoordinates().getY();
 
             line = new Line(startX, startY, targetX, targetY);
-            GameData.get().getController().getTextPane().getChildren().add(line);
+            GamePlayData.get().getController().getTextPane().getChildren().add(line);
 
             // Calculate hexes
             long distance = HexFunction.distance(startHex, targetHex);

@@ -1,9 +1,11 @@
-package com.tompy.game;
+package com.tompy.game.play;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tompy.counter.Counter;
 import com.tompy.counter.CounterFactory;
 import com.tompy.counter.CounterType;
+import com.tompy.game.GameConstants;
+import com.tompy.game.GameController;
+import com.tompy.game.GameData;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
@@ -11,7 +13,6 @@ import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexBoard;
 import com.tompy.hexboard.state.HexStateFactory;
 import com.tompy.hexboard.state.HexStateType;
-import com.tompy.hexboard.terrain.LayoutDescription;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,10 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-public class GamePlayControllerImpl implements GamePlayController {
+public class GamePlayControllerImpl implements GameController, GamePlayController {
     private static final double SQRT3 = Math.sqrt(3);
     @FXML
     private ScrollPane scrollBackground;
@@ -50,10 +48,9 @@ public class GamePlayControllerImpl implements GamePlayController {
 
     private Stage stage;
 
-    private GameData gameData;
+    private GamePlayData gameData;
 
-    @Override
-    public void setGameData(GameData gameData) {
+    public void setGameData(GamePlayData gameData) {
         this.gameData = gameData;
     }
 
@@ -141,7 +138,7 @@ public class GamePlayControllerImpl implements GamePlayController {
     }
 
     public void handleNextScene(ActionEvent event) {
-        String nextScene = (String) GameData.get().getProperty("scene.next");
+        String nextScene = (String) GameData.get().getProperty(GameConstants.SCENE_NEXT);
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).properties(nextScene).stage(stage).build());
     }
 

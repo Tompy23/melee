@@ -19,4 +19,8 @@ module com.tompy.game {
     opens com.tompy.game.state to javafx.fxml;
     exports com.tompy.hexboard.terrain;
     opens com.tompy.hexboard.terrain to com.fasterxml.jackson.databind, javafx.fxml;
+    exports com.tompy.game.play;
+    opens com.tompy.game.play to com.fasterxml.jackson.databind, javafx.fxml;
+    exports com.tompy.game.state.play;
+    opens com.tompy.game.state.play to javafx.fxml;
 }
