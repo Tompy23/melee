@@ -17,7 +17,8 @@ public class GameSceneLoader {
         Properties sceneProperties = new Properties();
         sceneProperties.load(getFileFromResourceAsStream(propertiesFilename));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(GamePlayApplication.class.getResource(sceneProperties.getProperty(GameConstants.FXML)));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                GamePlayApplication.class.getResource(sceneProperties.getProperty(GameConstants.FXML)));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle(sceneProperties.getProperty(GameConstants.TITLE));
@@ -26,7 +27,8 @@ public class GameSceneLoader {
 
         LayoutDescription layoutDescription = null;
         if (sceneProperties.containsKey(GameConstants.BOARD_LAYOUT)) {
-            InputStream boardLayoutStream = getFileFromResourceAsStream(sceneProperties.getProperty(GameConstants.BOARD_LAYOUT));
+            InputStream boardLayoutStream = getFileFromResourceAsStream(
+                    sceneProperties.getProperty(GameConstants.BOARD_LAYOUT));
             ObjectMapper mapper = new ObjectMapper();
 
             try {
@@ -38,7 +40,9 @@ public class GameSceneLoader {
         }
 
         GameController gpc = sceneLoader.loadSceneController(fxmlLoader, stage, sceneProperties, layoutDescription);
-        GameData.builder().properties(sceneProperties).layoutMap(layoutDescription.getLayouts()).hexBoard(gpc.getHexBoardPane()).text(gpc.getTextPane()).init();
+        GameData.builder().properties(sceneProperties)
+                .layoutMap(layoutDescription == null ? null : layoutDescription.getLayouts())
+                .hexBoard(gpc.getHexBoardPane()).text(gpc.getTextPane()).init();
 
         if (sceneProperties.containsKey(GameConstants.BOARD_LAYOUT)) {
             gpc.drawHexBoardWithLayout();

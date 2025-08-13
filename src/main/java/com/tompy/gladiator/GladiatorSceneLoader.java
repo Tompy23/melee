@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.util.Properties;
 
-public class GladiatorPlaySceneLoader extends AbstractSceneLoader {
+public class GladiatorSceneLoader extends AbstractSceneLoader {
     @Override
     public GameController loadSceneController(FXMLLoader fxmlLoader, Stage stage, Properties sceneProperties,
             LayoutDescription layoutDescription) {

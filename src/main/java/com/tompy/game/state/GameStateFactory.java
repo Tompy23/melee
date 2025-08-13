@@ -27,7 +27,7 @@ public class GameStateFactory {
             case COMMON:
                 return new CommonGameStateImpl();
             case SCENE_CHANGE:
-                return new ChangeSceneStateImpl(builder.stage, builder.properties);
+                return new ChangeSceneStateImpl(builder.stage, builder.properties, GameStateType.COMMON);
             case MOVE_1:
                 return new Move1StateImpl(builder.originHex);
             case TEST_POINTER:

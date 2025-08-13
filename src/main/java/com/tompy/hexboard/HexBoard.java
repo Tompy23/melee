@@ -68,10 +68,12 @@ public class HexBoard implements StateMachine<State> {
                 }
 
                 Terrain terrain = TerrainFactory.builder().type("CLEAR").entryCost(1).build();
-                Layout layout = layoutMap.get(hexCoordinate);
-                if (layout != null) {
-                    terrain = TerrainFactory.builder().type(layoutMap.get(hexCoordinate).getTerrain())
-                            .entryCost(layout.getEntry()).build();
+                if (layoutMap != null) {
+                    Layout layout = layoutMap.get(hexCoordinate);
+                    if (layout != null) {
+                        terrain = TerrainFactory.builder().type(layoutMap.get(hexCoordinate).getTerrain())
+                                .entryCost(layout.getEntry()).build();
+                    }
                 }
 
                 Hex hex = Hex.builder().setCol(col).setRow(row).coordinates(finalCoordinates)
