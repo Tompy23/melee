@@ -3,7 +3,7 @@ package com.tompy.game.state;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public abstract class AbstractGameState implements GameState {
+public abstract class AbstractGameState implements GameState, GamePlayHandler {
     @Override
     public void beginState() {
 

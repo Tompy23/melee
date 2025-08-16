@@ -15,7 +15,7 @@ import javafx.scene.shape.Line;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrawLineGameStateImpl extends AbstractGameState {
+public class DrawLineGameStateImpl extends AbstractGamePlayState {
     private GameProperty<Hex> startHexProp;
     private GameProperty<Hex> targetHexProp;
     private Line line;

@@ -48,12 +48,6 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
 
     private Stage stage;
 
-    private GamePlayData gameData;
-
-    public void setGameData(GamePlayData gameData) {
-        this.gameData = gameData;
-    }
-
     @Override
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -62,10 +56,6 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
     @Override
     public void drawHexBoardWithLayout() {
         drawHexBoard();
-
-//        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
-//            paneHexDecorator.getChildren().add(hex.fillTerrain());
-//        }
     }
 
     @Override
@@ -185,22 +175,22 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
     }
 
     public void handleMove1(ActionEvent event) {
-        GameStateMachine.get().onClickMove1(event);
+        GameStateMachine.get().getCurrentState().onClickMove1(event);
     }
 
     public void handleTestHexPointer(ActionEvent event) {
-        GameStateMachine.get().onClickTestPointer(event);
+        GameStateMachine.get().getCurrentState().onClickTestPointer(event);
     }
 
     public void handleMouseMove(MouseEvent event) {
-        GameStateMachine.get().onMouseMove(event);
+        GameStateMachine.get().getCurrentState().onMouseMove(event);
     }
 
     public void handleDrawLine(ActionEvent event) {
-        GameStateMachine.get().onClickDrawLine(event);
+        GameStateMachine.get().getCurrentState().onClickDrawLine(event);
     }
 
     public void handleFindPath(ActionEvent event) {
-        GameStateMachine.get().onClickHandleFindPath(event);
+        GameStateMachine.get().getCurrentState().onClickHandleFindPath(event);
     }
 }

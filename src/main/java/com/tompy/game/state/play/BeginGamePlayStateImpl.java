@@ -10,7 +10,7 @@ import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import javafx.event.ActionEvent;
 
-public class BeginGamePlayStateImpl extends AbstractGameState {
+public class BeginGamePlayStateImpl extends AbstractGamePlayState {
     private static long pause = 0;
     private static final long WAIT = 10000;
     @Override

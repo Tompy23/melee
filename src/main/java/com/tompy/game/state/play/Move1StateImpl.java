@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class Move1StateImpl extends AbstractGameState {
+public class Move1StateImpl extends AbstractGamePlayState {
     private final Hex originHex;
     private final List<Counter> counters;
     private Hex currentHex;

@@ -1,10 +1,11 @@
 package com.tompy.game.state;
 
+import com.tompy.game.GameData;
 import com.tompy.state.AbstractStateMachine;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public class GameStateMachine extends AbstractStateMachine<GameState> implements GamePlayHandler {
+public class GameStateMachine extends AbstractStateMachine<GameState> {
     private static GameStateMachine stateMahcine;
     private GameState currentState;
 
@@ -37,27 +38,7 @@ public class GameStateMachine extends AbstractStateMachine<GameState> implements
     }
 
     @Override
-    public void onClickMove1(ActionEvent event) {
-        currentState.onClickMove1(event);
-    }
-
-    @Override
-    public void onClickTestPointer(ActionEvent event) {
-        changeState(GameStateFactory.buidler().type(GameStateType.TEST_POINTER).build());
-    }
-
-    @Override
-    public void onClickDrawLine(ActionEvent event) {
-        changeState(GameStateFactory.buidler().type(GameStateType.DRAW_LINE).build());
-    }
-
-    @Override
-    public void onClickHandleFindPath(ActionEvent event) {
-        changeState((GameStateFactory.buidler().type(GameStateType.FIND_PATH).build()));
-    }
-
-    @Override
-    public void onMouseMove(MouseEvent event) {
-        currentState.onMouseMove(event);
+    public GameState getCurrentState() {
+        return currentState;
     }
 }

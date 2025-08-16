@@ -11,7 +11,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public class TestHexPointerState extends AbstractGameState {
+public class TestHexPointerState extends AbstractGamePlayState {
     public static long start = 0;
 
     public Hex currentHex = null;
