@@ -4,7 +4,7 @@ import com.tompy.state.AbstractStateMachine;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public class GameStateMachine extends AbstractStateMachine<GameState> implements GameHandler {
+public class GameStateMachine extends AbstractStateMachine<GameState> implements GamePlayHandler {
     private static GameStateMachine stateMahcine;
     private GameState currentState;
 

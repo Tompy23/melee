@@ -1,27 +1,34 @@
 package com.tompy.game.state;
 
-import com.tompy.game.GameSceneLoader;
-import com.tompy.game.play.GamePlaySceneLoader;
+import com.tompy.game.GameFxmlLoader;
+import com.tompy.game.SceneLoader;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class ChangeSceneStateImpl extends AbstractGameState {
     protected final Stage stage;
     protected final String scenePropertiesName;
     protected final GameStateType type;
+    protected final SceneLoader sceneLoader;
 
-    public ChangeSceneStateImpl(Stage stage, String scenePropertiesName, GameStateType type) {
+    public ChangeSceneStateImpl(Stage stage, String scenePropertiesName, GameStateType type, SceneLoader sceneLoader) {
         this.stage = stage;
         this.scenePropertiesName = scenePropertiesName;
         this.type = type;
+        this.sceneLoader = sceneLoader;
     }
 
     @Override
     public void beginState() {
-        GameSceneLoader gpsl = new GameSceneLoader();
+        GameFxmlLoader gameFxmlLoader = new GameFxmlLoader();
         try {
-            gpsl.loadScene(stage, scenePropertiesName, new GamePlaySceneLoader());
+            Properties sceneProperties = new Properties();
+            sceneProperties.load(getFileFromResourceAsStream(scenePropertiesName));
+            gameFxmlLoader.loadFxml(stage, sceneProperties, sceneLoader);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -30,5 +37,18 @@ public class ChangeSceneStateImpl extends AbstractGameState {
     @Override
     public void process(long l) {
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(type).build());
+    }
+
+    private InputStream getFileFromResourceAsStream(String fileName) {
+        // The class loader that loaded the class
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+
+        // the stream holding the file content
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+            return inputStream;
+        }
     }
 }

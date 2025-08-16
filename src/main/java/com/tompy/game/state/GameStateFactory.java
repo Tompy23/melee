@@ -1,7 +1,9 @@
 package com.tompy.game.state;
 
+import com.tompy.game.SceneLoader;
 import com.tompy.game.state.play.*;
 import com.tompy.hexboard.Hex;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GameStateFactory {
@@ -27,7 +29,7 @@ public class GameStateFactory {
             case COMMON:
                 return new CommonGameStateImpl();
             case SCENE_CHANGE:
-                return new ChangeSceneStateImpl(builder.stage, builder.properties, GameStateType.COMMON);
+                return new ChangeSceneStateImpl(builder.stage, builder.properties, builder.toType, builder.sceneLoader);
             case MOVE_1:
                 return new Move1StateImpl(builder.originHex);
             case TEST_POINTER:
@@ -47,6 +49,8 @@ public class GameStateFactory {
         private String properties;
         private Stage stage;
         private Hex originHex;
+        private SceneLoader sceneLoader;
+        private GameStateType toType;
 
         public GameStateBuilder() {
             this.factory = GameStateFactory.get();
@@ -69,6 +73,16 @@ public class GameStateFactory {
 
         public GameStateBuilder originHex(Hex originHex) {
             this.originHex = originHex;
+            return this;
+        }
+
+        public GameStateBuilder sceneLoader(SceneLoader sceneLoader) {
+            this.sceneLoader = sceneLoader;
+            return this;
+        }
+
+        public GameStateBuilder toType(GameStateType toType) {
+            this.toType = toType;
             return this;
         }
 

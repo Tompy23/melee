@@ -3,7 +3,7 @@ package com.tompy.game.state;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public interface GameHandler {
+public interface GamePlayHandler {
 
 //    void onMouseEnterCounter(MouseEvent event);
 //

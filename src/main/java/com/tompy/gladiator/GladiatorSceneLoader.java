@@ -1,18 +1,15 @@
 package com.tompy.gladiator;
 
-import com.tompy.game.AbstractSceneLoader;
 import com.tompy.game.GameController;
-import com.tompy.hexboard.terrain.LayoutDescription;
+import com.tompy.game.SceneLoader;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.util.Properties;
 
-public class GladiatorSceneLoader extends AbstractSceneLoader {
+public class GladiatorSceneLoader implements SceneLoader {
     @Override
-    public GameController loadSceneController(FXMLLoader fxmlLoader, Stage stage, Properties sceneProperties,
-            LayoutDescription layoutDescription) {
+    public GameController loadSceneController(FXMLLoader fxmlLoader, Stage stage, Properties sceneProperties) {
         return null;
-
     }
 }
