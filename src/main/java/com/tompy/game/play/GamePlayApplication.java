@@ -19,7 +19,7 @@ public class GamePlayApplication extends Application {
     public void start(Stage stage) throws IOException {
         GameStateMachine.get().changeState(
                 GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).stage(stage).properties("first.properties")
-                        .sceneLoader(new GamePlaySceneLoader()).toType(GameStateType.COMMON).build());
+                        .sceneLoader(new GamePlaySceneLoader()).toType(GameStateType.BEGIN_GAME_PLAY).build());
         new GameTimer().start();
     }
 }

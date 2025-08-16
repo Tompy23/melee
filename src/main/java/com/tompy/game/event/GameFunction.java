@@ -1,7 +1,6 @@
 package com.tompy.game.event;
 
 import com.tompy.counter.Counter;
-import com.tompy.game.play.GamePlayData;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import javafx.scene.Node;
@@ -14,7 +13,7 @@ public class GameFunction {
 
     public static void displayCountersInHex(Hex hex, Pane hexBoardPane) {
         List<Node> toRemove = new ArrayList<>();
-        for (Node child : GamePlayData.get().getController().getHexBoardPane().getChildren()) {
+        for (Node child : hexBoardPane.getChildren()) {
             if (child.getId() != null && child.getId().startsWith("COUNTER")) {
                 Counter counter = (Counter) child;
                 if (counter.getHex().equals(hex)) {

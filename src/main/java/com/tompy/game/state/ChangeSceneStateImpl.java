@@ -2,7 +2,6 @@ package com.tompy.game.state;
 
 import com.tompy.game.GameFxmlLoader;
 import com.tompy.game.SceneLoader;
-import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.io.IOException;

@@ -44,7 +44,7 @@ public class TestHexPointerState extends AbstractGameState {
 
     @Override
     public void onMouseMove(MouseEvent event) {
-        Point2D point = GamePlayData.get().getController().getHexBoardPane()
+        Point2D point = GameData.get().getPaneHexBoard()
                 .sceneToLocal(event.getSceneX(), event.getSceneY());
         GameData.get().setMousePointer(point.getX(), point.getY());
     }

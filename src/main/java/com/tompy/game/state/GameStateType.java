@@ -1,7 +1,7 @@
 package com.tompy.game.state;
 
 public enum GameStateType {
-    COMMON,
+    BEGIN_GAME_PLAY,
     SCENE_CHANGE,
     MOVE_1,
     TEST_POINTER,

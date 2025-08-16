@@ -23,9 +23,4 @@ public class HexStateDrawLineImpl extends AbstractHexState {
     public void handleEnter() {
         hexWithMouse.set(hex);
     }
-
-    @Override
-    public void handleExit() {
-        //hexWithMouse.set(null);
-    }
 }

@@ -86,7 +86,7 @@ public class Move1StateImpl extends AbstractGameState {
 
     @Override
     public void onClickMove1(ActionEvent event) {
-        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.COMMON).build());
+        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.BEGIN_GAME_PLAY).build());
         GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
         for (Hex hex : GameData.get().getHexBoard().getHexes()) {
             hex.getCounters().forEach(c -> c.changeState(c.getPreviousState()));

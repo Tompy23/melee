@@ -10,7 +10,7 @@ import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import javafx.event.ActionEvent;
 
-public class CommonGameStateImpl extends AbstractGameState {
+public class BeginGamePlayStateImpl extends AbstractGameState {
     private static long pause = 0;
     private static final long WAIT = 10000;
     @Override
@@ -43,10 +43,5 @@ public class CommonGameStateImpl extends AbstractGameState {
             GameStateMachine.get().changeState(
                     GameStateFactory.buidler().type(GameStateType.MOVE_1).originHex(originHex).build());
         }
-    }
-
-    @Override
-    public void onClickHandleFindPath(ActionEvent event) {
-
     }
 }

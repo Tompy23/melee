@@ -37,7 +37,7 @@ public class DrawLineGameStateImpl extends AbstractGameState {
         if (startHexProp.isChanged() || targetHexProp.isChanged() && startHexProp.peek() != null) {
             // reset
             if (line != null) {
-                GamePlayData.get().getController().getTextPane().getChildren().remove(line);
+                GameData.get().getPaneText().getChildren().remove(line);
             }
 
             hexLine.forEach(h -> h.setFill(Color.TRANSPARENT));
@@ -54,7 +54,7 @@ public class DrawLineGameStateImpl extends AbstractGameState {
             double targetY = targetHex.getPaneCoordinates().getY();
 
             line = new Line(startX, startY, targetX, targetY);
-            GamePlayData.get().getController().getTextPane().getChildren().add(line);
+            GameData.get().getPaneText().getChildren().add(line);
 
             // Calculate hexes
             long distance = HexFunction.distance(startHex, targetHex);

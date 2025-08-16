@@ -3,7 +3,6 @@ package com.tompy.game.state;
 import com.tompy.game.SceneLoader;
 import com.tompy.game.state.play.*;
 import com.tompy.hexboard.Hex;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GameStateFactory {
@@ -26,8 +25,8 @@ public class GameStateFactory {
 
     private GameState create(GameStateBuilder builder) {
         switch (builder.type) {
-            case COMMON:
-                return new CommonGameStateImpl();
+            case BEGIN_GAME_PLAY:
+                return new BeginGamePlayStateImpl();
             case SCENE_CHANGE:
                 return new ChangeSceneStateImpl(builder.stage, builder.properties, builder.toType, builder.sceneLoader);
             case MOVE_1:
