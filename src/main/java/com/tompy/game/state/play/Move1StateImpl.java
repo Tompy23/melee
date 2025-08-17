@@ -3,9 +3,8 @@ package com.tompy.game.state.play;
 import com.tompy.counter.Counter;
 import com.tompy.counter.state.CounterStateFactory;
 import com.tompy.counter.state.CounterStateType;
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.GameProperty;
-import com.tompy.game.state.AbstractGameState;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
@@ -37,9 +36,9 @@ public class Move1StateImpl extends AbstractGamePlayState {
     @Override
     public void beginState() {
         counters.forEach(Counter::resetMovementExpended);
-        GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.MOVE1).build()));
+        GameHexBoardData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.MOVE1).build()));
         neighbors.forEach(n -> n.changeState(HexStateFactory.builder().hex(n).type(HexStateType.MOVE1_NEIGHBOR).initialColor(Color.GRAY).opaqueness(0.5).secondaryColor(Color.CHOCOLATE).gameState(this).hex2(movedHexProperty).style("-fx-font: 16 arial;").xOffset(-2).yOffset(20).display(addMovementPointText(n)).build()));
-        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+        for (Hex hex : GameHexBoardData.get().getHexBoard().getHexes()) {
             hex.getCounters().forEach(c -> c.changeState(CounterStateFactory.builder().type(CounterStateType.NO_CLICK_WRAPPER).counter(c).previousState(c.getCurrentState()).build()));
         }
     }
@@ -67,7 +66,7 @@ public class Move1StateImpl extends AbstractGamePlayState {
 //                GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.COMMON).build());
 //                GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
             } else {
-                GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.MOVE1).build()));
+                GameHexBoardData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.MOVE1).build()));
                 neighbors.forEach(n -> n.changeState(HexStateFactory.builder().hex(n).type(HexStateType.MOVE1_NEIGHBOR).initialColor(Color.GRAY).secondaryColor(Color.CHOCOLATE).opaqueness(0.5).gameState(this).hex2(movedHexProperty).style("-fx-font: 16 arial;").xOffset(-2).yOffset(20).display(addMovementPointText(n)).build()));
             }
         }
@@ -87,8 +86,8 @@ public class Move1StateImpl extends AbstractGamePlayState {
     @Override
     public void onClickMove1(ActionEvent event) {
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.BEGIN_GAME_PLAY).build());
-        GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
-        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+        GameHexBoardData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().hex(h).type(HexStateType.COMMON).switch1(false).build()));
+        for (Hex hex : GameHexBoardData.get().getHexBoard().getHexes()) {
             hex.getCounters().forEach(c -> c.changeState(c.getPreviousState()));
         }
     }

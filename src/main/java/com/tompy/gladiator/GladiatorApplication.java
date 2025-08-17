@@ -11,13 +11,20 @@ import java.io.IOException;
 
 public class GladiatorApplication extends Application {
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).stage(stage).properties("gladiator-start.properties").build());
-        new GameTimer().start();
-    }
-
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).stage(stage)
+                .sceneLoader(new BeginSceneLoader()).properties("gladiator-start.properties")
+                .toType(GameStateType.GLADIATOR_BEGIN).build());
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException ie) {
+//            ie.printStackTrace();
+//        }
+        new GameTimer().start();
     }
 }

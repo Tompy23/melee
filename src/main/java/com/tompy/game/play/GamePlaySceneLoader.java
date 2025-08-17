@@ -3,7 +3,7 @@ package com.tompy.game.play;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tompy.game.GameConstants;
 import com.tompy.game.GameController;
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.SceneLoader;
 import com.tompy.hexboard.terrain.LayoutDescription;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +36,7 @@ public class GamePlaySceneLoader implements SceneLoader {
             }
         }
 
-        GameData.builder().properties(sceneProperties)
+        GameHexBoardData.builder().properties(sceneProperties)
                 .layoutMap(layoutDescription == null ? null : layoutDescription.getLayouts())
                 .hexBoard(gpc.getHexBoardPane()).text(gpc.getTextPane()).init();
 

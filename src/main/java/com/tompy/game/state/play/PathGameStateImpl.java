@@ -1,9 +1,8 @@
 package com.tompy.game.state.play;
 
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.GameProperty;
 import com.tompy.game.event.GameFunction;
-import com.tompy.game.state.AbstractGameState;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.state.HexStateFactory;
 import com.tompy.hexboard.state.HexStateType;
@@ -27,7 +26,7 @@ public class PathGameStateImpl extends AbstractGamePlayState {
 
     @Override
     public void beginState() {
-        GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(
+        GameHexBoardData.get().getHexBoard().getHexes().forEach(h -> h.changeState(
                 HexStateFactory.builder().type(HexStateType.DRAW_LINE).hex(h).hex2(startHexProp).hex3(targetHexProp).build()));
     }
 

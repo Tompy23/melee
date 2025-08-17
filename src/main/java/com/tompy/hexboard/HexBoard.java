@@ -1,6 +1,6 @@
 package com.tompy.hexboard;
 
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.PaneCoordinates;
 import com.tompy.hexboard.state.HexStateFactory;
 import com.tompy.hexboard.state.HexStateType;
@@ -24,7 +24,7 @@ public class HexBoard implements StateMachine<State> {
     private State currentState;
 
     public HexBoard(Builder builder) {
-        GameData gameData = builder.gameData;
+        GameHexBoardData gameHexBoardData = builder.gameHexBoardData;
         this.border = builder.border;
         this.pixelSize = builder.pixelSize;
         this.height = builder.height;
@@ -163,7 +163,7 @@ public class HexBoard implements StateMachine<State> {
         private int pixelSize;
         private int height;
         private int width;
-        private GameData gameData;
+        private GameHexBoardData gameHexBoardData;
         private Map<HexCoordinate, Layout> layout;
 
         public Builder border(int border) {
@@ -186,8 +186,8 @@ public class HexBoard implements StateMachine<State> {
             return this;
         }
 
-        public Builder gameData(GameData gameData) {
-            this.gameData = gameData;
+        public Builder gameData(GameHexBoardData gameHexBoardData) {
+            this.gameHexBoardData = gameHexBoardData;
             return this;
         }
 

@@ -1,50 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@gladiator.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.game.play.GamePlayControllerImpl">
-   <children>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <ScrollPane fx:id="scrollBackground" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" styleClass=".corner" BorderPane.alignment="CENTER">
-               <content>
-                  <StackPane fx:id="stackBoard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="476.0" prefWidth="718.0">
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="600.0" text="Gladiator" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.gladiator.BeginController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="306.0" prefWidth="598.0">
+         <children>
+            <HBox layoutY="19.6" prefHeight="2.0" prefWidth="569.0" spacing="15.0" AnchorPane.bottomAnchor="132.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="205.0">
                      <children>
-                        <Pane fx:id="paneBackImage" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
-                        <Pane fx:id="paneHexDecorator" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
-                        <Pane fx:id="paneHexBoard" onMouseMoved="#handleMouseMove" prefHeight="275.0" prefWidth="390.0" />
-                        <Pane fx:id="paneText" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" />
+                        <RadioButton fx:id="rabCampaign" mnemonicParsing="false" onAction="#onCmbCampaign" selected="true" text="Campaign">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="GameType" />
+                           </toggleGroup></RadioButton>
+                        <TextField fx:id="txtStableOwner" promptText="Stable Owner" />
                      </children>
-                  </StackPane>
-               </content>
-            </ScrollPane>
-         </center>
-         <top>
-            <HBox maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="btnAddCounter" mnemonicParsing="false" onAction="#handleAddCounter" text="Add Counter" />
-                  <Button fx:id="btnAddCounter2" mnemonicParsing="false" onAction="#handleAddCounter2" text="Add Counter #2" />
-                  <Button fx:id="btnMove1" disable="true" mnemonicParsing="false" onAction="#handleMove1" text="Move #1" />
-                  <Button fx:id="btnDrawLine" mnemonicParsing="false" onAction="#handleDrawLine" text="Draw Line" />
-                  <Button mnemonicParsing="false" onAction="#handleTestHexPointer" text="Test Hex Pointer" />
-                  <Button mnemonicParsing="false" onAction="#handleFindPath" text="TestPath" />
-               </children></HBox>
-         </top>
-         <right>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="100.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="zoomIn" mnemonicParsing="false" onAction="#handleZoomIn" text="Zoom In" />
-                  <Button fx:id="zoomOut" mnemonicParsing="false" onAction="#handleZoomOut" text="Zooom Out" />
-                  <Button fx:id="btnUnselect" mnemonicParsing="false" onAction="#handleUnselect" text="Unselect All" />
-               </children></VBox>
-         </right>
-         <left>
-            <Button fx:id="btnNextScene" mnemonicParsing="false" onAction="#handleNextScene" text="Next Scene" BorderPane.alignment="CENTER" />
-         </left>
-         <bottom>
-            <TextArea prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT" />
-         </bottom>
-      </BorderPane>
-   </children>
-</AnchorPane>
+                  </VBox>
+                  <VBox prefHeight="100.0" prefWidth="233.0">
+                     <children>
+                        <RadioButton fx:id="rabSingle" mnemonicParsing="false" onAction="#onCmbSingle" text="Single Combat" toggleGroup="$GameType" />
+                        <TextField fx:id="txtName" promptText="Name" />
+                        <ComboBox fx:id="cmbType" prefWidth="150.0" promptText="Gladiator Type" />
+                        <ComboBox fx:id="cmbOpponentType" prefWidth="150.0" promptText="Opponent Type" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="btnStartNext" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#onClickNext" prefHeight="25.0" prefWidth="83.0" text="Next" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+         </children></AnchorPane>
+  </content>
+</TitledPane>

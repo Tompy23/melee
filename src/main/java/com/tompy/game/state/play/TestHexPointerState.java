@@ -1,8 +1,6 @@
 package com.tompy.game.state.play;
 
-import com.tompy.game.GameData;
-import com.tompy.game.play.GamePlayData;
-import com.tompy.game.state.AbstractGameState;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import com.tompy.hexboard.state.HexStateFactory;
@@ -18,19 +16,19 @@ public class TestHexPointerState extends AbstractGamePlayState {
 
     @Override
     public void beginState() {
-        GameData.get().getHexBoard().getHexes()
+        GameHexBoardData.get().getHexBoard().getHexes()
                 .forEach(h -> h.changeState(HexStateFactory.builder().type(HexStateType.NOTHING).build()));
     }
 
     @Override
     public void endState() {
-        GameData.get().getHexBoard().getHexes()
+        GameHexBoardData.get().getHexBoard().getHexes()
                 .forEach(h -> h.changeState(HexStateFactory.builder().type(HexStateType.COMMON).build()));
     }
 
     @Override
     public void process(long l) {
-        Hex hex = HexFunction.pixelToHex(GameData.get().getMouseX(), GameData.get().getMouseY());
+        Hex hex = HexFunction.pixelToHex(GameHexBoardData.get().getMouseX(), GameHexBoardData.get().getMouseY());
 
         if (hex != currentHex && hex != null) {
             if (currentHex != null) {
@@ -44,8 +42,8 @@ public class TestHexPointerState extends AbstractGamePlayState {
 
     @Override
     public void onMouseMove(MouseEvent event) {
-        Point2D point = GameData.get().getPaneHexBoard()
+        Point2D point = GameHexBoardData.get().getPaneHexBoard()
                 .sceneToLocal(event.getSceneX(), event.getSceneY());
-        GameData.get().setMousePointer(point.getX(), point.getY());
+        GameHexBoardData.get().setMousePointer(point.getX(), point.getY());
     }
 }

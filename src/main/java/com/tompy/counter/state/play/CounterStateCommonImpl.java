@@ -2,7 +2,7 @@ package com.tompy.counter.state.play;
 
 import com.tompy.counter.Counter;
 import com.tompy.counter.state.AbstractCounterState;
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.Hex;
 import javafx.scene.input.MouseEvent;
@@ -63,7 +63,7 @@ public class CounterStateCommonImpl extends AbstractCounterState {
                 } else {
                     hex.stackCounters();
                 }
-                GameFunction.displayCountersInHex(hex, GameData.get().getPaneHexBoard());
+                GameFunction.displayCountersInHex(hex, GameHexBoardData.get().getPaneHexBoard());
             }
         }
    }

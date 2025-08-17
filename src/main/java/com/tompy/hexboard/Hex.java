@@ -1,7 +1,7 @@
 package com.tompy.hexboard;
 
 import com.tompy.counter.Counter;
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.PaneCoordinates;
 import com.tompy.game.event.GameFunction;
 import com.tompy.hexboard.state.HexState;
@@ -100,7 +100,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
 
         counter.addToHex(this);
 
-        GameFunction.displayCountersInHex(this, GameData.get().getPaneHexBoard());
+        GameFunction.displayCountersInHex(this, GameHexBoardData.get().getPaneHexBoard());
     }
 
     public void removeCounter(Counter oldCounter) {
@@ -113,7 +113,7 @@ public class Hex extends Polygon implements StateMachine<HexState> {
         }
         counters.removeAll(countersToRemove);
 
-        GameFunction.displayCountersInHex(this, GameData.get().getPaneHexBoard());
+        GameFunction.displayCountersInHex(this, GameHexBoardData.get().getPaneHexBoard());
     }
 
     public Terrain getTerrain() {

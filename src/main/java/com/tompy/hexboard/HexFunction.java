@@ -1,6 +1,6 @@
 package com.tompy.hexboard;
 
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class HexFunction {
         for (int i = 0; i < 12; i += 2) {
             long x = hex.getCoordinate().getCol() + directionVector[i];
             long y = hex.getCoordinate().getR() + directionVector[i + 1];
-            Hex neighbor = GameData.get().getHexBoard().getHex(x, y);
+            Hex neighbor = GameHexBoardData.get().getHexBoard().getHex(x, y);
             if (neighbor != null && !neighbor.noEntry()) {
                 returnValue.add(neighbor);
             }
@@ -50,10 +50,10 @@ public class HexFunction {
     }
 
     public static Hex pixelToHex(double x, double y) {
-        x -= GameData.get().getHexBoard().getBorder()*1.5;
-        y -= GameData.get().getHexBoard().getBorder();
-        x /= GameData.get().getHexBoard().getPixelSize();
-        y /= GameData.get().getHexBoard().getPixelSize();
+        x -= GameHexBoardData.get().getHexBoard().getBorder()*1.5;
+        y -= GameHexBoardData.get().getHexBoard().getBorder();
+        x /= GameHexBoardData.get().getHexBoard().getPixelSize();
+        y /= GameHexBoardData.get().getHexBoard().getPixelSize();
 
         double q = (SQRT3 / 3 * x) - (1.0 / 3) * y;
         double r = (2.0 / 3) * y;
@@ -61,7 +61,7 @@ public class HexFunction {
         CubeCoordinate roundCoordinate = cubeRound(cubedCoordinates);
         HexCoordinate hexCoordinate = fromAxial(roundCoordinate);
 
-        return GameData.get().getHexBoard().getHex(hexCoordinate.getCol(), hexCoordinate.getR());
+        return GameHexBoardData.get().getHexBoard().getHex(hexCoordinate.getCol(), hexCoordinate.getR());
     }
 
     public static HexCoordinate fromAxial(CubeCoordinate coordinate) {

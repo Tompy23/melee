@@ -1,10 +1,8 @@
 package com.tompy.game.state.play;
 
-import com.tompy.game.GameData;
-import com.tompy.game.play.GamePlayData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.GameProperty;
 import com.tompy.game.PaneCoordinates;
-import com.tompy.game.state.AbstractGameState;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import com.tompy.hexboard.state.HexStateFactory;
@@ -29,7 +27,7 @@ public class DrawLineGameStateImpl extends AbstractGamePlayState {
 
     @Override
     public void beginState() {
-        GameData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().type(HexStateType.DRAW_LINE).hex(h).hex2(startHexProp).hex3(targetHexProp).build()));
+        GameHexBoardData.get().getHexBoard().getHexes().forEach(h -> h.changeState(HexStateFactory.builder().type(HexStateType.DRAW_LINE).hex(h).hex2(startHexProp).hex3(targetHexProp).build()));
     }
 
     @Override
@@ -37,7 +35,7 @@ public class DrawLineGameStateImpl extends AbstractGamePlayState {
         if (startHexProp.isChanged() || targetHexProp.isChanged() && startHexProp.peek() != null) {
             // reset
             if (line != null) {
-                GameData.get().getPaneText().getChildren().remove(line);
+                GameHexBoardData.get().getPaneText().getChildren().remove(line);
             }
 
             hexLine.forEach(h -> h.setFill(Color.TRANSPARENT));
@@ -54,7 +52,7 @@ public class DrawLineGameStateImpl extends AbstractGamePlayState {
             double targetY = targetHex.getPaneCoordinates().getY();
 
             line = new Line(startX, startY, targetX, targetY);
-            GameData.get().getPaneText().getChildren().add(line);
+            GameHexBoardData.get().getPaneText().getChildren().add(line);
 
             // Calculate hexes
             long distance = HexFunction.distance(startHex, targetHex);

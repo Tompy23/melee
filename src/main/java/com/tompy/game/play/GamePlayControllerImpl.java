@@ -3,9 +3,9 @@ package com.tompy.game.play;
 import com.tompy.counter.Counter;
 import com.tompy.counter.CounterFactory;
 import com.tompy.counter.CounterType;
+import com.tompy.game.AbstractGameController;
 import com.tompy.game.GameConstants;
-import com.tompy.game.GameController;
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
@@ -23,9 +23,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
-public class GamePlayControllerImpl implements GameController, GamePlayController {
+public class GamePlayControllerImpl extends AbstractGameController implements GamePlayController {
     private static final double SQRT3 = Math.sqrt(3);
     @FXML
     private ScrollPane scrollBackground;
@@ -46,13 +45,6 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
 
     //private double zoom = 1.0;
 
-    private Stage stage;
-
-    @Override
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     @Override
     public void drawHexBoardWithLayout() {
         drawHexBoard();
@@ -60,7 +52,7 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
 
     @Override
     public void drawHexBoard() {
-        HexBoard board = GameData.get().getHexBoard();
+        HexBoard board = GameHexBoardData.get().getHexBoard();
         double height = 1.5 * board.getPixelSize();
         double width = SQRT3 * board.getPixelSize();
 
@@ -128,7 +120,7 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
     }
 
     public void handleNextScene(ActionEvent event) {
-        String nextScene = (String) GameData.get().getProperty(GameConstants.SCENE_NEXT);
+        String nextScene = (String) GameHexBoardData.get().getProperty(GameConstants.SCENE_NEXT);
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).properties(nextScene).stage(stage).build());
     }
 
@@ -155,12 +147,12 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
     public void handleUnselect(ActionEvent event) {
         // TODO THis is going to go away once we have all the stuff coordinated
         // Dangerous for sure
-        GameData.get().getHexBoard().unselectAllHexes();
+        GameHexBoardData.get().getHexBoard().unselectAllHexes();
     }
 
     public void handleAddCounter(ActionEvent event) {
         Counter counter = CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator.png")
-                .hex(GameData.get().getHexBoard().getHex(0, 0)).movement(6).build();
+                .hex(GameHexBoardData.get().getHexBoard().getHex(0, 0)).movement(6).build();
         counter.setOnMouseClicked(counter::handleClick);
         counter.setOnMouseEntered(counter::handleEnter);
         counter.setOnMouseExited(counter::handleExit);
@@ -168,7 +160,7 @@ public class GamePlayControllerImpl implements GameController, GamePlayControlle
 
     public void handleAddCounter2(ActionEvent event) {
         Counter counter = CounterFactory.counterBuilder().type(CounterType.GLADIATOR).imageName("gladiator2.png")
-                .hex(GameData.get().getHexBoard().getHex(4, 2)).movement(5).build();
+                .hex(GameHexBoardData.get().getHexBoard().getHex(4, 2)).movement(5).build();
         counter.setOnMouseClicked(counter::handleClick);
         counter.setOnMouseEntered(counter::handleEnter);
         counter.setOnMouseExited(counter::handleExit);

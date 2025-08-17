@@ -6,5 +6,6 @@ public enum GameStateType {
     MOVE_1,
     TEST_POINTER,
     DRAW_LINE,
-    FIND_PATH
+    FIND_PATH,
+    GLADIATOR_BEGIN
 }

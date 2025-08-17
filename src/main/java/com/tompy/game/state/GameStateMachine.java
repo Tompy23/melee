@@ -1,9 +1,6 @@
 package com.tompy.game.state;
 
-import com.tompy.game.GameData;
 import com.tompy.state.AbstractStateMachine;
-import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
 
 public class GameStateMachine extends AbstractStateMachine<GameState> {
     private static GameStateMachine stateMahcine;

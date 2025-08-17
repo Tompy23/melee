@@ -3,15 +3,14 @@ package com.tompy.game;
 import com.tompy.hexboard.HexBoard;
 import com.tompy.hexboard.HexCoordinate;
 import com.tompy.hexboard.terrain.Layout;
-import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
-public class GameData {
-    private static GameData singleton;
+public class GameHexBoardData {
+    private static GameHexBoardData singleton;
     private final HexBoard hexBoard;
     private final Properties properties;
 
@@ -23,7 +22,7 @@ public class GameData {
     private final Pane paneHexBoard;
     private final Pane paneText;
 
-    private GameData(Builder builder) {
+    private GameHexBoardData(Builder builder) {
         this.properties = Objects.requireNonNull(builder.properties, "Scene Properties cannot be null");
         int pixelSize = Integer.parseInt(properties.getProperty("board.pixel.size"));
         int height = Integer.parseInt(properties.getProperty("board.height"));
@@ -37,7 +36,11 @@ public class GameData {
         singleton = this;
     }
 
-    public static GameData get() {
+    public static boolean isInitialized() {
+        return singleton != null;
+    }
+
+    public static GameHexBoardData get() {
         if (singleton != null) {
             return singleton;
         } else {
@@ -126,7 +129,7 @@ public class GameData {
         }
 
         public void init() {
-            new GameData(this);
+            new GameHexBoardData(this);
         }
     }
 }

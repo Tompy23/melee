@@ -12,6 +12,7 @@ module com.tompy.game {
     requires com.almasb.fxgl.all;
     requires jdk.xml.dom;
     requires annotations;
+    requires java.desktop;
 
     opens com.tompy.game to javafx.fxml, com.fasterxml.jackson.databind;
     exports com.tompy.game;
@@ -23,4 +24,6 @@ module com.tompy.game {
     opens com.tompy.game.play to com.fasterxml.jackson.databind, javafx.fxml;
     exports com.tompy.game.state.play;
     opens com.tompy.game.state.play to javafx.fxml;
+    exports com.tompy.gladiator;
+    opens com.tompy.gladiator to javafx.fxml, com.fasterxml.jackson.databind;
 }

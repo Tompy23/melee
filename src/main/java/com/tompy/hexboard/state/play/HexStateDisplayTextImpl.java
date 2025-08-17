@@ -1,7 +1,6 @@
 package com.tompy.hexboard.state.play;
 
-import com.tompy.game.GameData;
-import com.tompy.game.play.GamePlayData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.state.AbstractHexStateDecorator;
 import com.tompy.hexboard.state.HexState;
@@ -26,7 +25,7 @@ public class HexStateDisplayTextImpl extends AbstractHexStateDecorator {
 
     @Override
     public void beginState() {
-        Pane hexTextPane = GameData.get().getPaneText();
+        Pane hexTextPane = GameHexBoardData.get().getPaneText();
         text = new Text();
         text.setStyle(style);
         text.setText(display);
@@ -39,7 +38,7 @@ public class HexStateDisplayTextImpl extends AbstractHexStateDecorator {
 
     @Override
     public void endState() {
-        Pane hexTextPane = GameData.get().getPaneText();
+        Pane hexTextPane = GameHexBoardData.get().getPaneText();
         hexTextPane.getChildren().remove(text);
         super.endState();
     }

@@ -1,9 +1,8 @@
 package com.tompy.game.state.play;
 
-import com.tompy.game.GameData;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.counter.Counter;
 import com.tompy.game.play.GamePlayData;
-import com.tompy.game.state.AbstractGameState;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
@@ -19,7 +18,7 @@ public class BeginGamePlayStateImpl extends AbstractGamePlayState {
             pause += WAIT;
 
             int hexesSelected = 0;
-            for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+            for (Hex hex : GameHexBoardData.get().getHexBoard().getHexes()) {
                 long selected = hex.getCounters().stream().filter(Counter::isSelected).count();
                 if (selected > 0) {
                     hexesSelected++;
@@ -33,7 +32,7 @@ public class BeginGamePlayStateImpl extends AbstractGamePlayState {
     public void onClickMove1(ActionEvent event) {
         Hex originHex = null;
         long hexCount = 0;
-        for (Hex hex : GameData.get().getHexBoard().getHexes()) {
+        for (Hex hex : GameHexBoardData.get().getHexBoard().getHexes()) {
             if (hex.getCounters().stream().anyMatch(Counter::isSelected)) {
                 hexCount++;
                 originHex = hex;
