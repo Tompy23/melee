@@ -1,12 +1,16 @@
 package com.tompy.gladiator;
 
 import com.tompy.game.AbstractGameController;
+import com.tompy.game.state.GameStateFactory;
+import com.tompy.game.state.GameStateMachine;
+import com.tompy.game.state.GameStateType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import javafx.scene.input.KeyEvent;
 
 public class BeginController extends AbstractGameController {
     private static BeginController singleton;
@@ -58,6 +62,9 @@ public class BeginController extends AbstractGameController {
 
     public void onClickNext(ActionEvent event) {
         System.out.println("onClickNext");
+        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE)
+                .properties("gladiator-play.properties").toType(GameStateType.GLADIATOR_PLAY_BEGIN).stage(stage)
+                .sceneLoader(new PlayGameSceneLoader()).build());
     }
 
     public void onCmbCampaign(ActionEvent event) {
@@ -65,6 +72,7 @@ public class BeginController extends AbstractGameController {
         txtName.setDisable(true);
         cmbOpponentType.setDisable(true);
         cmbType.setDisable(true);
+        enableNext();
     }
 
     public void onCmbSingle(ActionEvent event) {
@@ -72,6 +80,30 @@ public class BeginController extends AbstractGameController {
         txtName.setDisable(false);
         cmbOpponentType.setDisable(false);
         cmbType.setDisable(false);
+        enableNext();
+    }
+
+    public void onNameChanged(KeyEvent event) {
+        enableNext();
+    }
+
+    public void onStableOwnerChanged(KeyEvent event) {
+        enableNext();
+    }
+
+    public void onTypeAction(ActionEvent event) {
+        enableNext();
+    }
+
+    private void enableNext() {
+        if (rabCampaign.isSelected()) {
+            btnStartNext.setDisable(txtStableOwner.getText().isEmpty());
+        }
+
+        if (rabSingle.isSelected()) {
+            btnStartNext.setDisable(txtName.getText()
+                    .isBlank() || cmbOpponentType.getValue() == null || cmbType.getValue() == null);
+        }
     }
 
     public Button getBtnStartNext() {

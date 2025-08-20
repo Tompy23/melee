@@ -1,5 +1,6 @@
 package com.tompy.game.state;
 
+import com.tompy.game.GameConstants;
 import com.tompy.game.GameFxmlLoader;
 import com.tompy.game.SceneLoader;
 import javafx.stage.Stage;
@@ -27,7 +28,8 @@ public class ChangeSceneStateImpl extends AbstractGameState {
         try {
             Properties sceneProperties = new Properties();
             sceneProperties.load(getFileFromResourceAsStream(scenePropertiesName));
-            gameFxmlLoader.loadFxml(stage, sceneProperties, sceneLoader);
+            gameFxmlLoader.loadFxml(stage, sceneProperties, sceneLoader,
+                    GameConstants.class.getResource(sceneProperties.getProperty(GameConstants.FXML)));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

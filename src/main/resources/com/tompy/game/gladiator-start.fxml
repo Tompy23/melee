@@ -16,14 +16,14 @@
                            <toggleGroup>
                               <ToggleGroup fx:id="GameType" />
                            </toggleGroup></RadioButton>
-                        <TextField fx:id="txtStableOwner" promptText="Stable Owner" />
+                        <TextField fx:id="txtStableOwner" onKeyPressed="#onStableOwnerChanged" promptText="Stable Owner" />
                      </children>
                   </VBox>
                   <VBox prefHeight="100.0" prefWidth="233.0">
                      <children>
                         <RadioButton fx:id="rabSingle" mnemonicParsing="false" onAction="#onCmbSingle" text="Single Combat" toggleGroup="$GameType" />
-                        <TextField fx:id="txtName" promptText="Name" />
-                        <ComboBox fx:id="cmbType" prefWidth="150.0" promptText="Gladiator Type" />
+                        <TextField fx:id="txtName" onKeyPressed="#onNameChanged" promptText="Name" />
+                        <ComboBox fx:id="cmbType" onAction="#onTypeAction" prefWidth="150.0" promptText="Gladiator Type" />
                         <ComboBox fx:id="cmbOpponentType" prefWidth="150.0" promptText="Opponent Type" />
                      </children>
                   </VBox>

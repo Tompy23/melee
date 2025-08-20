@@ -20,11 +20,6 @@ public class GladiatorApplication extends Application {
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).stage(stage)
                 .sceneLoader(new BeginSceneLoader()).properties("gladiator-start.properties")
                 .toType(GameStateType.GLADIATOR_BEGIN).build());
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException ie) {
-//            ie.printStackTrace();
-//        }
         new GameTimer().start();
     }
 }

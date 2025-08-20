@@ -1,17 +1,8 @@
 package com.tompy.game.play;
 
-import com.tompy.game.GameController;
-import javafx.scene.layout.Pane;
+import com.tompy.game.GameHexBoardController;
 
-public interface GamePlayController extends GameController {
+public interface GamePlayController extends GameHexBoardController {
 
     void enableMove1Button(boolean enable);
-
-    void drawHexBoard();
-
-    void drawHexBoardWithLayout();
-
-    Pane getHexBoardPane();
-
-    Pane getTextPane();
 }
