@@ -5,7 +5,7 @@ import com.tompy.game.state.GameStateMachine;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public class PlayGameController extends AbstractGameHexBoardController {
+public class PlayGladiatorController extends AbstractGameHexBoardController {
 
     public void handleMouseMove(MouseEvent event) {
         GameStateMachine.get().getCurrentState().onMouseMove(event);

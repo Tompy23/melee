@@ -3,7 +3,7 @@ package com.tompy.game.state;
 import com.tompy.game.SceneLoader;
 import com.tompy.game.state.play.*;
 import com.tompy.gladiator.BeginStateImpl;
-import com.tompy.gladiator.PlayGameBeginStateImpl;
+import com.tompy.gladiator.PlayGladiatorBeginStateImpl;
 import com.tompy.hexboard.Hex;
 import javafx.stage.Stage;
 
@@ -30,7 +30,7 @@ public class GameStateFactory {
             case GLADIATOR_BEGIN:
                 return new BeginStateImpl();
             case GLADIATOR_PLAY_BEGIN:
-                return new PlayGameBeginStateImpl();
+                return new PlayGladiatorBeginStateImpl();
             case BEGIN_GAME_PLAY:
                 return new BeginGamePlayStateImpl();
             case SCENE_CHANGE:

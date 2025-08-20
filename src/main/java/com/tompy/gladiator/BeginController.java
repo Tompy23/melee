@@ -1,6 +1,7 @@
 package com.tompy.gladiator;
 
 import com.tompy.game.AbstractGameController;
+import com.tompy.game.play.GamePlaySceneLoader;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
@@ -64,7 +65,7 @@ public class BeginController extends AbstractGameController {
         System.out.println("onClickNext");
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE)
                 .properties("gladiator-play.properties").toType(GameStateType.GLADIATOR_PLAY_BEGIN).stage(stage)
-                .sceneLoader(new PlayGameSceneLoader()).build());
+                .sceneLoader(new PlayGladiatorSceneLoader()).build());
     }
 
     public void onCmbCampaign(ActionEvent event) {
