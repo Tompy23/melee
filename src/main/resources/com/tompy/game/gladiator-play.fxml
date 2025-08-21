@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@gladiator.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.gladiator.PlayGladiatorController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@gladiator.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tompy.gladiator.PlayGladiatorController">
    <children>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -53,13 +53,13 @@
                               <Insets right="2.0" />
                            </padding>
                         </HBox>
-                        <CheckBox fx:id="cbxQuick" mnemonicParsing="false" text="(Q)uick" />
-                        <RadioButton mnemonicParsing="false" text="(R)ight turn">
+                        <CheckBox fx:id="chbQuick" mnemonicParsing="false" text="(Q)uick" />
+                        <RadioButton fx:id="radPreRight" mnemonicParsing="false" text="(R)ight turn">
                            <toggleGroup>
                               <ToggleGroup fx:id="Turn" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="(L)eft turn" toggleGroup="$Turn" />
+                        <RadioButton fx:id="radPreLeft" mnemonicParsing="false" text="(L)eft turn" toggleGroup="$Turn" />
                         <ToggleButton mnemonicParsing="false" onMouseEntered="#onForwardEnter" onMouseExited="#onForwardExit" text="Forward">
                            <toggleGroup>
                               <ToggleGroup fx:id="Action" />
@@ -78,8 +78,8 @@
                         <ToggleButton mnemonicParsing="false" onMouseEntered="#onRollBLEntered" onMouseExited="#onRollBLExited" text="Roll Back Left" toggleGroup="$Action" />
                         <ToggleButton mnemonicParsing="false" onMouseEntered="#onRollBREntered" onMouseExited="#onRollBRExited" text="Roll Back Right" toggleGroup="$Action" />
                         <ToggleButton mnemonicParsing="false" onMouseEntered="#onKickEntered" onMouseExited="#onKickExited" text="Kick" toggleGroup="$Action" />
-                        <RadioButton mnemonicParsing="false" text="(R)ight turn" toggleGroup="$Turn" />
-                        <RadioButton mnemonicParsing="false" text="(L)eft turn" toggleGroup="$Turn" />
+                        <RadioButton fx:id="radPostRight" mnemonicParsing="false" text="(R)ight turn" toggleGroup="$Turn" />
+                        <RadioButton fx:id="radPostLeft" mnemonicParsing="false" text="(L)eft turn" toggleGroup="$Turn" />
                      </children>
                      <padding>
                         <Insets bottom="2.0" left="2.0" top="2.0" />
