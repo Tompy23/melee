@@ -1,11 +1,29 @@
 package com.tompy.gladiator;
 
+import com.tompy.counter.Counter;
 import com.tompy.game.AbstractGameHexBoardController;
+import com.tompy.game.GameHexBoardData;
 import com.tompy.game.state.GameStateMachine;
+import com.tompy.hexboard.Hex;
+import com.tompy.hexboard.HexFunction;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 public class PlayGladiatorController extends AbstractGameHexBoardController {
+    private boolean moveSet = false;
+    private Rectangle tempImage;
+
+    @FXML
+    private CheckBox cbxQuick;
+
+    public PlayGladiatorController() {
+
+    }
 
     public void handleMouseMove(MouseEvent event) {
         GameStateMachine.get().getCurrentState().onMouseMove(event);
@@ -31,12 +49,54 @@ public class PlayGladiatorController extends AbstractGameHexBoardController {
         stackBoard.setScaleY(zoom);
     }
 
-    public void onForwardEnter(MouseEvent event) {
+    private Hex findNext(Hex hex, int facing) {
+        Hex[] neighbors = HexFunction.getNeighborArray(hex);
 
+        return neighbors[GladiatorData.get().getPlayer().getCounter().getFacing()];
+    }
+
+    public void onForwardEnter(MouseEvent event) {
+        if (!moveSet) {
+            Counter counter = GladiatorData.get().getPlayer().getCounter();
+            Hex hex = findNext(counter.getHex(), counter.getFacing());
+
+            hex.setFill(Color.PINK);
+            hex.setOpacity(0.6);
+
+            if (cbxQuick.isSelected()) {
+                hex = findNext(hex, counter.getFacing());
+                hex.setFill(Color.PINK);
+                hex.setOpacity(0.6);
+            }
+
+            tempImage = new Rectangle();
+            tempImage.setX(hex.localToParent(hex.getLayoutBounds()).getCenterX() - (counter.getImage()
+                    .getWidth() / 2));
+            tempImage.setY(hex.localToParent(hex.getLayoutBounds()).getCenterY() - (counter.getImage()
+                    .getHeight() / 2));
+            tempImage.setHeight(counter.getHeight());
+            tempImage.setWidth(counter.getWidth());
+
+            tempImage.setFill(new ImagePattern(counter.getImage()));
+            tempImage.setOpacity(0.5);
+            tempImage.setRotate((counter.getFacing() - 1) * 60);
+            GameHexBoardData.get().getPaneHexBoard().getChildren().add(tempImage);
+        }
     }
 
     public void onForwardExit(MouseEvent event) {
+        if (!moveSet) {
+            Counter counter = GladiatorData.get().getPlayer().getCounter();
+            Hex hex = findNext(counter.getHex(), counter.getFacing());
+            hex.setFill(Color.TRANSPARENT);
 
+            if (cbxQuick.isSelected()) {
+                Hex quick = findNext(hex, counter.getFacing());
+                quick.setFill(Color.TRANSPARENT);
+            }
+
+            GameHexBoardData.get().getPaneHexBoard().getChildren().remove(tempImage);
+        }
     }
 
     public void onBackwardsEntered(MouseEvent event) {

@@ -25,6 +25,10 @@ public class GameFunction {
 
 
         List<Counter> counters = hex.getCounters();
+        for (Counter counter : counters) {
+            counter.setRotate((counter.getFacing() - 1) * 60);
+        }
+
         if (!counters.isEmpty()) {
             if (counters.size() == 1) {
                 Counter counter = counters.getFirst();
@@ -82,7 +86,6 @@ public class GameFunction {
     }
 
 
-
     public static List<Hex> bfsFindPath(Hex start, Hex target) {
         Map<Hex, Hex> cameFrom = new HashMap<>();
         Queue<Hex> grid = new LinkedList<>();
@@ -137,7 +140,7 @@ public class GameFunction {
             if (!(o instanceof HexNode)) {
                 return false;
             }
-            HexNode node = (HexNode)o;
+            HexNode node = (HexNode) o;
             return node.getHex().equals(hex);
         }
 

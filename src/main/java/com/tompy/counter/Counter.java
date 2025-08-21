@@ -20,6 +20,7 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
     private final Image image;
     private Hex hex;
     private boolean selected;
+    private int facing;
 
     private final long movement;
     private long movementExpended;
@@ -30,6 +31,7 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
         this.image = builder.image;
         this.movement = builder.movement;
         this.movementExpended = 0;
+        this.facing = 0;
 
         this.setFill(new ImagePattern(image));
         this.setStrokeWidth(6.0);
@@ -41,6 +43,9 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
 
         changeState(CounterStateFactory.builder().type(CounterStateType.COMMON).counter(this).build());
     }
+
+//    public Counter() {
+//    }
 
     public static Builder builder() {
         return new Builder();
@@ -96,6 +101,14 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
 
     public void resetMovementExpended() {
         movementExpended = 0;
+    }
+
+    public int getFacing() {
+        return facing;
+    }
+
+    public void setFacing(int facing) {
+        this.facing = facing;
     }
 
     public Node getStyleableNode() {

@@ -14,12 +14,14 @@ public class ChangeSceneStateImpl extends AbstractGameState {
     protected final String scenePropertiesName;
     protected final GameStateType type;
     protected final SceneLoader sceneLoader;
+    private boolean initialized;
 
     public ChangeSceneStateImpl(Stage stage, String scenePropertiesName, GameStateType type, SceneLoader sceneLoader) {
         this.stage = stage;
         this.scenePropertiesName = scenePropertiesName;
         this.type = type;
         this.sceneLoader = sceneLoader;
+        initialized = false;
     }
 
     @Override
@@ -33,11 +35,20 @@ public class ChangeSceneStateImpl extends AbstractGameState {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+
+        initialized = true;
+    }
+
+    @Override
+    public void endState() {
+        initialized = false;
     }
 
     @Override
     public void process(long l) {
-        GameStateMachine.get().changeState(GameStateFactory.buidler().type(type).build());
+        if (initialized) {
+            GameStateMachine.get().changeState(GameStateFactory.buidler().type(type).build());
+        }
     }
 
     private InputStream getFileFromResourceAsStream(String fileName) {

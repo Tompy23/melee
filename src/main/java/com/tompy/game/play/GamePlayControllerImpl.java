@@ -31,7 +31,8 @@ public class GamePlayControllerImpl extends AbstractGameHexBoardController imple
         String nextScene = (String) GameHexBoardData.get().getProperty(GameConstants.SCENE_NEXT);
         GameStateMachine.get()
                 .changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).properties(nextScene)
-                        .stage(stage).build());
+                        .stage(stage).sceneLoader(new GamePlaySceneLoader()).toType(GameStateType.BEGIN_GAME_PLAY)
+                        .build());
     }
 
     public void handleZoomIn(ActionEvent event) {

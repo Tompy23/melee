@@ -20,6 +20,6 @@ public class GamePlayApplication extends Application {
         GameStateMachine.get().changeState(
                 GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).stage(stage).properties("first.properties")
                         .sceneLoader(new GamePlaySceneLoader()).toType(GameStateType.BEGIN_GAME_PLAY).build());
-        new GameTimer().start();
+        GameTimer.get().start();
     }
 }

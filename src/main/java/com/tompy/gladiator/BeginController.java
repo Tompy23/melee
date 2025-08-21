@@ -5,6 +5,7 @@ import com.tompy.game.play.GamePlaySceneLoader;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
+import com.tompy.game.state.GameTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -63,9 +64,14 @@ public class BeginController extends AbstractGameController {
 
     public void onClickNext(ActionEvent event) {
         System.out.println("onClickNext");
+
+        GameTimer.get().stop();
+
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE)
                 .properties("gladiator-play.properties").toType(GameStateType.GLADIATOR_PLAY_BEGIN).stage(stage)
                 .sceneLoader(new PlayGladiatorSceneLoader()).build());
+
+        GameTimer.get().start();
     }
 
     public void onCmbCampaign(ActionEvent event) {

@@ -3,21 +3,27 @@ package com.tompy.hexboard;
 import com.tompy.game.GameHexBoardData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HexFunction {
     private final static double SQRT3 = Math.sqrt(3);
 
-    private final static int[] directionVector = new int[]{2, 0, 1, -1, -1, -1, -2, 0, -1, 1, 1, 1};
+    private final static int[] directionVector = new int[]{1, -1, 2, 0, 1, 1, -1, 1, -2, 0, -1, -1};
 
     public static List<Hex> getNeighbors(Hex hex) {
-        List<Hex> returnValue = new ArrayList<>();
+        return Arrays.stream(getNeighborArray(hex)).toList();
+    }
+
+    public static Hex[] getNeighborArray(Hex hex) {
+        Hex[] returnValue = new Hex[6];
         for (int i = 0; i < 12; i += 2) {
+
             long x = hex.getCoordinate().getCol() + directionVector[i];
             long y = hex.getCoordinate().getR() + directionVector[i + 1];
             Hex neighbor = GameHexBoardData.get().getHexBoard().getHex(x, y);
             if (neighbor != null && !neighbor.noEntry()) {
-                returnValue.add(neighbor);
+                returnValue[i/2] = neighbor;
             }
         }
 
@@ -50,7 +56,7 @@ public class HexFunction {
     }
 
     public static Hex pixelToHex(double x, double y) {
-        x -= GameHexBoardData.get().getHexBoard().getBorder()*1.5;
+        x -= GameHexBoardData.get().getHexBoard().getBorder() * 1.5;
         y -= GameHexBoardData.get().getHexBoard().getBorder();
         x /= GameHexBoardData.get().getHexBoard().getPixelSize();
         y /= GameHexBoardData.get().getHexBoard().getPixelSize();
