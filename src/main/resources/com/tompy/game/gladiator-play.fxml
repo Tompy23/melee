@@ -46,40 +46,40 @@
                      <children>
                         <HBox spacing="90.0">
                            <children>
-                              <Button cancelButton="true" mnemonicParsing="false" text="Reset" />
-                              <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" text="Move" />
+                              <Button fx:id="btnReset" cancelButton="true" mnemonicParsing="false" onAction="#onReset" text="Reset" />
+                              <Button fx:id="btnMove" alignment="CENTER_RIGHT" contentDisplay="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#onMove" text="Move" />
                            </children>
                            <padding>
                               <Insets right="2.0" />
                            </padding>
                         </HBox>
-                        <CheckBox fx:id="chbQuick" mnemonicParsing="false" text="(Q)uick" />
-                        <RadioButton fx:id="radPreRight" mnemonicParsing="false" text="(R)ight turn">
+                        <CheckBox fx:id="chbQuick" mnemonicParsing="false" onAction="#onQuickAction" text="(Q)uick" />
+                        <RadioButton fx:id="radPreRight" mnemonicParsing="false" onAction="#onPreRightAction" text="(R)ight turn">
                            <toggleGroup>
                               <ToggleGroup fx:id="Turn" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="radPreLeft" mnemonicParsing="false" text="(L)eft turn" toggleGroup="$Turn" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onForwardEnter" onMouseExited="#onForwardExit" text="Forward">
+                        <RadioButton fx:id="radPreLeft" mnemonicParsing="false" onAction="#onPreLeftAction" text="(L)eft turn" toggleGroup="$Turn" />
+                        <ToggleButton fx:id="btnForward" mnemonicParsing="false" onAction="#onForwardAction" onMouseEntered="#onForwardEnter" onMouseExited="#onForwardExit" text="Forward">
                            <toggleGroup>
                               <ToggleGroup fx:id="Action" />
                            </toggleGroup></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onBackwardsEntered" onMouseExited="#onBackwardsExited" text="Backwards" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onSSFLEntered" onMouseExited="#onSSFLExited" text="Sidestep Forward Left" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onSSFREntered" onMouseExited="#onSSFRExited" text="Sidestep Forward Right" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onSSBLEntered" onMouseExited="#onSSBLExited" text="Sidestep Backward Left" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onSSBREntered" onMouseExited="#onSSBRExited" text="SideStep Backward Right" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onChargeEntered" onMouseExited="#onChargeExited" text="Charge" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onPauseEntered" onMouseExited="#onPauseExited" text="Pause" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onRecoverEntered" onMouseExited="#onRecoverExited" text="Recover Weapon/Shield" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onKneelEntered" onMouseExited="#onKneelExited" text="Kneel" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onRollFLEntered" onMouseExited="#onRollFLExited" text="Roll Front Left" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onRollFREntered" onMouseExited="#onRollFRExited" text="Roll Front Right" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onRollBLEntered" onMouseExited="#onRollBLExited" text="Roll Back Left" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onRollBREntered" onMouseExited="#onRollBRExited" text="Roll Back Right" toggleGroup="$Action" />
-                        <ToggleButton mnemonicParsing="false" onMouseEntered="#onKickEntered" onMouseExited="#onKickExited" text="Kick" toggleGroup="$Action" />
-                        <RadioButton fx:id="radPostRight" mnemonicParsing="false" text="(R)ight turn" toggleGroup="$Turn" />
-                        <RadioButton fx:id="radPostLeft" mnemonicParsing="false" text="(L)eft turn" toggleGroup="$Turn" />
+                        <ToggleButton fx:id="btnBackward" mnemonicParsing="false" onAction="#onBackwardAction" onMouseEntered="#onBackwardsEntered" onMouseExited="#onBackwardsExited" text="Backward" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnSSFL" mnemonicParsing="false" onAction="#onSSFLAction" onMouseEntered="#onSSFLEntered" onMouseExited="#onSSFLExited" text="Sidestep Forward Left" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnSSFR" mnemonicParsing="false" onAction="#onSSFRAction" onMouseEntered="#onSSFREntered" onMouseExited="#onSSFRExited" text="Sidestep Forward Right" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnSSBL" mnemonicParsing="false" onAction="#onSSBLAction" onMouseEntered="#onSSBLEntered" onMouseExited="#onSSBLExited" text="Sidestep Backward Left" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnSSBR" mnemonicParsing="false" onAction="#onSSBRAction" onMouseEntered="#onSSBREntered" onMouseExited="#onSSBRExited" text="SideStep Backward Right" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnCharge" mnemonicParsing="false" onAction="#onChargeAction" onMouseEntered="#onChargeEntered" onMouseExited="#onChargeExited" text="Charge" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnPause" mnemonicParsing="false" onAction="#onPauseAction" onMouseEntered="#onPauseEntered" onMouseExited="#onPauseExited" text="Pause" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnRecover" mnemonicParsing="false" onAction="#onRecoverAction" onMouseEntered="#onRecoverEntered" onMouseExited="#onRecoverExited" text="Recover Weapon/Shield" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnKneel" mnemonicParsing="false" onAction="#onKneelAction" onMouseEntered="#onKneelEntered" onMouseExited="#onKneelExited" text="Kneel" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnRollFL" mnemonicParsing="false" onAction="#onRollFLAction" onMouseEntered="#onRollFLEntered" onMouseExited="#onRollFLExited" text="Roll Front Left" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnRollFR" mnemonicParsing="false" onAction="#onRollFRAction" onMouseEntered="#onRollFREntered" onMouseExited="#onRollFRExited" text="Roll Front Right" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnRollBL" mnemonicParsing="false" onAction="#onRollBLAction" onMouseEntered="#onRollBLEntered" onMouseExited="#onRollBLExited" text="Roll Back Left" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnRollBR" mnemonicParsing="false" onAction="#onRollBRAction" onMouseEntered="#onRollBREntered" onMouseExited="#onRollBRExited" text="Roll Back Right" toggleGroup="$Action" />
+                        <ToggleButton fx:id="btnKick" mnemonicParsing="false" onAction="#onKickAction" onMouseEntered="#onKickEntered" onMouseExited="#onKickExited" text="Kick" toggleGroup="$Action" />
+                        <RadioButton fx:id="radPostRight" mnemonicParsing="false" onAction="#onPostRightAction" text="(R)ight turn" toggleGroup="$Turn" />
+                        <RadioButton fx:id="radPostLeft" mnemonicParsing="false" onAction="#onPostLeftAction" text="(L)eft turn" toggleGroup="$Turn" />
                      </children>
                      <padding>
                         <Insets bottom="2.0" left="2.0" top="2.0" />

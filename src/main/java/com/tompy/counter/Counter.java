@@ -44,8 +44,9 @@ public class Counter extends Rectangle implements StateMachine<CounterState> {
         changeState(CounterStateFactory.builder().type(CounterStateType.COMMON).counter(this).build());
     }
 
-//    public Counter() {
-//    }
+    public void decorateDisplay() {
+
+    }
 
     public static Builder builder() {
         return new Builder();
