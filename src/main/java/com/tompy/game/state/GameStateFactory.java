@@ -2,9 +2,12 @@ package com.tompy.game.state;
 
 import com.tompy.game.SceneLoader;
 import com.tompy.game.state.play.*;
-import com.tompy.gladiator.BeginStateImpl;
-import com.tompy.gladiator.PlayGladiatorBeginStateImpl;
+import com.tompy.gladiator.GladiatorInitiateCombatStateImpl;
+import com.tompy.gladiator.GladiatorMoveStateImpl;
+import com.tompy.gladiator.GladiatorBeginPlayStateImpl;
+import com.tompy.gladiator.GladiatorPrepareMoveStateImpl;
 import com.tompy.hexboard.Hex;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GameStateFactory {
@@ -27,10 +30,14 @@ public class GameStateFactory {
 
     private GameState create(GameStateBuilder builder) {
         switch (builder.type) {
-            case GLADIATOR_BEGIN:
-                return new BeginStateImpl();
             case GLADIATOR_PLAY_BEGIN:
-                return new PlayGladiatorBeginStateImpl();
+                return new GladiatorBeginPlayStateImpl();
+            case GLADIATOR_PREPARE_MOVE:
+                return new GladiatorPrepareMoveStateImpl();
+            case GLADIATOR_MOVE:
+                return new GladiatorMoveStateImpl();
+            case GLADIATOR_COMBAT_SETUP:
+                return new GladiatorInitiateCombatStateImpl();
             case BEGIN_GAME_PLAY:
                 return new BeginGamePlayStateImpl();
             case SCENE_CHANGE:
@@ -44,6 +51,8 @@ public class GameStateFactory {
                 return new DrawLineGameStateImpl();
             case FIND_PATH:
                 return new PathGameStateImpl();
+            case NONE:
+                return new GameNoStateImpl();
             default:
                 return null;
         }
@@ -57,6 +66,9 @@ public class GameStateFactory {
         private Hex originHex;
         private SceneLoader sceneLoader;
         private GameStateType toType;
+        private int intValue;
+        private Pane pane;
+        private Pane secondPane;
 
         public GameStateBuilder() {
             this.factory = GameStateFactory.get();
@@ -89,6 +101,21 @@ public class GameStateFactory {
 
         public GameStateBuilder toType(GameStateType toType) {
             this.toType = toType;
+            return this;
+        }
+
+        public GameStateBuilder intValue(int intValue) {
+            this.intValue = intValue;
+            return this;
+        }
+
+        public GameStateBuilder pane(Pane pane) {
+            this.pane = pane;
+            return this;
+        }
+
+        public GameStateBuilder secondPane(Pane secondPane) {
+            this.secondPane = secondPane;
             return this;
         }
 

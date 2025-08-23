@@ -19,7 +19,7 @@ public class GladiatorApplication extends Application {
     public void start(Stage stage) throws IOException {
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE).stage(stage)
                 .sceneLoader(new BeginSceneLoader()).properties("gladiator-start.properties")
-                .toType(GameStateType.GLADIATOR_BEGIN).build());
+                .toType(GameStateType.NONE).build());
         GameTimer.get().start();
     }
 }

@@ -2,47 +2,50 @@ package com.tompy.gladiator;
 
 public class GladiatorData {
     private static GladiatorData singleton;
-    private final Player player;
-    private final Player npc;
+    private Player player;
+    private Player npc;
+    private boolean playerMoveChoice;
+    private PlayGladiatorController controller;
 
-    private GladiatorData(Builder builder) {
-        this.player = builder.player;
-        this.npc = builder.npc;
-        singleton = this;
-    }
-
-    public static Builder builder() {
-        return new Builder();
+    private GladiatorData() {
     }
 
     public static GladiatorData get() {
-        if (singleton != null) {
-            return singleton;
-        } else {
-            throw new RuntimeException("Gladiator Data must be initialized");
+        if (singleton == null) {
+            singleton = new GladiatorData();
         }
+        return singleton;
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    public static class Builder {
-        private Player player;
-        private Player npc;
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
-        public Builder player(Player player) {
-            this.player = player;
-            return this;
-        }
+    public Player getNpc() {
+        return npc;
+    }
 
-        public Builder npc(Player npc) {
-            this.npc = npc;
-            return this;
-        }
+    public void setNpc(Player npc) {
+        this.npc = npc;
+    }
 
-        public void init() {
-            new GladiatorData(this);
-        }
+    public boolean isPlayerMoveChoice() {
+        return playerMoveChoice;
+    }
+
+    public void setPlayerMoveChoice(boolean playerMoveChoice) {
+        this.playerMoveChoice = playerMoveChoice;
+    }
+
+    public PlayGladiatorController getController() {
+        return controller;
+    }
+
+    public void setController(PlayGladiatorController controller) {
+        this.controller = controller;
     }
 }

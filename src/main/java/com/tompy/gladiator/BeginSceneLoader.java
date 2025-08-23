@@ -1,7 +1,6 @@
 package com.tompy.gladiator;
 
 import com.tompy.game.GameController;
-import com.tompy.game.GameHexBoardData;
 import com.tompy.game.SceneLoader;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -12,7 +11,6 @@ public class BeginSceneLoader implements SceneLoader {
     @Override
     public GameController loadSceneController(FXMLLoader fxmlLoader, Stage stage, Properties sceneProperties) {
         BeginController controller = fxmlLoader.getController();
-        //GameHexBoardData.builder().properties(sceneProperties).init();
         controller.init();
         controller.setStage(stage);
 

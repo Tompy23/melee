@@ -1,17 +1,16 @@
 package com.tompy.gladiator;
 
 import com.tompy.game.AbstractGameController;
-import com.tompy.game.play.GamePlaySceneLoader;
 import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
 import com.tompy.game.state.GameStateType;
 import com.tompy.game.state.GameTimer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
 import javafx.scene.input.KeyEvent;
 
 public class BeginController extends AbstractGameController {

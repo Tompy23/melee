@@ -16,6 +16,8 @@ public class PlayGladiatorSceneLoader extends AbstractSceneLoader implements Sce
 
         handleHexBoard(controller, stage, sceneProperties);
 
+        GladiatorData.get().setController(controller);
+
         return controller;
     }
 }

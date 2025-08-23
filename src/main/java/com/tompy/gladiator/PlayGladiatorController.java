@@ -1,30 +1,29 @@
 package com.tompy.gladiator;
 
-import com.almasb.fxgl.multiplayer.ActionBeginReplicationEvent;
 import com.tompy.counter.Counter;
 import com.tompy.game.AbstractGameHexBoardController;
 import com.tompy.game.GameHexBoardData;
+import com.tompy.game.state.GameStateFactory;
 import com.tompy.game.state.GameStateMachine;
+import com.tompy.game.state.GameStateType;
 import com.tompy.hexboard.Hex;
 import com.tompy.hexboard.HexFunction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import javax.swing.*;
-import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayGladiatorController extends AbstractGameHexBoardController {
-    private MoveType moveType = MoveType.NONE;
+
     private Rectangle tempImage;
 
     @FXML
@@ -43,14 +42,21 @@ public class PlayGladiatorController extends AbstractGameHexBoardController {
     private RadioButton radPostLeft;
 
     @FXML
-    private Button btnMove;
+    private Pane paneMove;
+
     @FXML
-    private ToggleButton btnForward;
-    @FXML
-    private ToggleButton btnBackward;
+    private Pane paneCombat;
 
     public PlayGladiatorController() {
 
+    }
+
+    public Pane getPaneMove() {
+        return paneMove;
+    }
+
+    public Pane getPaneCombat() {
+        return paneCombat;
     }
 
     public void handleMouseMove(MouseEvent event) {
@@ -128,7 +134,7 @@ public class PlayGladiatorController extends AbstractGameHexBoardController {
     }
 
     public void resetHexes(List<Hex> hexes) {
-        hexes.forEach(h -> h.setFill(Color.TRANSPARENT));
+        hexes.stream().filter(Objects::nonNull).forEach(h -> h.setFill(Color.TRANSPARENT));
     }
 
     private void showHexImage(Hex hex, Counter counter) {
@@ -185,225 +191,164 @@ public class PlayGladiatorController extends AbstractGameHexBoardController {
         GameHexBoardData.get().getPaneHexBoard().getChildren().remove(tempImage);
     }
 
-    private void moveCounter(Hex hex, Counter counter) {
-        moveCounter(hex, counter, 0, false);
-    }
-
-    private void moveCounter(Hex hex, Counter counter, int rotation) {
-        moveCounter(hex, counter, rotation, false);
-    }
-
-    private void moveCounter(Hex hex, Counter counter, int rotation, boolean ignoreRotation) {
-        int fixedRotation = getRotation(counter, rotation, ignoreRotation);
-        counter.setFacing(fixedRotation + 1);
-        counter.getHex().removeCounter(counter);
-        hex.addCounter(counter);
-    }
-
-    public void onMove(ActionEvent event) {
-        Hex destination;
-        switch (moveType) {
-            case FORWARD:
-                destination = getMove(0).getLast();
-                moveCounter(destination, GladiatorData.get().getPlayer().getCounter());
-                break;
-            case BACKWARD:
-                destination = getMove(3).getLast();
-                moveCounter(destination, GladiatorData.get().getPlayer().getCounter());
-            default:
-                break;
-        }
-    }
-
-    private void redoEnter(MoveType type) {
-
-    }
-
-    public void onPreLeftAction(ActionEvent event) {
-        if (moveType != MoveType.NONE) {
-            removeHexImage();
-            resetHexes(GameHexBoardData.get().getHexBoard().getHexes());
-        }
-    }
-
-    public void onPreRightAction(ActionEvent event) {
-        if (moveType != MoveType.NONE) {
-            removeHexImage();
-            resetHexes(GameHexBoardData.get().getHexBoard().getHexes());
-        }
-    }
-
-    public void onPostLeftAction(ActionEvent event) {
-        if (moveType != MoveType.NONE) {
-            removeHexImage();
-            resetHexes(GameHexBoardData.get().getHexBoard().getHexes());
-        }
-    }
-
-    public void onPostRightAction(ActionEvent event) {
-        if (moveType != MoveType.NONE) {
-            removeHexImage();
-            resetHexes(GameHexBoardData.get().getHexBoard().getHexes());
-        }
-    }
-
-    public void onQuickAction(ActionEvent event) {
-        if (moveType != MoveType.NONE) {
-            removeHexImage();
-            resetHexes(GameHexBoardData.get().getHexBoard().getHexes());
-        }
-    }
+//    private void moveCounter(Hex hex, Counter counter) {
+//        moveCounter(hex, counter, 0, false);
+//    }
+//
+//    private void moveCounter(Hex hex, Counter counter, int rotation) {
+//        moveCounter(hex, counter, rotation, false);
+//    }
+//
+//    private void moveCounter(Hex hex, Counter counter, int rotation, boolean ignoreRotation) {
+//        int fixedRotation = getRotation(counter, rotation, ignoreRotation);
+//        counter.setFacing(fixedRotation + 1);
+//        counter.getHex().removeCounter(counter);
+//        hex.addCounter(counter);
+//    }
 
     public void onForwardAction(ActionEvent event) {
-        if (btnForward.isSelected()) {
-            moveType = MoveType.FORWARD;
-            btnMove.setDisable(false);
-        } else {
-            moveType = MoveType.NONE;
-            btnMove.setDisable(true);
-        }
+        Hex destination = getMove(0).getLast();
+        int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), 0, false);
+        GladiatorData.get().getPlayer().setMoveToHex(destination);
+        GladiatorData.get().getPlayer().setMoveToRotation(rotation);
+        onForwardExit(null);
+        GameStateMachine.get()
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).pane(paneMove)
+                        .secondPane(paneCombat).build());
     }
 
     public void onForwardEnter(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(0);
-            showHexes(hexes);
-            showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
-        }
+        List<Hex> hexes = getMove(0);
+        showHexes(hexes);
+        showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
+
     }
 
     public void onForwardExit(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(0);
-            resetHexes(hexes);
-            removeHexImage();
-        }
+        List<Hex> hexes = getMove(0);
+        resetHexes(hexes);
+        removeHexImage();
     }
 
     public void onBackwardAction(ActionEvent event) {
-        if (btnBackward.isSelected()) {
-            moveType = MoveType.BACKWARD;
-            btnMove.setDisable(false);
-        } else {
-            moveType = MoveType.NONE;
-            btnMove.setDisable(true);
-        }
+        Hex destination = getMove(3).getLast();
+        int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), 3, false);
+        onBackwardsExited(null);
+        GameStateMachine.get()
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).originHex(destination)
+                        .intValue(rotation).pane(paneMove).secondPane(paneCombat).build());
     }
 
     public void onBackwardsEntered(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(3);
-            showHexes(hexes);
-            showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
-        }
+        List<Hex> hexes = getMove(3);
+        showHexes(hexes);
+        showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
     }
 
     public void onBackwardsExited(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(3);
-            resetHexes(hexes);
-            removeHexImage();
-        }
+        List<Hex> hexes = getMove(3);
+        resetHexes(hexes);
+        removeHexImage();
     }
 
     public void onSSFLAction(ActionEvent actionevent) {
-
+        Hex destination = getMove(1).getLast();
+        int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), 1, false);
+        GameStateMachine.get()
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).originHex(destination)
+                        .intValue(rotation).pane(paneMove).secondPane(paneCombat).build());
     }
 
     public void onSSFLEntered(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(1);
-            showHexes(hexes);
-            showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
-        }
+        List<Hex> hexes = getMove(1);
+        showHexes(hexes);
+        showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
     }
 
     public void onSSFLExited(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(1);
-            resetHexes(hexes);
-            removeHexImage();
-        }
+        List<Hex> hexes = getMove(1);
+        resetHexes(hexes);
+        removeHexImage();
     }
 
     public void onSSFRAction(ActionEvent event) {
-
+        Hex destination = getMove(-1).getLast();
+        int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), -1, false);
+        GameStateMachine.get()
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).originHex(destination)
+                        .intValue(rotation).pane(paneMove).secondPane(paneCombat).build());
     }
 
     public void onSSFREntered(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(-1);
-            showHexes(hexes);
-            showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
-        }
+        List<Hex> hexes = getMove(-1);
+        showHexes(hexes);
+        showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
     }
 
     public void onSSFRExited(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(-1);
-            resetHexes(hexes);
-            removeHexImage();
-        }
+        List<Hex> hexes = getMove(-1);
+        resetHexes(hexes);
+        removeHexImage();
     }
 
     public void onSSBLAction(ActionEvent event) {
-
+        Hex destination = getMove(2).getLast();
+        int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), 2, false);
+        GameStateMachine.get()
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).originHex(destination)
+                        .intValue(rotation).pane(paneMove).secondPane(paneCombat).build());
     }
 
     public void onSSBLEntered(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(2);
-            showHexes(hexes);
-            showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
-        }
+        List<Hex> hexes = getMove(2);
+        showHexes(hexes);
+        showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
     }
 
     public void onSSBLExited(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(2);
-            resetHexes(hexes);
-            removeHexImage();
-        }
+        List<Hex> hexes = getMove(2);
+        resetHexes(hexes);
+        removeHexImage();
     }
 
     public void onSSBRAction(ActionEvent event) {
-
+        Hex destination = getMove(-2).getLast();
+        int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), -2, false);
+        GameStateMachine.get()
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).originHex(destination)
+                        .intValue(rotation).pane(paneMove).secondPane(paneCombat).build());
     }
 
     public void onSSBREntered(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(-2);
-            showHexes(hexes);
-            showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
-        }
+        List<Hex> hexes = getMove(-2);
+        showHexes(hexes);
+        showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter());
     }
 
     public void onSSBRExited(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(-2);
-            resetHexes(hexes);
-            removeHexImage();
-        }
+        List<Hex> hexes = getMove(-2);
+        resetHexes(hexes);
+        removeHexImage();
     }
 
     public void onChargeAction(ActionEvent event) {
-
+        Hex destination = getMove(1, 3, true, true).getLast();
+        int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), 0, true);
+        GameStateMachine.get()
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).originHex(destination)
+                        .intValue(rotation).pane(paneMove).secondPane(paneCombat).build());
     }
 
     public void onChargeEntered(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(0, 3, true, true);
-            showHexes(hexes);
-            showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter(), 0, true);
-        }
+        List<Hex> hexes = getMove(0, 3, true, true);
+        showHexes(hexes);
+        showHexImage(hexes.getLast(), GladiatorData.get().getPlayer().getCounter(), 0, true);
     }
 
     public void onChargeExited(MouseEvent event) {
-        if (moveType == MoveType.NONE) {
-            List<Hex> hexes = getMove(0, 3, true, true);
-            resetHexes(hexes);
-            removeHexImage();
-        }
+        List<Hex> hexes = getMove(0, 3, true, true);
+        resetHexes(hexes);
+        removeHexImage();
     }
 
     public void onPauseAction(ActionEvent event) {
@@ -499,10 +444,6 @@ public class PlayGladiatorController extends AbstractGameHexBoardController {
     }
 
     public void onKickExited(MouseEvent event) {
-
-    }
-
-    public void onReset(ActionEvent event) {
 
     }
 }

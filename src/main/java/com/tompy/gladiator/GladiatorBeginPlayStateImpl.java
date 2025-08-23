@@ -6,8 +6,11 @@ import com.tompy.counter.CounterType;
 import com.tompy.game.GameHexBoardData;
 import com.tompy.game.event.GameFunction;
 import com.tompy.game.state.AbstractGameState;
+import com.tompy.game.state.GameStateFactory;
+import com.tompy.game.state.GameStateMachine;
+import com.tompy.game.state.GameStateType;
 
-public class PlayGladiatorBeginStateImpl extends AbstractGameState {
+public class GladiatorBeginPlayStateImpl extends AbstractGameState {
 
     @Override
     public void beginState() {
@@ -21,10 +24,17 @@ public class PlayGladiatorBeginStateImpl extends AbstractGameState {
         GameFunction.displayCountersInHex(npcCounter.getHex(), GameHexBoardData.get().getPaneHexBoard());
 
         // Create the individual Gladiators
+        // TODO create a player factory to handle random attributes, etc.
         Player player = Player.builder().counter(playerCounter).build();
         Player npc = Player.builder().counter(npcCounter).build();
 
         // Build the global data
-        GladiatorData.builder().player(player).npc(npc).init();
+        GladiatorData.get().setPlayer(player);
+        GladiatorData.get().setNpc(npc);
+    }
+
+    @Override
+    public void process(long l) {
+        GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_PREPARE_MOVE).build());
     }
 }
