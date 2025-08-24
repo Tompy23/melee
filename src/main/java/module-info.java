@@ -26,4 +26,6 @@ module com.tompy.game {
     opens com.tompy.game.state.play to javafx.fxml;
     exports com.tompy.gladiator;
     opens com.tompy.gladiator to javafx.fxml, com.fasterxml.jackson.databind;
+    exports com.tompy.gladiator.details;
+    opens com.tompy.gladiator.details to com.fasterxml.jackson.databind, javafx.fxml;
 }

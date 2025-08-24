@@ -66,6 +66,13 @@ public class BeginController extends AbstractGameController {
 
         GameTimer.get().stop();
 
+        Player player = Player.builder().name(txtName.getText()).type(cmbType.getValue()).build();
+        Player npc = Player.builder().name("AI").type(cmbOpponentType.getValue()).build();
+
+        // Build the global data
+        GladiatorData.get().setPlayer(player);
+        GladiatorData.get().setNpc(npc);
+
         GameStateMachine.get().changeState(GameStateFactory.buidler().type(GameStateType.SCENE_CHANGE)
                 .properties("gladiator-play.properties").toType(GameStateType.GLADIATOR_PLAY_BEGIN).stage(stage)
                 .sceneLoader(new PlayGladiatorSceneLoader()).build());

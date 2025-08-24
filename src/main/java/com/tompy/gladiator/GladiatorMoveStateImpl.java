@@ -18,7 +18,8 @@ public class GladiatorMoveStateImpl extends AbstractGameState {
     @Override
     public void beginState() {
         moveGladiator(player);
-        moveGladiator(npc);
+        //moveGladiator(npc);
+        GladiatorData.get().getController().getPaneCombat().setVisible(true);
     }
     @Override
     public void endState() {

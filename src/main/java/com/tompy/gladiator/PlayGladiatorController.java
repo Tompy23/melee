@@ -234,9 +234,11 @@ public class PlayGladiatorController extends AbstractGameHexBoardController {
         Hex destination = getMove(3).getLast();
         int rotation = getRotation(GladiatorData.get().getPlayer().getCounter(), 3, false);
         onBackwardsExited(null);
+        GladiatorData.get().getPlayer().setMoveToHex(destination);
+        GladiatorData.get().getPlayer().setMoveToRotation(rotation);
         GameStateMachine.get()
-                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).originHex(destination)
-                        .intValue(rotation).pane(paneMove).secondPane(paneCombat).build());
+                .changeState(GameStateFactory.buidler().type(GameStateType.GLADIATOR_MOVE).pane(paneMove)
+                        .secondPane(paneCombat).build());
     }
 
     public void onBackwardsEntered(MouseEvent event) {
