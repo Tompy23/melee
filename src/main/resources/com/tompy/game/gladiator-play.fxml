@@ -35,9 +35,9 @@
             <TextArea prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT" />
          </bottom>
          <left>
-            <Pane fx:id="paneMove" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Pane fx:id="paneMove" prefWidth="200.0" visible="false" BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="paneCombat" prefHeight="200.0" prefWidth="200.0" visible="false">
+                  <Pane fx:id="paneCombat" prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" />
                      </children>
